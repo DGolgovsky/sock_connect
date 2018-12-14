@@ -1,0 +1,23 @@
+# Maintainer: Dmitry Golgovsky <d.westcoast@aol.com>
+# Contributor: Dmitry Golgovsky <d.westcoast@aol.com>
+
+pkgname=sock_connect
+pkgver=0.0.1
+pkgrel=1
+pkgdesc="Prototype shared library of Socket Connector."
+
+arch=('i686' 'x86_64')
+url="https://github.com/DGolgovsky/sock_connect"
+license=('MIT')
+options=('!strip' '!emptydirs')
+depends=(glibc cmake gcc)
+
+source_i686=("sock_connect-$pkgver-Linux.deb")
+source_x86_64=("sock_connect-$pkgver-Linux.deb")
+
+package() {
+
+	# Extract package data
+	tar xzf data.tar.gz -C "${pkgdir}"
+
+}
