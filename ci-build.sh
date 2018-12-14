@@ -28,17 +28,4 @@ esac
 
 cpack .
 
-if [[ ${1} ]]; then
-    mv *.deb ../packages/devel/
-    cd ../packages/devel
-    makepkg -csf --skipinteg
-    exit 0
-fi
-
-mv *.deb ../packages/build/
-
-## Archlinux automake
-cd ../packages/build
-makepkg -csf --skipinteg
-
 exit 0
