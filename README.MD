@@ -37,7 +37,7 @@ Package provides headers, installs at `/usr/include` and `.so` library, puts to 
 #### Usage:
 
 ---
-* Include header in your source files where do you need it. Use `namespace kamaz`.
+* Include header in your source files where do you need it.
 ```cpp
 #include <sock_connect.h>
 ```
