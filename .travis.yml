@@ -18,8 +18,8 @@ before_script:
     # Nothing to do
 
 script:
-    - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8 ./ci-build.sh
     - doxygen $TRAVIS_BUILD_DIR/Doxyfile
+    - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8 ./ci-build.sh
 
 deploy:
     - provider: pages
@@ -33,7 +33,4 @@ deploy:
       skip_cleanup: true
       script: curl -T build/sock_connect-0.0.$BUILD_NUMBER-Linux.deb -udgolgovsky:$BINTRAY_API_KEY "https://api.bintray.com/content/dgolgovsky/own/sock_connect/$BUILD_NUMBER/sock_connect-0.0.$BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
 
-after_success:
-    # Sending data to codecov.io
-    - bash <(curl -s https://codecov.io/bash) -x /usr/bin/gcov-5
 

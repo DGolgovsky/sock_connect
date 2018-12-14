@@ -13,8 +13,6 @@ if [[ -e docs ]]; then
     rm -rf docs
 fi
 
-doxygen Doxyfile
-
 mkdir build
 cd build
 
