@@ -1,7 +1,7 @@
 /**
  * @file Connection.h
  * @author DGolgovsky
- * @date 2018
+ * @date 2018-2019
  * @brief Socket Connection Class
  *
  * Class realize socket connection
@@ -29,17 +29,22 @@
 #define CONNECTION_H
 
 #include "SocketIp.h"
+#include <fcntl.h>
 
 class Connection {
 protected:
     SocketIp socket_;
-    std::string m_path;
+
     uint32_t address_{};
     uint16_t port_{};
+    std::string m_path{};
+
     sockaddr_in socket_addr{};
     sockaddr_in client_addr{};
     sockaddr_un unix_addr;
-    int receiver_id{};
+    sockaddr *ptr_addr;
+
+    int transmission{};
     bool state{false};
 
 public:
@@ -52,7 +57,7 @@ public:
      */
     explicit Connection(conn_type cp, uint32_t address, uint16_t port);
 
-    explicit Connection(conn_type cp, std::string &path);
+    explicit Connection(conn_type cp, std::string path);
 
     /**
      * @brief Deleted constructors and operator=
@@ -66,6 +71,8 @@ public:
     Connection &operator=(const Connection &) = delete;
 
     Connection &operator=(Connection &&) = delete;
+
+    void conn_memset();
 
     /**
      * @brief Virtual destructor
@@ -92,7 +99,7 @@ public:
      * Accept client connection and returns client id
      * @return client_id
      */
-    int Accept() const;
+    int Accept();
 
     /**
      * @brief Connecting to server
@@ -108,7 +115,7 @@ public:
      * Close opened socket
      * @return void
      */
-    void Shutdown() const;
+    void Shutdown(int id) const;
 
     /**
      * @brief Return socket id
@@ -120,6 +127,6 @@ public:
      * Connection status
      */
     bool status() const;
-
 };
+
 #endif // CONNECTION_H

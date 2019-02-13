@@ -1,3 +1,5 @@
+#include <utility>
+
 #include <cstring>
 #include <algorithm>
 
@@ -8,115 +10,109 @@
 #endif
 
 Connection::Connection(conn_type cp, uint32_t address, uint16_t port)
-        : socket_(cp)
-        , address_(address)
-        , port_(port)
-{
-    std::memset(&socket_addr, '\0', sizeof(socket_addr));
-    std::memset(&client_addr, '\0', sizeof(client_addr));
+        : socket_(cp), address_(address), port_(port), transmission(socket_.id()) {
+    conn_memset();
     socket_addr.sin_family = AF_INET;
     socket_addr.sin_addr.s_addr = htonl(address_);
     socket_addr.sin_port = htons(port_);
+    ptr_addr = (sockaddr *) &socket_addr;
 }
 
-Connection::Connection(conn_type cp, std::string &path)
-        : socket_(cp)
-        , m_path(path)
-{
+Connection::Connection(conn_type cp, std::string socket_path = "/tmp/unix.sock")
+        : socket_(cp), m_path(std::move(socket_path)), transmission(socket_.id()) {
+    conn_memset();
+    unix_addr.sun_family = AF_UNIX;
+    ptr_addr = (sockaddr *) &unix_addr;
+#ifdef NDEBUG
+    std::clog << socket_.c_type() << " socket created: " << socket_path << '\n' << std::flush;
+#endif
+}
+
+void Connection::conn_memset() {
     std::memset(&socket_addr, '\0', sizeof(socket_addr));
     std::memset(&client_addr, '\0', sizeof(client_addr));
-    unix_addr.sun_family = AF_UNIX;
+    std::memset(&unix_addr, '\0', sizeof(unix_addr));
 }
 
-Connection::~Connection()
-{
-    shutdown(socket_.id(), SHUT_RDWR);
+Connection::~Connection() {
+#ifdef NDEBUG
+    std::clog << socket_.c_type() << " Shutdown: " << socket_.id() << '\n' << std::flush;
+#endif
+    //this->Shutdown(socket_.id());
 }
 
-int Connection::Accept() const
-{
-    int client_id = accept(socket_.id()
-            , (sockaddr*)&client_addr
-            , (socklen_t*)sizeof(client_addr));
-
-    if (client_id < 0) {
-        throw std::runtime_error("Accept failed, error number: "
+bool Connection::Bind(bool listen) const {
+    if (bind(socket_.id(), ptr_addr, sizeof(*ptr_addr)) < 0) {
+        throw std::runtime_error(socket_.c_type() + " Bind failed, error number: "
                                  + std::to_string(errno));
     }
 #ifdef NDEBUG
-    std::clog << "Client Connected: " << inet_ntoa(client_addr.sin_addr)
-                  << ":" << ntohs(client_addr.sin_port) << '\n' << std::flush;
+    if (socket_.c_type() != "UNIX")
+    std::clog << socket_.c_type() << " Address Binded: " << inet_ntoa(socket_addr.sin_addr)
+                  << ":" << ntohs(socket_addr.sin_port) << '\n' << std::flush;
 #endif
-    return client_id;
-}
-
-bool Connection::Bind(bool listen) const
-{
-    if (bind(socket_.id(), (sockaddr*) &socket_addr, sizeof(socket_addr)) < 0) {
-        /*throw std::runtime_error("_TCP Bind failed, error number: "
-                                 + std::to_string(errno));*/
-#ifdef NDEBUG
-        std::clog << "Binding failed: " << '\n' << std::flush;
-#endif
-        return false;
-    }
-
     if (listen)
         this->Listen();
 
     return true;
 }
 
-bool Connection::Listen() const
-{
+bool Connection::Listen() const {
     if (listen(socket_.id(), SOMAXCONN) < 0) {
-        /*throw std::runtime_error("_TCP Listen failed, error number: "
-                                 + std::to_string(errno));*/
-#ifdef NDEBUG
-        std::clog << "Listen failed: " << '\n' << std::flush;
-#endif
-        return false;
+        throw std::runtime_error(socket_.c_type() + " Listen failed, error number: "
+                                 + std::to_string(errno));
     }
+#ifdef NDEBUG
+    if (socket_.c_type() != "UNIX")
+    std::clog << socket_.c_type() << " Address Listened: " << inet_ntoa(socket_addr.sin_addr)
+                  << ":" << ntohs(socket_addr.sin_port) << '\n' << std::flush;
+#endif
 
     return true;
 }
 
-bool Connection::Connect()
-{
-    receiver_id = connect(socket_.id(), (sockaddr*)(&socket_addr), sizeof(socket_addr));
+int Connection::Accept() {
+    socklen_t addrlen = sizeof(client_addr);
+    transmission = accept(socket_.id(), (sockaddr *) &client_addr, &addrlen); //(socklen_t*)sizeof(client_addr));
 
-    if (receiver_id < 0) {
-        shutdown(receiver_id, SHUT_RDWR);
+    if (transmission < 0) {
+        throw std::runtime_error(socket_.c_type() + " Accept failed, error number: "
+                                 + std::to_string(errno));
+    }
+#ifdef NDEBUG
+    std::clog << socket_.c_type() << " Client Connected: " << inet_ntoa(client_addr.sin_addr)
+                  << ":" << ntohs(client_addr.sin_port) << '\n' << std::flush;
+#endif
+    return transmission;
+}
+
+bool Connection::Connect() {
+    if (connect(socket_.id(), ptr_addr, sizeof(*ptr_addr)) < 0) {
         this->state = false;
         return false;
     }
 #ifdef NDEBUG
-    std::clog << "Connected to: " << inet_ntoa(socket_addr.sin_addr)
+    std::clog << socket_.c_type() << " Connected to: " << inet_ntoa(socket_addr.sin_addr)
                   << ":" << ntohs(socket_addr.sin_port) << '\n' << std::flush;
 #endif
     this->state = true;
-
     return true;
 }
 
-void Connection::Shutdown() const
-{
+void Connection::Shutdown(int id) const {
 #ifdef NDEBUG
-    std::clog << "Disconnected: " << inet_ntoa(socket_addr.sin_addr)
-                  << ":" << ntohs(socket_addr.sin_port) << '\n' << std::flush;
+    std::clog << socket_.c_type() << " Shutdown: " << id << '\n' << std::flush;
 #endif
-    if (shutdown(socket_.id(), SHUT_RDWR) < 0) {
+    if (shutdown(id, SHUT_RDWR) < 0) {
         throw std::runtime_error("Shutdown failed, error number: "
                                  + std::to_string(errno));
     }
 }
 
-int Connection::id() const noexcept
-{
+int Connection::id() const noexcept {
     return this->socket_.id();
 }
 
-bool Connection::status() const
-{
+bool Connection::status() const {
     return state;
 }

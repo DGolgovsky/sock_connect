@@ -5,14 +5,18 @@
 #include "UDP.h"
 #include "UNIX.h"
 #include "USB.h"
+#include "ip_to_int.h"
+
 
 template<class Type>
-class Connector
-{
+class Connector {
 private:
     Type connection;
 public:
     Connector(uint32_t addr, uint16_t port)
+            : connection(addr, port) {}
+
+    Connector(const char *addr, uint16_t port)
             : connection(addr, port) {}
 
     Connector(const std::string &address, speed_t speed)
@@ -23,7 +27,7 @@ public:
     /**
      * OVERRIDED FUNCTIONS
      */
-    int Accept() const {
+    int Accept() {
         return connection.Accept();
     }
 
@@ -31,32 +35,26 @@ public:
         return connection.Listen();
     }
 
-    bool Bind(bool listen) const {
+    bool Bind(bool listen = false) const {
         return connection.Bind(listen);
     }
 
-    ssize_t Send(const uint8_t *value, std::size_t size) {
+    template<typename T>
+    ssize_t Send(const T *value, std::size_t size) {
         return connection.Send(value, size);
     }
 
-    ssize_t Send(const std::string &value, std::size_t size) {
-        return connection.Send(value, size);
-    }
-
-    ssize_t Receive(uint8_t *value, std::size_t size) {
+    template<typename T>
+    ssize_t Receive(T *value, std::size_t size) {
         return connection.Receive(value, size);
     }
 
-    ssize_t Receive(std::string &value, std::size_t size) {
-        return connection.Receive(value, size);
-    }
-
-    bool Connect() {
+    int Connect() {
         return connection.Connect();
     }
 
-    void Shutdown() {
-        return connection.Shutdown();
+    void Shutdown(int id = 0) {
+        return connection.Shutdown(id);
     }
 
     void setRTS() {

@@ -3,8 +3,8 @@
 
 #include "Connection.h"
 
-class TCP : public Connection
-{
+
+class TCP : public Connection {
 private:
     /*
      * The MTU (Maximum Transmission Unit) for Ethernet value is 1500 bytes
@@ -13,7 +13,7 @@ private:
     ssize_t msg_sz;
 
 public:
-    TCP(uint32_t address, uint16_t port);
+    explicit TCP(uint32_t address, uint16_t port);
 
     ~TCP() override;
 
@@ -25,6 +25,10 @@ public:
      * @return message size
      */
     ssize_t Receive(uint8_t *value, std::size_t tu_size);
+
+    ssize_t Receive(uint16_t *value, std::size_t tu_size);
+
+    ssize_t Receive(uint32_t *value, std::size_t tu_size);
 
     /**
      * @brief Receive std::string
@@ -42,6 +46,10 @@ public:
      * @return message size
      */
     ssize_t Send(const uint8_t *value, std::size_t tu_size);
+
+    ssize_t Send(const uint16_t *value, std::size_t tu_size);
+
+    ssize_t Send(const uint32_t *value, std::size_t tu_size);
 
     /**
      * @brief Send std::string

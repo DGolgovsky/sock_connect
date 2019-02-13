@@ -3,8 +3,8 @@
 
 #include "Connection.h"
 
-class UDP : public Connection
-{
+
+class UDP : public Connection {
 private:
     /**
      * The MTU (Maximum Transmission Unit) for Ethernet value is 1500 bytes
@@ -25,6 +25,10 @@ public:
      */
     ssize_t Receive(uint8_t *value, std::size_t tu_size);
 
+    ssize_t Receive(uint16_t *value, std::size_t tu_size);
+
+    ssize_t Receive(uint32_t *value, std::size_t tu_size);
+
     /**
      * @brief Receive std::string, UDP
      * Virtual receiving function for std::string messages as UDP connections without size
@@ -40,6 +44,10 @@ public:
      * @return message size
      */
     ssize_t Send(const uint8_t *value, std::size_t);
+
+    ssize_t Send(const uint16_t *value, std::size_t);
+
+    ssize_t Send(const uint32_t *value, std::size_t);
 
     /**
      * @brief Send std::string

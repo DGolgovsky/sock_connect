@@ -1,5 +1,5 @@
-#ifndef USB_H
-#define USB_H
+#ifndef USB_SOCKET_H
+#define USB_SOCKET_H
 
 #include "Connection.h"
 
@@ -7,8 +7,7 @@
 #include <termios.h>
 #include <sys/ioctl.h>
 
-class USB
-{
+class USB {
 private:
     int F_ID = -1;
     char buffer[1500];
@@ -38,9 +37,17 @@ public:
 
     ssize_t Receive(uint8_t *value, std::size_t tu_size);
 
+    ssize_t Receive(uint16_t *value, std::size_t tu_size);
+
+    ssize_t Receive(uint32_t *value, std::size_t tu_size);
+
     ssize_t Send(const std::string &value, std::size_t tu_size);
 
     ssize_t Send(const uint8_t *value, std::size_t tu_size);
+
+    ssize_t Send(const uint16_t *value, std::size_t tu_size);
+
+    ssize_t Send(const uint32_t *value, std::size_t tu_size);
 
     void setRTS();
 
@@ -53,4 +60,4 @@ public:
     bool status() const;
 };
 
-#endif // USB_H
+#endif // USB_SOCKET_H
