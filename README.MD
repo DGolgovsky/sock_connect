@@ -18,8 +18,8 @@ Shared library that realize connections.
 #### Installation:
 
 ---
-1. download **deb** packages: [**latest**](https://github.com/DGolgovsky/libsock_connect/raw/master/packages/build/sock_connect-0.1-Linux.deb "Latest stable package")
-or [**devel**](https://github.com/DGolgovsky/libsock_connect/raw/master/packages/devel/sock_connect-0.1-Linux.deb "Debug package") (with debug information) versions
+1. download **deb** packages: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/sock_connect-0.1-Linux.deb "Latest stable package")
+or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/devel/sock_connect-0.1-Linux.deb "Debug package") (with debug information) versions
 
     * install it using `sudo dpkg -i ${package_name}`
     * or install it using `sudo apt install ${package_name}` 
