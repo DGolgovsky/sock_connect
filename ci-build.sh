@@ -11,13 +11,12 @@ fi
 
 if [[ -e docs ]]; then
     rm -rf docs
+    doxygen Doxyfile
 fi
 
-mkdir build
-cd build
+mkdir build && cd build
 
 cmake -DDEBUG:BOOL=${DBG} -DBUILD_TESTING:BOOL=${TESTS} ..
-
 cmake --build . -- -j2
 
 case ${TESTS} in
@@ -25,5 +24,23 @@ case ${TESTS} in
 esac
 
 cpack .
+
+if [[ ${1} ]]; then
+    mv *.deb ../packages/devel/
+    ## Archlinux automake
+    if [ -f "/etc/arch-release" ]; then
+        cd ../packages/devel
+        makepkg -csf --skipinteg
+        exit 0
+    fi
+fi
+
+mv *.deb ../packages/build/
+
+if [ -f "/etc/arch-release" ]; then
+    cd ../packages/build
+    makepkg -csf --skipinteg
+    exit 0
+fi
 
 exit 0
