@@ -25,8 +25,8 @@ or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/de
     * or install it using `sudo apt install ${package_name}` 
 
 2. compile from source
-    * `git clone https://github.com/DGolgovsky/libsock_connect.git` clone git repository 
-    * `cd libsock_connect` change directory to cloned repo-dir
+    * `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository 
+    * `cd sock_connect` change directory to cloned repo-dir
     * `./ci-build.sh` compile **latest** version with or `./ci-build.sh ON` for **debug** version
     * `cd build` jump to directory with compiled objects
     * `sudo make install` install library as `root`
@@ -36,12 +36,12 @@ Package provides headers installs at `/usr/include` and `.so` library, puts to `
 #### Usage:
 
 ---
-* Include header in your source files where do you need it. Use `namespace kamaz`.
+* Include header in your source files where do you need it.
 ```cpp
 #include <sock_connect.h>
 ```
 
-* Compile with `-lsock_connect` 
+* Compile with `-lsock_connect`
 
 #### Variations:
 
