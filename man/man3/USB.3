@@ -1,0 +1,192 @@
+.TH "USB" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+USB \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <USB\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBUSB\fP (std::string address, speed_t speed)"
+.br
+.ti -1c
+.RI "\fB~USB\fP ()"
+.br
+.ti -1c
+.RI "bool \fBConnect\fP ()"
+.br
+.ti -1c
+.RI "void \fBShutdown\fP ()"
+.br
+.ti -1c
+.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S const tu_size)"
+.br
+.ti -1c
+.RI "template<typename T , typename S > ssize_t \fBSend\fP (T const *value, S const tu_size)"
+.br
+.ti -1c
+.RI "void \fBsetRTS\fP ()"
+.br
+.ti -1c
+.RI "void \fBclrRTS\fP ()"
+.br
+.ti -1c
+.RI "int \fBid\fP () const "
+.br
+.ti -1c
+.RI "bool \fBselect_status\fP ()"
+.br
+.ti -1c
+.RI "bool \fBstatus\fP () const "
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (uint8_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (uint16_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (uint32_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (std::string *value, std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (char *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const uint8_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const uint16_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const uint32_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const std::string *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const char *value, const std::size_t tu_size)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "bool \fBstate\fP {false}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 10 of file USB\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "USB::USB (std::string address, speed_t speed)\fC [explicit]\fP"
+
+.PP
+\fBParameters:\fP
+.RS 4
+\fIaddress\fP path to device {/dev/ttyACM0 | /dev/ttyUSB0} 
+.br
+\fIspeed\fP connection speed: B9600, B57600, B115200 
+.RE
+.PP
+
+.PP
+Definition at line 9 of file USB\&.cpp\&.
+.SS "USB::~USB ()"
+
+.PP
+Definition at line 12 of file USB\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void USB::clrRTS ()"
+
+.PP
+Definition at line 276 of file USB\&.cpp\&.
+.SS "bool USB::Connect ()"
+Connect/open port CONFIGURE THE UART The flags (defined in /usr/include/termios\&.h - see http://pubs.opengroup.org/onlinepubs/007908799/xsh/termios.h.html):
+.PP
+Baud rate:- B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200, B230400, B460800, B500000, B576000, B921600, B1000000, B1152000, B1500000, B2000000, B2500000, B3000000, B3500000, B4000000
+.PP
+CSIZE:- CS5, CS6, CS7, CS8 CLOCAL - Ignore modem status lines CREAD - Enable receiver IGNPAR = Ignore characters with parity errors ICRNL - Map CR to NL on input (Use for ASCII comms where you want to auto correct end of line characters - don't use for bianry comms!) PARENB - Parity enable PARODD - Odd parity (else even)
+.PP
+Definition at line 16 of file USB\&.cpp\&.
+.SS "int USB::id () const"
+
+.PP
+Definition at line 287 of file USB\&.cpp\&.
+.SS "template<typename T , typename S > ssize_t USB::Receive (T * value, S const tu_size)"
+
+.SS "template<> ssize_t USB::Receive (uint8_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 64 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Receive (uint16_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 87 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Receive (uint32_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 110 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Receive (std::string * value, std::size_t tu_size)"
+
+.PP
+Definition at line 133 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Receive (char * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 158 of file USB\&.cpp\&.
+.SS "bool USB::select_status ()"
+
+.SS "template<typename T , typename S > ssize_t USB::Send (T const * value, S const tu_size)"
+
+.SS "template<> ssize_t USB::Send (const uint8_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 166 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Send (const uint16_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 189 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Send (const uint32_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 212 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Send (const std::string * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 235 of file USB\&.cpp\&.
+.SS "template<> ssize_t USB::Send (const char * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 257 of file USB\&.cpp\&.
+.SS "void USB::setRTS ()"
+
+.PP
+Definition at line 269 of file USB\&.cpp\&.
+.SS "void USB::Shutdown ()"
+
+.PP
+Definition at line 262 of file USB\&.cpp\&.
+.SS "bool USB::status () const"
+
+.PP
+Definition at line 283 of file USB\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "bool USB::state {false}"
+
+.PP
+Definition at line 19 of file USB\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Shared library Connection Socket from the source code\&.

@@ -1,0 +1,73 @@
+.TH "src/SocketIp.h" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/SocketIp.h \- Socket \fBConnection\fP support Class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <arpa/inet\&.h>\fP
+.br
+\fC#include <netinet/in\&.h>\fP
+.br
+\fC#include <sys/socket\&.h>\fP
+.br
+\fC#include <sys/un\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <stdexcept>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBSocketIp\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBconn_type\fP : char { \fB_TCP\fP, \fB_UDP\fP, \fB_UNIX\fP }"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Socket \fBConnection\fP support Class\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+DGolgovsky 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2018 Class realize socket connection 
+.RE
+.PP
+
+.PP
+Definition in file \fBSocketIp\&.h\fP\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBconn_type\fP : char"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fI_TCP \fP\fP
+.TP
+\fB\fI_UDP \fP\fP
+.TP
+\fB\fI_UNIX \fP\fP
+.PP
+Definition at line 40 of file SocketIp\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Shared library Connection Socket from the source code\&.

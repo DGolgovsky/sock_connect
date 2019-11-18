@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['transmission',['transmission',['../class_connection.html#ac080f0c28cfb3c2b995a08bdc98592b9',1,'Connection']]]
+  ['unix_5faddr',['unix_addr',['../class_connection.html#ab40420f0fd36e7f9806f07005af0b14d',1,'Connection']]]
 ];

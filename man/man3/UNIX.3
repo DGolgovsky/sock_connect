@@ -1,0 +1,122 @@
+.TH "UNIX" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+UNIX \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <UNIX\&.h>\fP
+.PP
+Inherits \fBConnection\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBUNIX\fP (std::string &path)"
+.br
+.ti -1c
+.RI "\fB~UNIX\fP () override"
+.br
+.ti -1c
+.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S const tu_size)"
+.br
+.ti -1c
+.RI "template<typename T , typename S > ssize_t \fBSend\fP (const T *value, S const tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (uint8_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (uint16_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (uint32_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (std::string *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (char *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const uint8_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const uint16_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const uint32_t *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const std::string *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (const char *value, const std::size_t tu_size)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Definition at line 6 of file UNIX\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "UNIX::UNIX (std::string & path)\fC [explicit]\fP"
+
+.PP
+Definition at line 7 of file UNIX\&.cpp\&.
+.SS "UNIX::~UNIX ()\fC [override]\fP"
+
+.PP
+Definition at line 10 of file UNIX\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<> ssize_t UNIX::Receive (uint8_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 16 of file UNIX\&.cpp\&.
+.SS "template<typename T , typename S > ssize_t UNIX::Receive (T * value, S const tu_size)"
+
+.SS "template<> ssize_t UNIX::Receive (uint16_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 39 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Receive (uint32_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 62 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Receive (std::string * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 85 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Receive (char * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 110 of file UNIX\&.cpp\&.
+.SS "template<typename T , typename S > ssize_t UNIX::Send (const T * value, S const tu_size)"
+
+.SS "template<> ssize_t UNIX::Send (const uint8_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 118 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Send (const uint16_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 140 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Send (const uint32_t * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 162 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Send (const std::string * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 184 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Send (const char * value, const std::size_t tu_size)"
+
+.PP
+Definition at line 205 of file UNIX\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Shared library Connection Socket from the source code\&.
