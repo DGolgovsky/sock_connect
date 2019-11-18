@@ -1,7 +1,7 @@
 /**
  * @file Connection.h
  * @author DGolgovsky
- * @date 2018-2019
+ * @date 2018
  * @brief Socket Connection Class
  *
  * Class realize socket connection
@@ -25,13 +25,18 @@
  * The main emphasis is on the controller template and polymorphism.
  */
 
-#ifndef CONNECTION_H
-#define CONNECTION_H
+#ifndef _LIB_SOCK_CONNECT_CONNECTION_H
+#define _LIB_SOCK_CONNECT_CONNECTION_H
+
+#include <utility>
+#include <map>
+#include <thread>
+#include <algorithm>
 
 #include "SocketIp.h"
-#include <fcntl.h>
 
-class Connection {
+class Connection
+{
 protected:
     SocketIp socket_;
 
@@ -41,35 +46,40 @@ protected:
 
     sockaddr_in socket_addr{};
     sockaddr_in client_addr{};
-    sockaddr_un unix_addr;
+    sockaddr_un unix_addr{};
     sockaddr *ptr_addr;
+    socklen_t size_addr;
 
-    int transmission{};
+    std::map<std::thread::id, int> clients;
     bool state{false};
 
 public:
     /**
-     * @brief Constructor of two arguments
-     * Explicit ctor with two arguments:
-     * @param address
+     * @brief Creates new socket with IP:PORT
+     * Explicit ctor:
+     * @param cp
+     * @param addr
      * @param port
-     * Create new socket
      */
-    explicit Connection(conn_type cp, uint32_t address, uint16_t port);
+    explicit Connection(conn_type cp, uint32_t addr, uint16_t port);
+    explicit Connection(conn_type cp, char const *addr, uint16_t port);
 
+    /**
+     * @brief Creates new socket unix_path
+     * Explicit ctor:
+     * @param cp
+     * @param path
+     */
     explicit Connection(conn_type cp, std::string path);
 
     /**
-     * @brief Deleted constructors and operator=
+     * @brief Deleted unused constructors and operator=
      */
+    Connection(Connection &) = delete;
     Connection(Connection &&) = delete;
-
     Connection(const Connection &) = delete;
-
     Connection &operator=(Connection &) = delete;
-
     Connection &operator=(const Connection &) = delete;
-
     Connection &operator=(Connection &&) = delete;
 
     void conn_memset();
@@ -83,14 +93,14 @@ public:
     /**
      * @brief Binding address
      * Bind function
-     * @return void
+     * @return status of execution
      */
     bool Bind(bool listen) const;
 
     /**
      * @brief Listening address
      * Listen functions
-     * @return void
+     * @return status of execution
      */
     bool Listen() const;
 
@@ -115,18 +125,19 @@ public:
      * Close opened socket
      * @return void
      */
-    void Shutdown(int id) const;
+    void Shutdown(int id);
 
     /**
      * @brief Return socket id
      * @return socket.id
      */
-    int id() const noexcept;
+    int id() noexcept;
 
     /**
      * Connection status
      */
     bool status() const;
+    void assign_client(int id);
 };
 
-#endif // CONNECTION_H
+#endif // _LIB_SOCK_CONNECT_CONNECTION_H

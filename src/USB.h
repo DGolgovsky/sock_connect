@@ -1,5 +1,5 @@
-#ifndef USB_SOCKET_H
-#define USB_SOCKET_H
+#ifndef _LIB_SOCK_CONNECT_USB_SOCKET_H
+#define _LIB_SOCK_CONNECT_USB_SOCKET_H
 
 #include "Connection.h"
 
@@ -7,11 +7,12 @@
 #include <termios.h>
 #include <sys/ioctl.h>
 
-class USB {
+class USB
+{
 private:
-    int F_ID = -1;
-    char buffer[1500];
-    ssize_t msg_sz;
+    int fd = -1;
+    char buffer[1500]{};
+    ssize_t msg_sz{-1};
     std::string address;
     speed_t speed;
 public:
@@ -22,42 +23,28 @@ public:
      * @param address path to device {/dev/ttyACM0 | /dev/ttyUSB0}
      * @param speed connection speed: B9600, B57600, B115200
      */
-    USB(const std::string &address, speed_t speed);
-
+    explicit USB(std::string address, speed_t speed);
     ~USB();
 
     /**
      * Connect/open port
      */
     bool Connect();
-
     void Shutdown();
 
-    ssize_t Receive(std::string &message, std::size_t tu_size);
+    template <typename T, typename S>
+    ssize_t Receive(T *value, S const tu_size);
 
-    ssize_t Receive(uint8_t *value, std::size_t tu_size);
-
-    ssize_t Receive(uint16_t *value, std::size_t tu_size);
-
-    ssize_t Receive(uint32_t *value, std::size_t tu_size);
-
-    ssize_t Send(const std::string &value, std::size_t tu_size);
-
-    ssize_t Send(const uint8_t *value, std::size_t tu_size);
-
-    ssize_t Send(const uint16_t *value, std::size_t tu_size);
-
-    ssize_t Send(const uint32_t *value, std::size_t tu_size);
+    template <typename T, typename S>
+    ssize_t Send(T const *value, S const tu_size);
 
     void setRTS();
-
-    bool select_status();
-
     void clrRTS();
 
     int id() const;
 
+    bool select_status();
     bool status() const;
 };
 
-#endif // USB_SOCKET_H
+#endif // _LIB_SOCK_CONNECT_USB_SOCKET_H

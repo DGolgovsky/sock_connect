@@ -1,5 +1,4 @@
 #include "TCP.h"
-#include <cstring>
 
 #ifdef NDEBUG
 #include <iostream>
@@ -8,141 +7,220 @@
 TCP::TCP(uint32_t address, uint16_t port)
         : Connection(_TCP, address, port) {
     int set = 1;
-    setsockopt(transmission, SOL_SOCKET, SO_REUSEADDR, &set, sizeof(set));
-    std::memset(&buffer, '\0', sizeof(buffer));
+    setsockopt(clients[std::this_thread::get_id()], SOL_SOCKET, SO_REUSEADDR,
+               &set, sizeof(set));
+    memset(&buffer, '\0', sizeof(buffer));
+}
+
+TCP::TCP(const char *address, uint16_t port)
+        : Connection(_TCP, address, port) {
+    int set = 1;
+    setsockopt(clients[std::this_thread::get_id()], SOL_SOCKET, SO_REUSEADDR,
+               &set, sizeof(set));
+    memset(&buffer, '\0', sizeof(buffer));
 }
 
 TCP::~TCP() {
-    shutdown(transmission, SHUT_RDWR);
+    shutdown(clients[std::this_thread::get_id()], SHUT_RDWR);
 }
 
-ssize_t TCP::Receive(uint8_t *value, const size_t tu_size) {
-    msg_sz = recv(transmission, value, tu_size, MSG_NOSIGNAL);
+template<>
+ssize_t TCP::Receive(uint8_t *value, const std::size_t tu_size) {
+    // map with threads name
+    msg_sz = recv(clients[std::this_thread::get_id()], value, tu_size,
+                  MSG_NOSIGNAL);
 
     if (msg_sz < 1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<uint8_t>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<uint8_t>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
 #ifdef NDEBUG
-    std::clog << "TCP<uint8_t>::Receive: received <" << value << " [+"
-              << tu_size << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<uint8_t>::Receive: received <";
+    print_values(value, tu_size);
+    std::clog << " [+" << tu_size << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
 }
 
+template<>
 ssize_t TCP::Receive(uint16_t *value, const std::size_t tu_size) {
-    msg_sz = recv(transmission, value, tu_size, MSG_NOSIGNAL);
+    msg_sz = recv(clients[std::this_thread::get_id()], value, tu_size,
+                  MSG_NOSIGNAL);
 
     if (msg_sz < 1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<uint16_t>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<uint16_t>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
 #ifdef NDEBUG
-    std::clog << "TCP<uint16_t>::Receive: received <" << value << " [+"
-              << tu_size << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<uint16_t>::Receive: received <";
+    print_values(value, tu_size);
+    std::clog << " [+" << tu_size << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
 }
 
+template<>
 ssize_t TCP::Receive(uint32_t *value, const std::size_t tu_size) {
-    msg_sz = recv(transmission, value, tu_size, MSG_NOSIGNAL);
+    msg_sz = recv(clients[std::this_thread::get_id()], value, tu_size,
+                  MSG_NOSIGNAL);
 
     if (msg_sz < 1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<uint32_t>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<uint32_t>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
 #ifdef NDEBUG
-    std::clog << "TCP<uint32_t>::Receive: received <" << value << " [+"
-              << tu_size << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<uint32_t>::Receive: received <";
+    print_values(value, tu_size);
+    std::clog << " [+" << tu_size << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
 }
 
-ssize_t TCP::Receive(std::string &message, const std::size_t tu_size) {
-    msg_sz = recv(transmission, buffer, tu_size, MSG_NOSIGNAL);
+template<>
+ssize_t TCP::Receive(std::string *value, const std::size_t tu_size) {
+    msg_sz = recv(clients[std::this_thread::get_id()], buffer, tu_size,
+                  MSG_NOSIGNAL);
 
     if (msg_sz < 1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<char*>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<char*>::Receive: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
     buffer[msg_sz] = '\0';
-    message = std::string(buffer, static_cast<std::size_t>(msg_sz));
-    //message.erase(1, std::min(message.find_first_not_of('0'), message.size()));
+    *value = std::string(buffer, static_cast<std::size_t>(msg_sz));
+    //value.erase(1, std::min(value.find_first_not_of('0'), value.size()));
 #ifdef NDEBUG
-    std::clog << "TCP<char*>::Receive: received <" << message.data() << " [+"
-              << message.size() << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<char*>::Receive: received <" << value->data() << " [+"
+              << value->size() << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
 }
 
+template<>
+ssize_t TCP::Receive(char *value, const std::size_t tu_size) {
+    std::string msg{value};
+    msg_sz = TCP::Receive(&msg, tu_size);
+    strcpy(value, msg.c_str());
+    return msg_sz;
+}
+
+template<>
 ssize_t TCP::Send(const uint8_t *value, const std::size_t tu_size) {
-    if ((msg_sz = send(transmission, value, tu_size, MSG_NOSIGNAL)) < 1) {
+    if ((msg_sz = send(clients[std::this_thread::get_id()], value, tu_size,
+                       MSG_NOSIGNAL)) < 1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<uint8_t>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<uint8_t>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
 #ifdef NDEBUG
-    std::clog << "TCP<uint8_t>::Send: sent <" << value << " [+"
-              << tu_size << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<uint8_t>::Send: sent <";
+    print_values(value, tu_size);
+    std::clog << " [+" << tu_size << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
 }
 
+template<>
 ssize_t TCP::Send(const uint16_t *value, const std::size_t tu_size) {
-    if ((msg_sz = send(transmission, value, tu_size, MSG_NOSIGNAL)) < 1) {
+    if ((msg_sz = send(clients[std::this_thread::get_id()], value, tu_size,
+                       MSG_NOSIGNAL)) < 1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<uint16_t>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<uint16_t>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
 #ifdef NDEBUG
-    std::clog << "TCP<uint16_t>::Send: sent <" << value << " [+"
-              << tu_size << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<uint16_t>::Send: sent <";
+    print_values(value, tu_size);
+    std::clog << " [+" << tu_size << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
 }
 
+template<>
 ssize_t TCP::Send(const uint32_t *value, const std::size_t tu_size) {
-    if ((msg_sz = send(transmission, value, tu_size, MSG_NOSIGNAL)) < 1) {
+    if ((msg_sz = send(clients[std::this_thread::get_id()], value, tu_size,
+                       MSG_NOSIGNAL)) < 1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<uint32_t>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<uint32_t>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
 #ifdef NDEBUG
-    std::clog << "TCP<uint32_t>::Send: sent <" << value << " [+"
-              << tu_size << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<uint32_t>::Send: sent <";
+    print_values(value, tu_size);
+    std::clog << " [+" << tu_size << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
 }
 
-ssize_t TCP::Send(const std::string &message, const std::size_t tu_size) {
-    if ((msg_sz = send(transmission, message.data(), tu_size, MSG_NOSIGNAL)) < 1) {
+template<>
+ssize_t TCP::Send(const std::string *value, const std::size_t tu_size) {
+    if ((msg_sz = send(clients[std::this_thread::get_id()], value->data(),
+                       tu_size, MSG_NOSIGNAL)) <
+        1) {
         this->state = false;
 #ifdef NDEBUG
-        std::clog << "TCP<char*>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] TCP<char*>::Send: status <DISCONNECTED>\n" << std::flush;
+        debug_mutex.unlock();
 #endif
         return 0;
     }
 #ifdef NDEBUG
-    std::clog << "TCP<char*>::Send: sent <" << message.data() << " [+"
-              << message.size() << "]>\n" << std::flush;
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] TCP<char*>::Send: sent <" << value->data() << " [+"
+              << value->size() << "]>\n" << std::flush;
+    debug_mutex.unlock();
 #endif
     return msg_sz;
+}
+
+template<>
+ssize_t TCP::Send(const char *value, const std::size_t tu_size) {
+    std::string msg{value};
+    return TCP::Send(&msg, tu_size);
 }

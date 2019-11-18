@@ -10,16 +10,16 @@ addons:
         sources:
             - ubuntu-toolchain-r-test
         packages:
-            - g++-8
+            - g++-9
             - doxygen
             - graphviz
 
-before_script:
-    # Nothing to do
+before_script: skip
+# Nothing to do
 
 script:
     - doxygen $TRAVIS_BUILD_DIR/Doxyfile
-    - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8 ./ci-build.sh
+    - CXX=/usr/bin/g++-9 CC=/usr/bin/gcc-9 ./ci-build.sh -p deb -v $BUILD_NUMBER -b
 
 deploy:
     - provider: pages
@@ -31,6 +31,4 @@ deploy:
           branch: master
     - provider: script
       skip_cleanup: true
-      script: curl -T build/sock_connect-0.$BUILD_NUMBER-Linux.deb -udgolgovsky:$BINTRAY_API_KEY "https://api.bintray.com/content/dgolgovsky/own/sock_connect/$BUILD_NUMBER/sock_connect-0.$BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
-
-
+      script: curl -T packages/build/libsock_connect-0.$BUILD_NUMBER-1-x86_64.deb -udgolgovsky:$BINTRAY_API_KEY "https://api.bintray.com/content/dgolgovsky/own/sock_connect/$BUILD_NUMBER/libsock_connect-0.$BUILD_NUMBER-1-x86_64.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"

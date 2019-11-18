@@ -1,37 +1,41 @@
-## sock_connect
+## Shared library Socket Connection
 
-Shared library that realize connections.
+Shared library that realize connections and could transfer data-packages.
 
-### Navigation
+#### Navigation
 
-<!-- TOC -->
-
-- [Navigation](#sock_connect)    
-    - [Installation](#installation)
-    - [Usage](#usage)
-    - [Examples](#examples)
-    - [Variations](#variations)
-    - [License](#license)
-
-<!-- /TOC -->
+- [Navigation](#navigation)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Variations](#variations)
+- [License](#license)
 
 #### Installation:
 
 ---
-1. download **deb** packages: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/sock_connect-0.1-Linux.deb "Latest stable package")
-or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/devel/sock_connect-0.1-Linux.deb "Debug package") (with debug information) versions
-
+1. download **`deb`** packages: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/libsock_connect-0.5-1-x86_64.deb "Latest stable package")
+or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/debug/libsock_connect-0.5-1-x86_64.deb "Debug package") (with debug information) versions
     * install it using `sudo dpkg -i ${package_name}`
     * or install it using `sudo apt install ${package_name}` 
-
-2. compile from source
+2. download **`rpm`** packages: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/libsock_connect-0.5-1-x86_64.rpm "Latest stable package")
+or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/debug/libsock_connect-0.5-1-x86_64.rpm "Debug package") (with debug information) versions
+    * install it using `sudo dnf -i ${package_name}`
+    * or install it using `sudo zypper install ${package_name}` 
+3. download packages for **`other`** linux distroes: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/libsock_connect-0.5-1-x86_64.tar.gz "Latest stable package")
+or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/debug/libsock_connect-0.5-1-x86_64.tar.gz "Debug package") (with debug information) versions
+    * extract downloaded package `tar xzfv libsock_connect-${VERSION}-x86_64.tar.gz`
+    * `cd libsock_connect-${VERSION}-x86_64`
+    * `sudo cp -rv * /usr/local/`
+4. compile from source
     * `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository 
     * `cd sock_connect` change directory to cloned repo-dir
-    * `./ci-build.sh` compile **latest** version with or `./ci-build.sh ON` for **debug** version
+    * `./ci-build.sh -b` compile **latest** version
+    * **OR** use `./ci-build.sh -h` for print help information for another variations of building
     * `cd build` jump to directory with compiled objects
     * `sudo make install` install library as `root`
 
-Package provides headers installs at `/usr/include` and `.so` library, puts to `/usr/lib`
+Package provides headers installs at `/usr/local/include` and `.so` library, puts to `/usr/local/lib`
 
 #### Usage:
 
@@ -40,111 +44,116 @@ Package provides headers installs at `/usr/include` and `.so` library, puts to `
 ```cpp
 #include <sock_connect.h>
 ```
-
-* Compile with `-lsock_connect`
+* Compile with `-lsock_connect` 
 
 #### Variations:
 
 ---
-
 1. Connection with `TCP` transmission
-    * `auto TCP = new Connector<TCP>(IP, PORT);`
+    * `auto tcp = new Connector<TCP>(IP, PORT);`
 2. Connection with `UDP` transmission
-    * `auto UDP = new Connector<UDP>(INADDR_ANY, PORT);`
+    * `auto udp = new Connector<UDP>(INADDR_ANY, PORT);`
 3. Connection with `UNIX` sockets transmission
-    * `auto UNIX = new Connector<UNIX>(dev_path);`
+    * `auto unix = new Connector<UNIX>(dev_path);`
 4. Connection with `USB` transmission
-    * `auto USB = new Connector<USB>(dev_path, speed);`
-5. Transform `const char*` ip-addr `192.168.1.42` to `uint32_t`
+    * `auto usb = new Connector<USB>(dev_path, speed);`
+5. **`DEPRECATED`** Transform `const char*` ip-addr `192.168.1.42` to `uint32_t`
     * `uint32_t IP = ip_to_int(argv[1]);`
 
 #### Examples:
 
 ---
-* For examples used `Queue` from [**this**](https://github.com/DGolgovsky/data "Wrapper for message structure to send/recv at control system") repository whis realize `priority_queue` wrapper
-```cpp
-static auto g_queue = new Queue();
-```
 * Receiving `TCP` as client:
 ```cpp
 uint16_t msg = 0;
 auto recv_sz = sizeof(uint16_t);
 
-auto TCP = new Connector<TCP>(IP, PORT);
+/* Create new socket connection */
+auto tcp = new Connector<TCP>(IP, PORT);
 while (true) {
-    if (TCP->Connect()) {
-        while (TCP->Receive(&msg, recv_sz)) {
-            g_queue->push(&msg);
+    // While tcp establish connection to server
+    if (tcp->Connect()) {
+        // While data receiving do smtg with it
+        // if tcp connection lost tcp->Receive returns false
+        while (tcp->Receive(&msg, recv_sz)) {
+            // do_something with received data
+            // ...
         }
         // Trying reconnect if connection lost
-        delete TCP;
-        auto new_TCP = new Connector<TCP>(IP, PORT);
-        TCP = new_TCP;
+        delete tcp;
+        auto new_tcp = new Connector<TCP>(IP, PORT);
+        tcp = new_tcp;
     }
 }
-delete TCP;
+delete tcp;
 ```
-* Receiving `TCP` as server:
+* Receiving `TCP` as multi-server:
 ```cpp
 template<class T>
-void handler(T TCP, int client_id) {
+void handler(T tcp, int client_id) {
     uint16_t msg = 0;
     auto recv_sz = sizeof(uint16_t);
-    while ((TCP->Receive(&msg, recv_sz))) {
-        g_queue->push(&msg);
+    while ((tcp->Receive(&msg, recv_sz))) {
+        // do_something with received message
+        // ...
     }
-    TCP->Shutdown(client_id);
+    tcp->Shutdown(client_id);
 }
 
 /* Used if [this] - recv server */
 void receiver()
 {
     /* Creating new connection */
-    auto *TCP = new Connector<TCP>(IP, PORT);
+    auto tcp = new Connector<TCP>(IP, PORT);
 
-    TCP->Bind(); /* You can use it as TCP->Bind(true); for bind && listen */
-    TCP->Listen(); /* You don't need this part if you bind with (true) option */
+    tcp->Bind(); /* You can use it as TCP->Bind(true); for bind && listen */
+    tcp->Listen(); /* You may don't need this part if you bind with (true) option */
 
     int client_id = 0;
-    while ((client_id = TCP->Accept()) > 0) {
+    while ((client_id = tcp->Accept()) > 0) {
         /* Accepting new connections and start receiving with the new thread */
-        std::thread thread(handler<decltype(TCP)>, TCP, client_id);
+        std::thread thread(handler<decltype(tcp)>, tcp, client_id);
         thread.detach();
     }
-    delete TCP;
+    delete tcp;
 }
 ```
-* Sending `TCP`, broadcasting `UDP`:
+* Sending `TCP` as client to server, broadcasting `UDP`:
 ```cpp
-auto TCP = new Connector<TCP>(IP, PORT);
-auto UDP = new Connector<UDP>(INADDR_ANY, PORT); // 0.0.0.0
+auto tcp = new Connector<TCP>(INADDR_LOOPBACK, PORT); // 127.0.0.1
+auto udp = new Connector<UDP>(INADDR_ANY, PORT); // 0.0.0.0
 
 uint16_t msg = 0;
 auto msg_sz = sizeof(uint16_t);
 
+// Infinite loop. This allow execute tcp_sender as daemon
 while (true) {
-    if (TCP->Connect()) {
-        while (TCP->status()) {
-            msg = g_queue->top<uint16_t>(); // Reading messages queue
+    if (tcp->Connect()) {
+        // If connection successfull,
+        // send data while status() returns true
+        while (tcp->status()) {
+            msg = rand() % 50; // Generate random data
             if (msg) {
-                if (!TCP->Send(&msg, msg_sz)) continue;
-                UDP->Send(&msg, msg_sz);
-                g_queue->pop();
+                // Trying to send message
+                // Continue if sending is failure,
+                // Also tcp->status() will return false
+                if (!tcp->Send(&msg, msg_sz)) continue;
+                // Send udp package
+                udp->Send(&msg, msg_sz);                
             }
         }
-        // Reconnecting
-        delete TCP;
-        auto new_TCP = new Connector<TCP>(IP, PORT);
-        TCP = new_TCP;
+        // Reconnecting if connection lost
+        delete tcp;
+        auto new_tcp = new Connector<TCP>(INADDR_LOOPBACK, PORT);
+        tcp = new_tcp;
     }
 }
-delete UDP;
-delete TCP;
+delete udp;
+delete tcp;
 ```
 #### License:
 
 ---
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights

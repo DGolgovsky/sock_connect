@@ -1,14 +1,14 @@
 /**
  * @file SocketIp.h
  * @author DGolgovsky
- * @date 2018-2019
+ * @date 2018
  * @brief Socket Connection support Class
  *
  * Class realize socket connection
  */
 
-#ifndef SOCKETIP_H
-#define SOCKETIP_H
+#ifndef _LIB_SOCK_CONNECT_SOCKETIP_H
+#define _LIB_SOCK_CONNECT_SOCKETIP_H
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -18,6 +18,24 @@
 
 #include <unistd.h>
 #include <stdexcept>
+
+#ifdef NDEBUG
+#include <mutex>
+#include <iostream>
+static std::mutex debug_mutex;
+//std::ostream & operator<<(std::ostream &os, void *val, std::size_t sz)
+template <typename T>
+void print_values(T *val, std::size_t sz)
+{
+    std::clog << "[";
+    for (std::size_t i = 0; i < sz; i++) {
+        if (i != 0 && i != sz)
+            std::clog << "; ";
+        std::clog << (int)*(val + i);
+    }
+    std::clog << "]" << std::flush;
+}
+#endif
 
 enum conn_type : char {
     _TCP, _UDP, _UNIX
@@ -60,9 +78,7 @@ public:
     }
 
     SocketIp(const SocketIp &) = delete;
-
     SocketIp &operator=(const SocketIp &) = delete;
-
     SocketIp &operator=(SocketIp &&) = delete;
 
     ~SocketIp() {
@@ -80,4 +96,4 @@ public:
     }
 };
 
-#endif // SOCKETIP_H
+#endif // _LIB_SOCK_CONNECT_SOCKETIP_H
