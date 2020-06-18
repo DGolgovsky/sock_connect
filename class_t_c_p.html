@@ -121,16 +121,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5441779c3857e43d1e8f95ddd5f9d5a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a42dda9114b443ba56c0690e4dc759052"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a42dda9114b443ba56c0690e4dc759052">TCP</a> (const char *address, uint16_t port)</td></tr>
 <tr class="separator:a42dda9114b443ba56c0690e4dc759052"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d96519cbbfe21185110509af811e68b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a9d96519cbbfe21185110509af811e68b">TCP</a> (std::string const &amp;address, uint16_t port)</td></tr>
+<tr class="separator:a9d96519cbbfe21185110509af811e68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab83611f2b75852a7e1afa8b3dc38de75"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#ab83611f2b75852a7e1afa8b3dc38de75">~TCP</a> () override</td></tr>
 <tr class="separator:ab83611f2b75852a7e1afa8b3dc38de75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bb5580178006ba075b96b8876b135fa"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S &gt; </td></tr>
 <tr class="memitem:a9bb5580178006ba075b96b8876b135fa"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a9bb5580178006ba075b96b8876b135fa">Receive</a> (T *value, S tu_size)</td></tr>
-<tr class="memdesc:a9bb5580178006ba075b96b8876b135fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive int Virtual receiving function for int values.  <a href="#a9bb5580178006ba075b96b8876b135fa">More...</a><br /></td></tr>
+<tr class="memdesc:a9bb5580178006ba075b96b8876b135fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive value Virtual receiving function for values.  <a href="#a9bb5580178006ba075b96b8876b135fa">More...</a><br /></td></tr>
 <tr class="separator:a9bb5580178006ba075b96b8876b135fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ca51795f0ec88903323eee77ae61910"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S &gt; </td></tr>
-<tr class="memitem:a0ca51795f0ec88903323eee77ae61910"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a0ca51795f0ec88903323eee77ae61910">Send</a> (const T *value, S tu_size)</td></tr>
-<tr class="memdesc:a0ca51795f0ec88903323eee77ae61910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send int value Virtual sending function for int values.  <a href="#a0ca51795f0ec88903323eee77ae61910">More...</a><br /></td></tr>
-<tr class="separator:a0ca51795f0ec88903323eee77ae61910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ad9be70e502f85f3e1503215e91918c"><td class="memTemplParams" colspan="2">template&lt;typename T , typename S &gt; </td></tr>
+<tr class="memitem:a1ad9be70e502f85f3e1503215e91918c"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a1ad9be70e502f85f3e1503215e91918c">Send</a> (T const *value, S tu_size)</td></tr>
+<tr class="memdesc:a1ad9be70e502f85f3e1503215e91918c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send value Virtual sending function for values.  <a href="#a1ad9be70e502f85f3e1503215e91918c">More...</a><br /></td></tr>
+<tr class="separator:a1ad9be70e502f85f3e1503215e91918c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e041429fdbf5314fc74c348c607d655"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
 <tr class="memitem:a9e041429fdbf5314fc74c348c607d655"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a9e041429fdbf5314fc74c348c607d655">Receive</a> (uint8_t *value, const std::size_t tu_size)</td></tr>
 <tr class="separator:a9e041429fdbf5314fc74c348c607d655"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,12 +142,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acde1bfaedb458fba9d154418354a5a92"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
 <tr class="memitem:acde1bfaedb458fba9d154418354a5a92"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#acde1bfaedb458fba9d154418354a5a92">Receive</a> (uint32_t *value, const std::size_t tu_size)</td></tr>
 <tr class="separator:acde1bfaedb458fba9d154418354a5a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa960e158ea7d7d7d6a73fa3382da3b4d"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:aa960e158ea7d7d7d6a73fa3382da3b4d"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#aa960e158ea7d7d7d6a73fa3382da3b4d">Receive</a> (std::string *value, const std::size_t tu_size)</td></tr>
-<tr class="separator:aa960e158ea7d7d7d6a73fa3382da3b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a8e7b58daab677bba90a97e608a7e2"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:aa5a8e7b58daab677bba90a97e608a7e2"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#aa5a8e7b58daab677bba90a97e608a7e2">Receive</a> (std::size_t *value, const std::size_t tu_size)</td></tr>
+<tr class="separator:aa5a8e7b58daab677bba90a97e608a7e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2813128a621d3a2ea5746191ba0bf62f"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
 <tr class="memitem:a2813128a621d3a2ea5746191ba0bf62f"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a2813128a621d3a2ea5746191ba0bf62f">Receive</a> (char *value, const std::size_t tu_size)</td></tr>
 <tr class="separator:a2813128a621d3a2ea5746191ba0bf62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa960e158ea7d7d7d6a73fa3382da3b4d"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:aa960e158ea7d7d7d6a73fa3382da3b4d"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#aa960e158ea7d7d7d6a73fa3382da3b4d">Receive</a> (std::string *value, const std::size_t tu_size)</td></tr>
+<tr class="separator:aa960e158ea7d7d7d6a73fa3382da3b4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7173b1f219573cec6edf458ab6bce880"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
 <tr class="memitem:a7173b1f219573cec6edf458ab6bce880"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a7173b1f219573cec6edf458ab6bce880">Send</a> (const uint8_t *value, const std::size_t tu_size)</td></tr>
 <tr class="separator:a7173b1f219573cec6edf458ab6bce880"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,18 +160,25 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1e6363620fcec6a8ed6a7236b7ca92f2"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
 <tr class="memitem:a1e6363620fcec6a8ed6a7236b7ca92f2"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a1e6363620fcec6a8ed6a7236b7ca92f2">Send</a> (const uint32_t *value, const std::size_t tu_size)</td></tr>
 <tr class="separator:a1e6363620fcec6a8ed6a7236b7ca92f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35db11a18688018e6950d58e169649d6"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:a35db11a18688018e6950d58e169649d6"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a35db11a18688018e6950d58e169649d6">Send</a> (const std::string *value, const std::size_t tu_size)</td></tr>
-<tr class="separator:a35db11a18688018e6950d58e169649d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab89bf7290476c1045e4c78c8d71b5456"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
-<tr class="memitem:ab89bf7290476c1045e4c78c8d71b5456"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#ab89bf7290476c1045e4c78c8d71b5456">Send</a> (const char *value, const std::size_t tu_size)</td></tr>
-<tr class="separator:ab89bf7290476c1045e4c78c8d71b5456"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07626b993612b58732645c53c9c4bf55"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a07626b993612b58732645c53c9c4bf55"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a07626b993612b58732645c53c9c4bf55">Send</a> (const std::size_t *value, const std::size_t tu_size)</td></tr>
+<tr class="separator:a07626b993612b58732645c53c9c4bf55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac10fb0302e73e144d1176904390bac88"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:ac10fb0302e73e144d1176904390bac88"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#ac10fb0302e73e144d1176904390bac88">Send</a> (char const *value, std::size_t const tu_size)</td></tr>
+<tr class="separator:ac10fb0302e73e144d1176904390bac88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a506823d5c7aa9026cea2014131070f6e"><td class="memTemplParams" colspan="2">template&lt;&gt; </td></tr>
+<tr class="memitem:a506823d5c7aa9026cea2014131070f6e"><td class="memTemplItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_t_c_p.html#a506823d5c7aa9026cea2014131070f6e">Send</a> (std::string const *value, std::size_t const tu_size)</td></tr>
+<tr class="separator:a506823d5c7aa9026cea2014131070f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_connection"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_connection')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_connection.html">Connection</a></td></tr>
 <tr class="memitem:a5cda9f7e4590d9154f18d190c978f14b inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a5cda9f7e4590d9154f18d190c978f14b">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, uint32_t addr, uint16_t port)</td></tr>
 <tr class="memdesc:a5cda9f7e4590d9154f18d190c978f14b inherit pub_methods_class_connection"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new socket with IP:PORT Explicit ctor:  <a href="#a5cda9f7e4590d9154f18d190c978f14b">More...</a><br /></td></tr>
 <tr class="separator:a5cda9f7e4590d9154f18d190c978f14b inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad34544110c848f387e961aa1dd54b671 inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#ad34544110c848f387e961aa1dd54b671">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, char const *addr, uint16_t port)</td></tr>
 <tr class="separator:ad34544110c848f387e961aa1dd54b671 inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9ec1891258b287317dbac0e76c09f00 inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#ac9ec1891258b287317dbac0e76c09f00">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, std::string const &amp;addr, uint16_t port)</td></tr>
+<tr class="separator:ac9ec1891258b287317dbac0e76c09f00 inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49e7e4f31ec12060c31d384e19ae8290 inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a49e7e4f31ec12060c31d384e19ae8290">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, char const &amp;&amp;addr, uint16_t port)</td></tr>
+<tr class="separator:a49e7e4f31ec12060c31d384e19ae8290 inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51cb45d591eace092a8103ccb2901932 inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a51cb45d591eace092a8103ccb2901932">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, std::string path)</td></tr>
 <tr class="memdesc:a51cb45d591eace092a8103ccb2901932 inherit pub_methods_class_connection"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new socket unix_path Explicit ctor:  <a href="#a51cb45d591eace092a8103ccb2901932">More...</a><br /></td></tr>
 <tr class="separator:a51cb45d591eace092a8103ccb2901932 inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,8 +220,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a89faab01049f7a2832019ed2bfc1c5d3 inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76856daf5f4aa15a0295275ec7e1d9ec inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a76856daf5f4aa15a0295275ec7e1d9ec">status</a> () const </td></tr>
 <tr class="separator:a76856daf5f4aa15a0295275ec7e1d9ec inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac28f23c89d2fb8fe64d8340408b1912b inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#ac28f23c89d2fb8fe64d8340408b1912b">assign_client</a> (int <a class="el" href="class_connection.html#a89faab01049f7a2832019ed2bfc1c5d3">id</a>)</td></tr>
-<tr class="separator:ac28f23c89d2fb8fe64d8340408b1912b inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7022e469e6c8cd87fea671df6ca95a87 inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a7022e469e6c8cd87fea671df6ca95a87">assign_thread</a> (int <a class="el" href="class_connection.html#a89faab01049f7a2832019ed2bfc1c5d3">id</a>)</td></tr>
+<tr class="separator:a7022e469e6c8cd87fea671df6ca95a87 inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb8e53e3ec2f3eb2e92b438f7a0c0f45 inherit pub_methods_class_connection"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#adb8e53e3ec2f3eb2e92b438f7a0c0f45">get_descriptor</a> ()</td></tr>
+<tr class="separator:adb8e53e3ec2f3eb2e92b438f7a0c0f45 inherit pub_methods_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -232,8 +246,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a551ae1f2e286096df551a440ba2b661e inherit pro_attribs_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82a69c1ed51d4a2cedf893bca309f4fd inherit pro_attribs_class_connection"><td class="memItemLeft" align="right" valign="top">socklen_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a82a69c1ed51d4a2cedf893bca309f4fd">size_addr</a></td></tr>
 <tr class="separator:a82a69c1ed51d4a2cedf893bca309f4fd inherit pro_attribs_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7eb483e2cac51cad0aff0d7d7af003a7 inherit pro_attribs_class_connection"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::thread::id, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a7eb483e2cac51cad0aff0d7d7af003a7">clients</a></td></tr>
-<tr class="separator:a7eb483e2cac51cad0aff0d7d7af003a7 inherit pro_attribs_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab5a4c0d356d910fb82718ac40021a6e inherit pro_attribs_class_connection"><td class="memItemLeft" align="right" valign="top">storage_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#aab5a4c0d356d910fb82718ac40021a6e">clients</a> {}</td></tr>
+<tr class="separator:aab5a4c0d356d910fb82718ac40021a6e inherit pro_attribs_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d32d22df1710d82135fcef18313dc69 inherit pro_attribs_class_connection"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a3d32d22df1710d82135fcef18313dc69">state</a> {false}</td></tr>
 <tr class="separator:a3d32d22df1710d82135fcef18313dc69 inherit pro_attribs_class_connection"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -309,7 +323,43 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00015">15</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00018">18</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a9d96519cbbfe21185110509af811e68b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">TCP::TCP </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00029">29</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -334,7 +384,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00023">23</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00040">40</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -365,11 +415,11 @@ template&lt;typename T , typename S &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Receive int Virtual receiving function for int values. </p>
+<p>Receive value Virtual receiving function for values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td></td></tr>
-    <tr><td class="paramname">tu_size</td><td>Package size. By default is sizeof(int) </td></tr>
+    <tr><td class="paramname">tu_size</td><td>Package size. </td></tr>
   </table>
   </dd>
 </dl>
@@ -403,7 +453,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00028">28</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00049">49</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -433,7 +483,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00053">53</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00072">72</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -463,11 +513,11 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00077">77</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00095">95</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa960e158ea7d7d7d6a73fa3382da3b4d"></a>
+<a class="anchor" id="aa5a8e7b58daab677bba90a97e608a7e2"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -476,7 +526,7 @@ template&lt;&gt; </div>
         <tr>
           <td class="memname">ssize_t TCP::Receive </td>
           <td>(</td>
-          <td class="paramtype">std::string *&#160;</td>
+          <td class="paramtype">std::size_t *&#160;</td>
           <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
@@ -493,7 +543,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00101">101</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00118">118</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -523,11 +573,41 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00127">127</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00141">141</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0ca51795f0ec88903323eee77ae61910"></a>
+<a class="anchor" id="aa960e158ea7d7d7d6a73fa3382da3b4d"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t TCP::Receive </td>
+          <td>(</td>
+          <td class="paramtype">std::string *&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::size_t&#160;</td>
+          <td class="paramname"><em>tu_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00171">171</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1ad9be70e502f85f3e1503215e91918c"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -536,7 +616,7 @@ template&lt;typename T , typename S &gt; </div>
         <tr>
           <td class="memname">ssize_t TCP::Send </td>
           <td>(</td>
-          <td class="paramtype">const T *&#160;</td>
+          <td class="paramtype">T const *&#160;</td>
           <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
@@ -553,7 +633,7 @@ template&lt;typename T , typename S &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Send int value Virtual sending function for int values. </p>
+<p>Send value Virtual sending function for values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td></td></tr>
@@ -591,7 +671,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00135">135</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00184">184</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -621,7 +701,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00157">157</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00206">206</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -651,11 +731,11 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00179">179</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00228">228</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a35db11a18688018e6950d58e169649d6"></a>
+<a class="anchor" id="a07626b993612b58732645c53c9c4bf55"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -664,7 +744,7 @@ template&lt;&gt; </div>
         <tr>
           <td class="memname">ssize_t TCP::Send </td>
           <td>(</td>
-          <td class="paramtype">const std::string *&#160;</td>
+          <td class="paramtype">const std::size_t *&#160;</td>
           <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
@@ -681,11 +761,11 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00201">201</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00250">250</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab89bf7290476c1045e4c78c8d71b5456"></a>
+<a class="anchor" id="ac10fb0302e73e144d1176904390bac88"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -694,13 +774,44 @@ template&lt;&gt; </div>
         <tr>
           <td class="memname">ssize_t TCP::Send </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
+          <td class="paramtype">char const *&#160;</td>
           <td class="paramname"><em>value</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::size_t&#160;</td>
+          <td class="paramtype">std::size_t const&#160;</td>
+          <td class="paramname"><em>tu_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="class_t_c_p.html">TCP</a> MTU = 1460 net.core.rmem_max = 212992</p>
+
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00272">272</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a506823d5c7aa9026cea2014131070f6e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">ssize_t TCP::Send </td>
+          <td>(</td>
+          <td class="paramtype">std::string const *&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t const&#160;</td>
           <td class="paramname"><em>tu_size</em>&#160;</td>
         </tr>
         <tr>
@@ -711,7 +822,7 @@ template&lt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00223">223</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_t_c_p_8cpp_source.html#l00303">303</a> of file <a class="el" href="_t_c_p_8cpp_source.html">TCP.cpp</a>.</p>
 
 </div>
 </div>
@@ -722,7 +833,7 @@ template&lt;&gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2019 13:18:52 for Shared library Connection Socket by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jun 18 2020 08:20:53 for Shared library Connection Socket by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

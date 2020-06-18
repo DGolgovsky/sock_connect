@@ -1,13 +1,6 @@
 var searchData=
 [
-  ['udp',['UDP',['../class_u_d_p.html',1,'UDP'],['../class_u_d_p.html#ac4d135136a0e5d3cf7f40647fcf4fe81',1,'UDP::UDP(uint32_t address, uint16_t port)'],['../class_u_d_p.html#aac1bc0ead07b6a96f9597af4a6397a4c',1,'UDP::UDP(const char *address, uint16_t port)']]],
-  ['udp_2ecpp',['UDP.cpp',['../_u_d_p_8cpp.html',1,'']]],
-  ['udp_2eh',['UDP.h',['../_u_d_p_8h.html',1,'']]],
-  ['unix',['UNIX',['../class_u_n_i_x.html',1,'UNIX'],['../class_u_n_i_x.html#aba491661110acf9699695e024c363e76',1,'UNIX::UNIX()']]],
-  ['unix_2ecpp',['UNIX.cpp',['../_u_n_i_x_8cpp.html',1,'']]],
-  ['unix_2eh',['UNIX.h',['../_u_n_i_x_8h.html',1,'']]],
-  ['unix_5faddr',['unix_addr',['../class_connection.html#ab40420f0fd36e7f9806f07005af0b14d',1,'Connection']]],
-  ['usb',['USB',['../class_u_s_b.html',1,'USB'],['../class_u_s_b.html#afdb45f2c878b21e276d6c109f843a877',1,'USB::USB()']]],
-  ['usb_2ecpp',['USB.cpp',['../_u_s_b_8cpp.html',1,'']]],
-  ['usb_2eh',['USB.h',['../_u_s_b_8h.html',1,'']]]
+  ['tcp',['TCP',['../class_t_c_p.html',1,'TCP'],['../class_t_c_p.html#a5441779c3857e43d1e8f95ddd5f9d5a2',1,'TCP::TCP(uint32_t address, uint16_t port)'],['../class_t_c_p.html#a42dda9114b443ba56c0690e4dc759052',1,'TCP::TCP(const char *address, uint16_t port)'],['../class_t_c_p.html#a9d96519cbbfe21185110509af811e68b',1,'TCP::TCP(std::string const &amp;address, uint16_t port)']]],
+  ['tcp_2ecpp',['TCP.cpp',['../_t_c_p_8cpp.html',1,'']]],
+  ['tcp_2eh',['TCP.h',['../_t_c_p_8h.html',1,'']]]
 ];

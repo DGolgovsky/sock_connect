@@ -1,4 +1,4 @@
-.TH "UNIX" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "UNIX" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,11 +20,13 @@ Inherits \fBConnection\fP\&.
 .RI "\fB~UNIX\fP () override"
 .br
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S const tu_size)"
+.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S tu_size)"
 .br
+.RI "\fIReceive value Virtual receiving function for values\&. \fP"
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBSend\fP (const T *value, S const tu_size)"
+.RI "template<typename T , typename S > ssize_t \fBSend\fP (const T *value, S tu_size)"
 .br
+.RI "\fISend value Virtual sending function for values\&. \fP"
 .ti -1c
 .RI "template<> ssize_t \fBReceive\fP (uint8_t *value, const std::size_t tu_size)"
 .br
@@ -69,53 +71,85 @@ Definition at line 7 of file UNIX\&.cpp\&.
 .SS "UNIX::~UNIX ()\fC [override]\fP"
 
 .PP
-Definition at line 10 of file UNIX\&.cpp\&.
+Definition at line 17 of file UNIX\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
+.SS "template<typename T , typename S > ssize_t UNIX::Receive (T * value, S tu_size)"
+
+.PP
+Receive value Virtual receiving function for values\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP 
+.br
+\fItu_size\fP Package size\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+message size 
+.RE
+.PP
+
 .SS "template<> ssize_t UNIX::Receive (uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 16 of file UNIX\&.cpp\&.
-.SS "template<typename T , typename S > ssize_t UNIX::Receive (T * value, S const tu_size)"
-
+Definition at line 28 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Receive (uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 39 of file UNIX\&.cpp\&.
+Definition at line 50 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Receive (uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 62 of file UNIX\&.cpp\&.
+Definition at line 72 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Receive (std::string * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 85 of file UNIX\&.cpp\&.
+Definition at line 94 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Receive (char * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 110 of file UNIX\&.cpp\&.
-.SS "template<typename T , typename S > ssize_t UNIX::Send (const T * value, S const tu_size)"
+Definition at line 118 of file UNIX\&.cpp\&.
+.SS "template<typename T , typename S > ssize_t UNIX::Send (const T * value, S tu_size)"
+
+.PP
+Send value Virtual sending function for values\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP 
+.br
+\fItu_size\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+message size 
+.RE
+.PP
 
 .SS "template<> ssize_t UNIX::Send (const uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 118 of file UNIX\&.cpp\&.
+Definition at line 126 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Send (const uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 140 of file UNIX\&.cpp\&.
+Definition at line 148 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Send (const uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 162 of file UNIX\&.cpp\&.
+Definition at line 169 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Send (const std::string * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 184 of file UNIX\&.cpp\&.
+Definition at line 190 of file UNIX\&.cpp\&.
 .SS "template<> ssize_t UNIX::Send (const char * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 205 of file UNIX\&.cpp\&.
+Definition at line 210 of file UNIX\&.cpp\&.
 
 .SH "Author"
 .PP 

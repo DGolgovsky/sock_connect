@@ -1,13 +1,13 @@
 <map id="src/SocketIp.h" name="src/SocketIp.h">
-<area shape="rect" id="node2" href="$_connection_8h.html" title="Socket Connection Class. " alt="" coords="259,80,389,107"/>
-<area shape="rect" id="node3" href="$_connection_8cpp.html" title="src/Connection.cpp" alt="" coords="5,155,149,181"/>
-<area shape="rect" id="node4" href="$_t_c_p_8h.html" title="src/TCP.h" alt="" coords="502,155,581,181"/>
-<area shape="rect" id="node7" href="$_u_d_p_8h.html" title="src/UDP.h" alt="" coords="173,155,256,181"/>
-<area shape="rect" id="node9" href="$_u_n_i_x_8h.html" title="src/UNIX.h" alt="" coords="280,155,368,181"/>
-<area shape="rect" id="node11" href="$_u_s_b_8h.html" title="src/USB.h" alt="" coords="392,155,477,181"/>
-<area shape="rect" id="node5" href="$sock__connect_8h.html" title="src/sock_connect.h" alt="" coords="307,229,451,256"/>
-<area shape="rect" id="node6" href="$_t_c_p_8cpp.html" title="src/TCP.cpp" alt="" coords="600,229,693,256"/>
-<area shape="rect" id="node8" href="$_u_d_p_8cpp.html" title="src/UDP.cpp" alt="" coords="56,229,155,256"/>
-<area shape="rect" id="node10" href="$_u_n_i_x_8cpp.html" title="src/UNIX.cpp" alt="" coords="179,229,282,256"/>
-<area shape="rect" id="node12" href="$_u_s_b_8cpp.html" title="src/USB.cpp" alt="" coords="475,229,575,256"/>
+<area shape="rect" id="node2" href="$_connection_8h.html" title="Socket Connection Class. " alt="" coords="263,80,393,107"/>
+<area shape="rect" id="node3" href="$_connection_8cpp.html" title="src/Connection.cpp" alt="" coords="9,155,153,181"/>
+<area shape="rect" id="node4" href="$_t_c_p_8h.html" title="src/TCP.h" alt="" coords="397,155,475,181"/>
+<area shape="rect" id="node7" href="$_u_d_p_8h.html" title="src/UDP.h" alt="" coords="177,155,260,181"/>
+<area shape="rect" id="node9" href="$_u_n_i_x_8h.html" title="src/UNIX.h" alt="" coords="284,155,372,181"/>
+<area shape="rect" id="node11" href="$_u_s_b_8h.html" title="src/USB.h" alt="" coords="524,155,609,181"/>
+<area shape="rect" id="node5" href="$sock__connect_8h.html" title="src/sock_connect.h" alt="" coords="256,229,400,256"/>
+<area shape="rect" id="node6" href="$_t_c_p_8cpp.html" title="src/TCP.cpp" alt="" coords="424,229,517,256"/>
+<area shape="rect" id="node8" href="$_u_d_p_8cpp.html" title="src/UDP.cpp" alt="" coords="5,229,104,256"/>
+<area shape="rect" id="node10" href="$_u_n_i_x_8cpp.html" title="src/UNIX.cpp" alt="" coords="129,229,231,256"/>
+<area shape="rect" id="node12" href="$_u_s_b_8cpp.html" title="src/USB.cpp" alt="" coords="542,229,642,256"/>
 </map>

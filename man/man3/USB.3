@@ -1,4 +1,4 @@
-.TH "USB" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "USB" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -99,17 +99,17 @@ Definition at line 10 of file USB\&.h\&.
 .PP
 
 .PP
-Definition at line 9 of file USB\&.cpp\&.
+Definition at line 8 of file USB\&.cpp\&.
 .SS "USB::~USB ()"
 
 .PP
-Definition at line 12 of file USB\&.cpp\&.
+Definition at line 11 of file USB\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void USB::clrRTS ()"
 
 .PP
-Definition at line 276 of file USB\&.cpp\&.
+Definition at line 275 of file USB\&.cpp\&.
 .SS "bool USB::Connect ()"
 Connect/open port CONFIGURE THE UART The flags (defined in /usr/include/termios\&.h - see http://pubs.opengroup.org/onlinepubs/007908799/xsh/termios.h.html):
 .PP
@@ -117,33 +117,33 @@ Baud rate:- B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200, B230400
 .PP
 CSIZE:- CS5, CS6, CS7, CS8 CLOCAL - Ignore modem status lines CREAD - Enable receiver IGNPAR = Ignore characters with parity errors ICRNL - Map CR to NL on input (Use for ASCII comms where you want to auto correct end of line characters - don't use for bianry comms!) PARENB - Parity enable PARODD - Odd parity (else even)
 .PP
-Definition at line 16 of file USB\&.cpp\&.
+Definition at line 15 of file USB\&.cpp\&.
 .SS "int USB::id () const"
 
 .PP
-Definition at line 287 of file USB\&.cpp\&.
+Definition at line 286 of file USB\&.cpp\&.
 .SS "template<typename T , typename S > ssize_t USB::Receive (T * value, S const tu_size)"
 
 .SS "template<> ssize_t USB::Receive (uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 64 of file USB\&.cpp\&.
+Definition at line 63 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Receive (uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 87 of file USB\&.cpp\&.
+Definition at line 86 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Receive (uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 110 of file USB\&.cpp\&.
+Definition at line 109 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Receive (std::string * value, std::size_t tu_size)"
 
 .PP
-Definition at line 133 of file USB\&.cpp\&.
+Definition at line 132 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Receive (char * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 158 of file USB\&.cpp\&.
+Definition at line 157 of file USB\&.cpp\&.
 .SS "bool USB::select_status ()"
 
 .SS "template<typename T , typename S > ssize_t USB::Send (T const * value, S const tu_size)"
@@ -151,35 +151,35 @@ Definition at line 158 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Send (const uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 166 of file USB\&.cpp\&.
+Definition at line 165 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Send (const uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 189 of file USB\&.cpp\&.
+Definition at line 188 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Send (const uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 212 of file USB\&.cpp\&.
+Definition at line 211 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Send (const std::string * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 235 of file USB\&.cpp\&.
+Definition at line 234 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Send (const char * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 257 of file USB\&.cpp\&.
+Definition at line 256 of file USB\&.cpp\&.
 .SS "void USB::setRTS ()"
 
 .PP
-Definition at line 269 of file USB\&.cpp\&.
+Definition at line 268 of file USB\&.cpp\&.
 .SS "void USB::Shutdown ()"
 
 .PP
-Definition at line 262 of file USB\&.cpp\&.
+Definition at line 261 of file USB\&.cpp\&.
 .SS "bool USB::status () const"
 
 .PP
-Definition at line 283 of file USB\&.cpp\&.
+Definition at line 282 of file USB\&.cpp\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "bool USB::state {false}"

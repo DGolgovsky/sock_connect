@@ -1,4 +1,4 @@
-.TH "UDP" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "UDP" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,16 +20,19 @@ Inherits \fBConnection\fP\&.
 .RI "\fBUDP\fP (const char *address, uint16_t port)"
 .br
 .ti -1c
+.RI "\fBUDP\fP (const std::string &address, uint16_t port)"
+.br
+.ti -1c
 .RI "\fB~UDP\fP () override"
 .br
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S const tu_size)"
+.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S tu_size)"
 .br
-.RI "\fIReceive int, \fBUDP\fP Virtual receiving function for int values as \fBUDP\fP connections without size\&. \fP"
+.RI "\fIReceive int Virtual receiving function for values\&. \fP"
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBSend\fP (T const *value, S const tu_size)"
+.RI "template<typename T , typename S > ssize_t \fBSend\fP (T const *value, S tu_size)"
 .br
-.RI "\fISend int value Virtual sending function for int values\&. \fP"
+.RI "\fISend value Virtual sending function for values\&. \fP"
 .ti -1c
 .RI "template<> ssize_t \fBReceive\fP (uint8_t *value, const std::size_t tu_size)"
 .br
@@ -40,10 +43,10 @@ Inherits \fBConnection\fP\&.
 .RI "template<> ssize_t \fBReceive\fP (uint32_t *value, const std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBReceive\fP (std::string *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBReceive\fP (char *value, const std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBReceive\fP (char *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBReceive\fP (std::string *value, const std::size_t tu_size)"
 .br
 .ti -1c
 .RI "template<> ssize_t \fBSend\fP (const uint8_t *value, const std::size_t tu_size)"
@@ -55,10 +58,13 @@ Inherits \fBConnection\fP\&.
 .RI "template<> ssize_t \fBSend\fP (const uint32_t *value, const std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBSend\fP (const std::string *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBSend\fP (const std::size_t *value, const std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBSend\fP (const char *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBSend\fP (char const *value, std::size_t const tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (std::string const *value, std::size_t const tu_size)"
 .br
 .in -1c
 .SS "Additional Inherited Members"
@@ -74,17 +80,21 @@ Definition at line 7 of file UDP\&.cpp\&.
 .SS "UDP::UDP (const char * address, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 17 of file UDP\&.cpp\&.
+Definition at line 18 of file UDP\&.cpp\&.
+.SS "UDP::UDP (const std::string & address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 29 of file UDP\&.cpp\&.
 .SS "UDP::~UDP ()\fC [override]\fP"
 
 .PP
-Definition at line 27 of file UDP\&.cpp\&.
+Definition at line 40 of file UDP\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "template<typename T , typename S > ssize_t UDP::Receive (T * value, S const tu_size)"
+.SS "template<typename T , typename S > ssize_t UDP::Receive (T * value, S tu_size)"
 
 .PP
-Receive int, \fBUDP\fP Virtual receiving function for int values as \fBUDP\fP connections without size\&. 
+Receive int Virtual receiving function for values\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -102,27 +112,27 @@ message size
 .SS "template<> ssize_t UDP::Receive (uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 32 of file UDP\&.cpp\&.
+Definition at line 49 of file UDP\&.cpp\&.
 .SS "template<> ssize_t UDP::Receive (uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 47 of file UDP\&.cpp\&.
+Definition at line 63 of file UDP\&.cpp\&.
 .SS "template<> ssize_t UDP::Receive (uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 62 of file UDP\&.cpp\&.
-.SS "template<> ssize_t UDP::Receive (std::string * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 77 of file UDP\&.cpp\&.
+Definition at line 78 of file UDP\&.cpp\&.
 .SS "template<> ssize_t UDP::Receive (char * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 94 of file UDP\&.cpp\&.
-.SS "template<typename T , typename S > ssize_t UDP::Send (T const * value, S const tu_size)"
+Definition at line 93 of file UDP\&.cpp\&.
+.SS "template<> ssize_t UDP::Receive (std::string * value, const std::size_t tu_size)"
 
 .PP
-Send int value Virtual sending function for int values\&. 
+Definition at line 112 of file UDP\&.cpp\&.
+.SS "template<typename T , typename S > ssize_t UDP::Send (T const * value, S tu_size)"
+
+.PP
+Send value Virtual sending function for values\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -140,23 +150,27 @@ message size
 .SS "template<> ssize_t UDP::Send (const uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 102 of file UDP\&.cpp\&.
+Definition at line 124 of file UDP\&.cpp\&.
 .SS "template<> ssize_t UDP::Send (const uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 118 of file UDP\&.cpp\&.
+Definition at line 140 of file UDP\&.cpp\&.
 .SS "template<> ssize_t UDP::Send (const uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 134 of file UDP\&.cpp\&.
-.SS "template<> ssize_t UDP::Send (const std::string * value, const std::size_t tu_size)"
+Definition at line 156 of file UDP\&.cpp\&.
+.SS "template<> ssize_t UDP::Send (const std::size_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 150 of file UDP\&.cpp\&.
-.SS "template<> ssize_t UDP::Send (const char * value, const std::size_t tu_size)"
+Definition at line 172 of file UDP\&.cpp\&.
+.SS "template<> ssize_t UDP::Send (char const * value, std::size_t const tu_size)"
+\fBTCP\fP MTU = 1460 net\&.core\&.rmem_max = 212992
+.PP
+Definition at line 188 of file UDP\&.cpp\&.
+.SS "template<> ssize_t UDP::Send (std::string const * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 166 of file UDP\&.cpp\&.
+Definition at line 213 of file UDP\&.cpp\&.
 
 .SH "Author"
 .PP 

@@ -124,6 +124,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5cda9f7e4590d9154f18d190c978f14b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad34544110c848f387e961aa1dd54b671"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#ad34544110c848f387e961aa1dd54b671">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, char const *addr, uint16_t port)</td></tr>
 <tr class="separator:ad34544110c848f387e961aa1dd54b671"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9ec1891258b287317dbac0e76c09f00"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#ac9ec1891258b287317dbac0e76c09f00">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, std::string const &amp;addr, uint16_t port)</td></tr>
+<tr class="separator:ac9ec1891258b287317dbac0e76c09f00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49e7e4f31ec12060c31d384e19ae8290"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a49e7e4f31ec12060c31d384e19ae8290">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, char const &amp;&amp;addr, uint16_t port)</td></tr>
+<tr class="separator:a49e7e4f31ec12060c31d384e19ae8290"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a51cb45d591eace092a8103ccb2901932"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a51cb45d591eace092a8103ccb2901932">Connection</a> (<a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a> cp, std::string path)</td></tr>
 <tr class="memdesc:a51cb45d591eace092a8103ccb2901932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates new socket unix_path Explicit ctor:  <a href="#a51cb45d591eace092a8103ccb2901932">More...</a><br /></td></tr>
 <tr class="separator:a51cb45d591eace092a8103ccb2901932"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,8 +169,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a89faab01049f7a2832019ed2bfc1c5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a76856daf5f4aa15a0295275ec7e1d9ec"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a76856daf5f4aa15a0295275ec7e1d9ec">status</a> () const </td></tr>
 <tr class="separator:a76856daf5f4aa15a0295275ec7e1d9ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac28f23c89d2fb8fe64d8340408b1912b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#ac28f23c89d2fb8fe64d8340408b1912b">assign_client</a> (int <a class="el" href="class_connection.html#a89faab01049f7a2832019ed2bfc1c5d3">id</a>)</td></tr>
-<tr class="separator:ac28f23c89d2fb8fe64d8340408b1912b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7022e469e6c8cd87fea671df6ca95a87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a7022e469e6c8cd87fea671df6ca95a87">assign_thread</a> (int <a class="el" href="class_connection.html#a89faab01049f7a2832019ed2bfc1c5d3">id</a>)</td></tr>
+<tr class="separator:a7022e469e6c8cd87fea671df6ca95a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb8e53e3ec2f3eb2e92b438f7a0c0f45"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#adb8e53e3ec2f3eb2e92b438f7a0c0f45">get_descriptor</a> ()</td></tr>
+<tr class="separator:adb8e53e3ec2f3eb2e92b438f7a0c0f45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -188,14 +194,14 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a551ae1f2e286096df551a440ba2b661e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82a69c1ed51d4a2cedf893bca309f4fd"><td class="memItemLeft" align="right" valign="top">socklen_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a82a69c1ed51d4a2cedf893bca309f4fd">size_addr</a></td></tr>
 <tr class="separator:a82a69c1ed51d4a2cedf893bca309f4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7eb483e2cac51cad0aff0d7d7af003a7"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::thread::id, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a7eb483e2cac51cad0aff0d7d7af003a7">clients</a></td></tr>
-<tr class="separator:a7eb483e2cac51cad0aff0d7d7af003a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab5a4c0d356d910fb82718ac40021a6e"><td class="memItemLeft" align="right" valign="top">storage_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#aab5a4c0d356d910fb82718ac40021a6e">clients</a> {}</td></tr>
+<tr class="separator:aab5a4c0d356d910fb82718ac40021a6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d32d22df1710d82135fcef18313dc69"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connection.html#a3d32d22df1710d82135fcef18313dc69">state</a> {false}</td></tr>
 <tr class="separator:a3d32d22df1710d82135fcef18313dc69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00038">38</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00040">40</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5cda9f7e4590d9154f18d190c978f14b"></a>
 <div class="memitem">
@@ -245,7 +251,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00050">50</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00056">56</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -287,7 +293,91 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00069">69</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00077">77</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac9ec1891258b287317dbac0e76c09f00"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Connection::Connection </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a>&#160;</td>
+          <td class="paramname"><em>cp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00080">80</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a49e7e4f31ec12060c31d384e19ae8290"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Connection::Connection </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14">conn_type</a>&#160;</td>
+          <td class="paramname"><em>cp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char const &amp;&amp;&#160;</td>
+          <td class="paramname"><em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00098">98</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -332,7 +422,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00072">72</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00083">83</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -433,7 +523,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Virtual destructor Shutdown opened socket. </p>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00095">95</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00107">107</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -454,16 +544,16 @@ Protected Attributes</h2></td></tr>
 <p>Accepting new connection Accept client connection and returns client id. </p>
 <dl class="section return"><dt>Returns</dt><dd>client_id </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00144">144</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00170">170</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac28f23c89d2fb8fe64d8340408b1912b"></a>
+<a class="anchor" id="a7022e469e6c8cd87fea671df6ca95a87"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Connection::assign_client </td>
+          <td class="memname">void Connection::assign_thread </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -471,8 +561,14 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Used with multithreading sockets iteraction </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Client ID </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00197">197</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00212">212</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -493,7 +589,7 @@ Protected Attributes</h2></td></tr>
 <p>Binding address Bind function. </p>
 <dl class="section return"><dt>Returns</dt><dd>status of execution </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00105">105</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00131">131</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -510,7 +606,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00089">89</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00101">101</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -530,7 +626,24 @@ Protected Attributes</h2></td></tr>
 <p>Connecting to server Connect If connection lost or failed set state to false If connection success set state to true. </p>
 <dl class="section return"><dt>Returns</dt><dd>state </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00161">161</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00188">188</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adb8e53e3ec2f3eb2e92b438f7a0c0f45"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Connection::get_descriptor </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00225">225</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -558,7 +671,7 @@ Protected Attributes</h2></td></tr>
 <p>Return socket id. </p>
 <dl class="section return"><dt>Returns</dt><dd>socket.id </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00189">189</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00204">204</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -578,7 +691,7 @@ Protected Attributes</h2></td></tr>
 <p>Listening address Listen functions. </p>
 <dl class="section return"><dt>Returns</dt><dd>status of execution </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00126">126</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00152">152</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -671,7 +784,7 @@ Protected Attributes</h2></td></tr>
 <p>Shutdown socket Close opened socket. </p>
 <dl class="section return"><dt>Returns</dt><dd>void </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00176">176</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00117">117</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -689,7 +802,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p><a class="el" href="class_connection.html">Connection</a> status </p>
 
-<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00193">193</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8cpp_source.html#l00208">208</a> of file <a class="el" href="_connection_8cpp_source.html">Connection.cpp</a>.</p>
 
 </div>
 </div>
@@ -712,7 +825,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00043">43</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00047">47</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -734,11 +847,11 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00048">48</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00052">52</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7eb483e2cac51cad0aff0d7d7af003a7"></a>
+<a class="anchor" id="aab5a4c0d356d910fb82718ac40021a6e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -746,7 +859,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;std::thread::id, int&gt; Connection::clients</td>
+          <td class="memname">storage_t* Connection::clients {}</td>
         </tr>
       </table>
   </td>
@@ -756,7 +869,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00053">53</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00057">57</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -778,7 +891,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00045">45</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00049">49</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -800,7 +913,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00044">44</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00048">48</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -822,7 +935,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00050">50</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00054">54</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -844,7 +957,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00051">51</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00055">55</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -866,7 +979,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00041">41</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00045">45</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -888,7 +1001,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00047">47</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00051">51</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -910,7 +1023,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00054">54</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00058">58</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -932,7 +1045,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="_connection_8h_source.html#l00049">49</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_8h_source.html#l00053">53</a> of file <a class="el" href="_connection_8h_source.html">Connection.h</a>.</p>
 
 </div>
 </div>
@@ -943,7 +1056,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Nov 18 2019 13:18:52 for Shared library Connection Socket by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jun 18 2020 08:20:53 for Shared library Connection Socket by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -1,4 +1,4 @@
-.TH "Connection" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "Connection" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -19,6 +19,12 @@ Inherited by \fBTCP\fP, \fBUDP\fP, and \fBUNIX\fP\&.
 .RI "\fICreates new socket with IP:PORT Explicit ctor: \fP"
 .ti -1c
 .RI "\fBConnection\fP (\fBconn_type\fP cp, char const *addr, uint16_t port)"
+.br
+.ti -1c
+.RI "\fBConnection\fP (\fBconn_type\fP cp, std::string const &addr, uint16_t port)"
+.br
+.ti -1c
+.RI "\fBConnection\fP (\fBconn_type\fP cp, char const &&addr, uint16_t port)"
 .br
 .ti -1c
 .RI "\fBConnection\fP (\fBconn_type\fP cp, std::string path)"
@@ -78,7 +84,10 @@ Inherited by \fBTCP\fP, \fBUDP\fP, and \fBUNIX\fP\&.
 .RI "bool \fBstatus\fP () const "
 .br
 .ti -1c
-.RI "void \fBassign_client\fP (int \fBid\fP)"
+.RI "void \fBassign_thread\fP (int \fBid\fP)"
+.br
+.ti -1c
+.RI "int \fBget_descriptor\fP ()"
 .br
 .in -1c
 .SS "Protected Attributes"
@@ -112,7 +121,7 @@ Inherited by \fBTCP\fP, \fBUDP\fP, and \fBUNIX\fP\&.
 .RI "socklen_t \fBsize_addr\fP"
 .br
 .ti -1c
-.RI "std::map< std::thread::id, int > \fBclients\fP"
+.RI "storage_t * \fBclients\fP {}"
 .br
 .ti -1c
 .RI "bool \fBstate\fP {false}"
@@ -120,7 +129,7 @@ Inherited by \fBTCP\fP, \fBUDP\fP, and \fBUNIX\fP\&.
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line 38 of file Connection\&.h\&.
+Definition at line 40 of file Connection\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "Connection::Connection (\fBconn_type\fP cp, uint32_t addr, uint16_t port)\fC [explicit]\fP"
@@ -139,11 +148,19 @@ Creates new socket with IP:PORT Explicit ctor:
 .PP
 
 .PP
-Definition at line 50 of file Connection\&.cpp\&.
+Definition at line 56 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBconn_type\fP cp, char const * addr, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 69 of file Connection\&.cpp\&.
+Definition at line 77 of file Connection\&.cpp\&.
+.SS "Connection::Connection (\fBconn_type\fP cp, std::string const & addr, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 80 of file Connection\&.cpp\&.
+.SS "Connection::Connection (\fBconn_type\fP cp, char const && addr, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 98 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBconn_type\fP cp, std::string path = \fC'/tmp/unix\&.sock'\fP)\fC [explicit]\fP"
 
 .PP
@@ -158,7 +175,7 @@ Creates new socket unix_path Explicit ctor:
 .PP
 
 .PP
-Definition at line 72 of file Connection\&.cpp\&.
+Definition at line 83 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBConnection\fP &)\fC [delete]\fP"
 
 .PP
@@ -172,7 +189,7 @@ Deleted unused constructors and operator=\&.
 .PP
 Virtual destructor Shutdown opened socket\&. 
 .PP
-Definition at line 95 of file Connection\&.cpp\&.
+Definition at line 107 of file Connection\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "int Connection::Accept ()"
@@ -187,11 +204,18 @@ client_id
 .PP
 
 .PP
-Definition at line 144 of file Connection\&.cpp\&.
-.SS "void Connection::assign_client (int id)"
+Definition at line 170 of file Connection\&.cpp\&.
+.SS "void Connection::assign_thread (int id)"
+Used with multithreading sockets iteraction 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIid\fP Client ID 
+.RE
+.PP
 
 .PP
-Definition at line 197 of file Connection\&.cpp\&.
+Definition at line 212 of file Connection\&.cpp\&.
 .SS "bool Connection::Bind (bool listen) const"
 
 .PP
@@ -204,11 +228,11 @@ status of execution
 .PP
 
 .PP
-Definition at line 105 of file Connection\&.cpp\&.
+Definition at line 131 of file Connection\&.cpp\&.
 .SS "void Connection::conn_memset ()"
 
 .PP
-Definition at line 89 of file Connection\&.cpp\&.
+Definition at line 101 of file Connection\&.cpp\&.
 .SS "bool Connection::Connect ()"
 
 .PP
@@ -221,7 +245,11 @@ state
 .PP
 
 .PP
-Definition at line 161 of file Connection\&.cpp\&.
+Definition at line 188 of file Connection\&.cpp\&.
+.SS "int Connection::get_descriptor ()"
+
+.PP
+Definition at line 225 of file Connection\&.cpp\&.
 .SS "int Connection::id ()\fC [noexcept]\fP"
 
 .PP
@@ -234,7 +262,7 @@ socket\&.id
 .PP
 
 .PP
-Definition at line 189 of file Connection\&.cpp\&.
+Definition at line 204 of file Connection\&.cpp\&.
 .SS "bool Connection::Listen () const"
 
 .PP
@@ -247,7 +275,7 @@ status of execution
 .PP
 
 .PP
-Definition at line 126 of file Connection\&.cpp\&.
+Definition at line 152 of file Connection\&.cpp\&.
 .SS "\fBConnection\fP& Connection::operator= (\fBConnection\fP &)\fC [delete]\fP"
 
 .SS "\fBConnection\fP& Connection::operator= (const \fBConnection\fP &)\fC [delete]\fP"
@@ -266,57 +294,57 @@ void
 .PP
 
 .PP
-Definition at line 176 of file Connection\&.cpp\&.
+Definition at line 117 of file Connection\&.cpp\&.
 .SS "bool Connection::status () const"
 \fBConnection\fP status 
 .PP
-Definition at line 193 of file Connection\&.cpp\&.
+Definition at line 208 of file Connection\&.cpp\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "uint32_t Connection::address_ {}\fC [protected]\fP"
 
 .PP
-Definition at line 43 of file Connection\&.h\&.
+Definition at line 47 of file Connection\&.h\&.
 .SS "sockaddr_in Connection::client_addr {}\fC [protected]\fP"
 
 .PP
-Definition at line 48 of file Connection\&.h\&.
-.SS "std::map<std::thread::id, int> Connection::clients\fC [protected]\fP"
+Definition at line 52 of file Connection\&.h\&.
+.SS "storage_t* Connection::clients {}\fC [protected]\fP"
 
 .PP
-Definition at line 53 of file Connection\&.h\&.
+Definition at line 57 of file Connection\&.h\&.
 .SS "std::string Connection::m_path {}\fC [protected]\fP"
 
 .PP
-Definition at line 45 of file Connection\&.h\&.
+Definition at line 49 of file Connection\&.h\&.
 .SS "uint16_t Connection::port_ {}\fC [protected]\fP"
 
 .PP
-Definition at line 44 of file Connection\&.h\&.
+Definition at line 48 of file Connection\&.h\&.
 .SS "sockaddr* Connection::ptr_addr\fC [protected]\fP"
 
 .PP
-Definition at line 50 of file Connection\&.h\&.
+Definition at line 54 of file Connection\&.h\&.
 .SS "socklen_t Connection::size_addr\fC [protected]\fP"
 
 .PP
-Definition at line 51 of file Connection\&.h\&.
+Definition at line 55 of file Connection\&.h\&.
 .SS "\fBSocketIp\fP Connection::socket_\fC [protected]\fP"
 
 .PP
-Definition at line 41 of file Connection\&.h\&.
+Definition at line 45 of file Connection\&.h\&.
 .SS "sockaddr_in Connection::socket_addr {}\fC [protected]\fP"
 
 .PP
-Definition at line 47 of file Connection\&.h\&.
+Definition at line 51 of file Connection\&.h\&.
 .SS "bool Connection::state {false}\fC [protected]\fP"
 
 .PP
-Definition at line 54 of file Connection\&.h\&.
+Definition at line 58 of file Connection\&.h\&.
 .SS "sockaddr_un Connection::unix_addr {}\fC [protected]\fP"
 
 .PP
-Definition at line 49 of file Connection\&.h\&.
+Definition at line 53 of file Connection\&.h\&.
 
 .SH "Author"
 .PP 

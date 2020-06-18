@@ -1,4 +1,4 @@
-.TH "src/SocketIp.h" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "src/SocketIp.h" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -19,6 +19,10 @@ src/SocketIp.h \- Socket \fBConnection\fP support Class\&.
 .br
 \fC#include <stdexcept>\fP
 .br
+\fC#include <mutex>\fP
+.br
+\fC#include <iostream>\fP
+.br
 
 .SS "Classes"
 
@@ -32,6 +36,13 @@ src/SocketIp.h \- Socket \fBConnection\fP support Class\&.
 .in +1c
 .ti -1c
 .RI "enum \fBconn_type\fP : char { \fB_TCP\fP, \fB_UDP\fP, \fB_UNIX\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename T > void \fBprint_values\fP (T *val, std::size_t sz)"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -67,7 +78,13 @@ Definition in file \fBSocketIp\&.h\fP\&.
 .TP
 \fB\fI_UNIX \fP\fP
 .PP
-Definition at line 40 of file SocketIp\&.h\&.
+Definition at line 43 of file SocketIp\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "template<typename T > void print_values (T * val, std::size_t sz)"
+
+.PP
+Definition at line 30 of file SocketIp\&.h\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for Shared library Connection Socket from the source code\&.

@@ -1,10 +1,4 @@
 var searchData=
 [
-  ['_7econnection',['~Connection',['../class_connection.html#a2e4352edf667bea83001569e9da8a24d',1,'Connection']]],
-  ['_7econnector',['~Connector',['../class_connector.html#a90d42483db4d2e5eaee4f333f26e0e0f',1,'Connector']]],
-  ['_7esocketip',['~SocketIp',['../class_socket_ip.html#aafdc0580f2a0d596a8dccc6a3b6a788c',1,'SocketIp']]],
-  ['_7etcp',['~TCP',['../class_t_c_p.html#ab83611f2b75852a7e1afa8b3dc38de75',1,'TCP']]],
-  ['_7eudp',['~UDP',['../class_u_d_p.html#a2f37f90421dc260869abbf69f39b7df5',1,'UDP']]],
-  ['_7eunix',['~UNIX',['../class_u_n_i_x.html#a0da1f2f9b718ab1671dd6e5e65b7afd6',1,'UNIX']]],
-  ['_7eusb',['~USB',['../class_u_s_b.html#aa9add17a861687879493ba7722653f62',1,'USB']]]
+  ['tcp',['TCP',['../class_t_c_p.html#a5441779c3857e43d1e8f95ddd5f9d5a2',1,'TCP::TCP(uint32_t address, uint16_t port)'],['../class_t_c_p.html#a42dda9114b443ba56c0690e4dc759052',1,'TCP::TCP(const char *address, uint16_t port)'],['../class_t_c_p.html#a9d96519cbbfe21185110509af811e68b',1,'TCP::TCP(std::string const &amp;address, uint16_t port)']]]
 ];

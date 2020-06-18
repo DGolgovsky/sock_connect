@@ -1,4 +1,4 @@
-.TH "TCP" 3 "Mon Nov 18 2019" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "TCP" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,16 +20,19 @@ Inherits \fBConnection\fP\&.
 .RI "\fBTCP\fP (const char *address, uint16_t port)"
 .br
 .ti -1c
+.RI "\fBTCP\fP (std::string const &address, uint16_t port)"
+.br
+.ti -1c
 .RI "\fB~TCP\fP () override"
 .br
 .ti -1c
 .RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S tu_size)"
 .br
-.RI "\fIReceive int Virtual receiving function for int values\&. \fP"
+.RI "\fIReceive value Virtual receiving function for values\&. \fP"
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBSend\fP (const T *value, S tu_size)"
+.RI "template<typename T , typename S > ssize_t \fBSend\fP (T const *value, S tu_size)"
 .br
-.RI "\fISend int value Virtual sending function for int values\&. \fP"
+.RI "\fISend value Virtual sending function for values\&. \fP"
 .ti -1c
 .RI "template<> ssize_t \fBReceive\fP (uint8_t *value, const std::size_t tu_size)"
 .br
@@ -40,10 +43,13 @@ Inherits \fBConnection\fP\&.
 .RI "template<> ssize_t \fBReceive\fP (uint32_t *value, const std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBReceive\fP (std::string *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBReceive\fP (std::size_t *value, const std::size_t tu_size)"
 .br
 .ti -1c
 .RI "template<> ssize_t \fBReceive\fP (char *value, const std::size_t tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBReceive\fP (std::string *value, const std::size_t tu_size)"
 .br
 .ti -1c
 .RI "template<> ssize_t \fBSend\fP (const uint8_t *value, const std::size_t tu_size)"
@@ -55,10 +61,13 @@ Inherits \fBConnection\fP\&.
 .RI "template<> ssize_t \fBSend\fP (const uint32_t *value, const std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBSend\fP (const std::string *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBSend\fP (const std::size_t *value, const std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBSend\fP (const char *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBSend\fP (char const *value, std::size_t const tu_size)"
+.br
+.ti -1c
+.RI "template<> ssize_t \fBSend\fP (std::string const *value, std::size_t const tu_size)"
 .br
 .in -1c
 .SS "Additional Inherited Members"
@@ -74,23 +83,27 @@ Definition at line 7 of file TCP\&.cpp\&.
 .SS "TCP::TCP (const char * address, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 15 of file TCP\&.cpp\&.
+Definition at line 18 of file TCP\&.cpp\&.
+.SS "TCP::TCP (std::string const & address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 29 of file TCP\&.cpp\&.
 .SS "TCP::~TCP ()\fC [override]\fP"
 
 .PP
-Definition at line 23 of file TCP\&.cpp\&.
+Definition at line 40 of file TCP\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "template<typename T , typename S > ssize_t TCP::Receive (T * value, S tu_size)"
 
 .PP
-Receive int Virtual receiving function for int values\&. 
+Receive value Virtual receiving function for values\&. 
 .PP
 \fBParameters:\fP
 .RS 4
 \fIvalue\fP 
 .br
-\fItu_size\fP Package size\&. By default is sizeof(int) 
+\fItu_size\fP Package size\&. 
 .RE
 .PP
 \fBReturns:\fP
@@ -102,27 +115,31 @@ message size
 .SS "template<> ssize_t TCP::Receive (uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 28 of file TCP\&.cpp\&.
+Definition at line 49 of file TCP\&.cpp\&.
 .SS "template<> ssize_t TCP::Receive (uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 53 of file TCP\&.cpp\&.
+Definition at line 72 of file TCP\&.cpp\&.
 .SS "template<> ssize_t TCP::Receive (uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 77 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Receive (std::string * value, const std::size_t tu_size)"
+Definition at line 95 of file TCP\&.cpp\&.
+.SS "template<> ssize_t TCP::Receive (std::size_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 101 of file TCP\&.cpp\&.
+Definition at line 118 of file TCP\&.cpp\&.
 .SS "template<> ssize_t TCP::Receive (char * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 127 of file TCP\&.cpp\&.
-.SS "template<typename T , typename S > ssize_t TCP::Send (const T * value, S tu_size)"
+Definition at line 141 of file TCP\&.cpp\&.
+.SS "template<> ssize_t TCP::Receive (std::string * value, const std::size_t tu_size)"
 
 .PP
-Send int value Virtual sending function for int values\&. 
+Definition at line 171 of file TCP\&.cpp\&.
+.SS "template<typename T , typename S > ssize_t TCP::Send (T const * value, S tu_size)"
+
+.PP
+Send value Virtual sending function for values\&. 
 .PP
 \fBParameters:\fP
 .RS 4
@@ -140,23 +157,27 @@ message size
 .SS "template<> ssize_t TCP::Send (const uint8_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 135 of file TCP\&.cpp\&.
+Definition at line 184 of file TCP\&.cpp\&.
 .SS "template<> ssize_t TCP::Send (const uint16_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 157 of file TCP\&.cpp\&.
+Definition at line 206 of file TCP\&.cpp\&.
 .SS "template<> ssize_t TCP::Send (const uint32_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 179 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Send (const std::string * value, const std::size_t tu_size)"
+Definition at line 228 of file TCP\&.cpp\&.
+.SS "template<> ssize_t TCP::Send (const std::size_t * value, const std::size_t tu_size)"
 
 .PP
-Definition at line 201 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Send (const char * value, const std::size_t tu_size)"
+Definition at line 250 of file TCP\&.cpp\&.
+.SS "template<> ssize_t TCP::Send (char const * value, std::size_t const tu_size)"
+\fBTCP\fP MTU = 1460 net\&.core\&.rmem_max = 212992
+.PP
+Definition at line 272 of file TCP\&.cpp\&.
+.SS "template<> ssize_t TCP::Send (std::string const * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 223 of file TCP\&.cpp\&.
+Definition at line 303 of file TCP\&.cpp\&.
 
 .SH "Author"
 .PP 
