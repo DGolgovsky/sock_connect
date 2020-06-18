@@ -41,9 +41,11 @@ Package provides headers installs at `/usr/local/include` and `.so` library, put
 
 ---
 * Include header in your source files where do you need it.
+
 ```cpp
 #include <sock_connect.h>
 ```
+
 * Compile with `-lsock_connect` 
 
 #### Variations:
@@ -64,6 +66,7 @@ Package provides headers installs at `/usr/local/include` and `.so` library, put
 
 ---
 * Receiving `TCP` as client:
+
 ```cpp
 uint16_t msg = 0;
 auto recv_sz = sizeof(uint16_t);
@@ -73,7 +76,7 @@ auto tcp = new Connector<TCP>(IP, PORT);
 while (true) {
     // While tcp establish connection to server
     if (tcp->Connect()) {
-        // While data receiving do smtg with it
+        // While data receiving do something with it
         // if tcp connection lost tcp->Receive returns false
         while (tcp->Receive(&msg, recv_sz)) {
             // do_something with received data
@@ -87,7 +90,9 @@ while (true) {
 }
 delete tcp;
 ```
+
 * Receiving `TCP` as multi-server:
+
 ```cpp
 template<class T>
 void handler(T tcp, int client_id) {
@@ -118,7 +123,9 @@ void receiver()
     delete tcp;
 }
 ```
+
 * Sending `TCP` as client to server, broadcasting `UDP`:
+
 ```cpp
 auto tcp = new Connector<TCP>(INADDR_LOOPBACK, PORT); // 127.0.0.1
 auto udp = new Connector<UDP>(INADDR_ANY, PORT); // 0.0.0.0
@@ -129,7 +136,7 @@ auto msg_sz = sizeof(uint16_t);
 // Infinite loop. This allow execute tcp_sender as daemon
 while (true) {
     if (tcp->Connect()) {
-        // If connection successfull,
+        // If connection successful,
         // send data while status() returns true
         while (tcp->status()) {
             msg = rand() % 50; // Generate random data
@@ -151,6 +158,7 @@ while (true) {
 delete udp;
 delete tcp;
 ```
+
 #### License:
 
 ---
