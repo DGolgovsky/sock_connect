@@ -4,43 +4,44 @@
 #include "TCP.h"
 #include "UDP.h"
 #include "UNIX.h"
-#include "USB.h"
 
-template<class Type>
+template <class Type>
 class Connector
 {
 private:
-    Type connection;
+	Type connection;
 
 public:
-    template<typename T, typename U>
-    Connector(const T addr, U port) : connection(addr, port) {}
-    ~Connector() = default;
+	template <typename T, typename U>
+	Connector(const T addr, U port) : connection(addr, port) {}
 
-    int Accept() { return connection.Accept(); }
-    bool Listen() const { return connection.Listen(); }
-    bool Bind(bool listen = false) const { return connection.Bind(listen); }
+	~Connector() = default;
 
-    template<typename T>
-    ssize_t Send(const T *value, std::size_t size) {
-        return connection.Send(value, size);
-    }
+	int Accept() { return connection.Accept(); }
 
-    template<typename T>
-    ssize_t Receive(T *value, std::size_t size) {
-        return connection.Receive(value, size);
-    }
+	[[nodiscard]] bool Listen() const { return connection.Listen(); }
 
-    int Connect() { return connection.Connect(); }
-    void Shutdown(int id = 0) { return connection.Shutdown(id); }
+	[[nodiscard]] bool Bind(bool listen = false) const { return connection.Bind(listen); }
 
-    void setRTS() { return connection.setRTS(); }
-    void clrRTS() { return connection.clrRTS(); }
+	template <typename T>
+	ssize_t Send(const T *value, std::size_t size) {
+		return connection.Send(value, size);
+	}
 
-    int id() { return connection.id(); }
-    bool status() const { return connection.status(); }
+	template <typename T>
+	ssize_t Receive(T *value, std::size_t size) {
+		return connection.Receive(value, size);
+	}
 
-    void assign_client(int id = 0) { return connection.assign_client(id); }
+	bool Connect() { return connection.Connect(); }
+
+	void Shutdown(int id = 0) { return connection.Shutdown(id); }
+
+	int id() { return connection.id(); }
+
+	[[nodiscard]] bool status() const { return connection.status(); }
+
+	void assign_thread(int id) { return connection.assign_thread(id); }
 };
 
 #endif // _LIB_SOCK_CONNECT_SOCK_CONNECT_H

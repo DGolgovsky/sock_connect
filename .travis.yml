@@ -2,33 +2,33 @@ sudo: false
 language: cpp
 
 branches:
-    only:
-        - master
+  only:
+    - master
 
 addons:
-    apt:
-        sources:
-            - ubuntu-toolchain-r-test
-        packages:
-            - g++-9
-            - doxygen
-            - graphviz
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-9
+      - doxygen
+      - graphviz
 
 before_script: skip
 # Nothing to do
 
 script:
-    - doxygen $TRAVIS_BUILD_DIR/Doxyfile
-    - CXX=/usr/bin/g++-9 CC=/usr/bin/gcc-9 ./ci-build.sh -p deb -v $BUILD_NUMBER -b
+  - doxygen $TRAVIS_BUILD_DIR/Doxyfile
+  - CXX=/usr/bin/g++-9 CC=/usr/bin/gcc-9 ./ci-build.sh -p deb -v $BUILD_NUMBER -b
 
 deploy:
-    - provider: pages
-      skip_cleanup: true
-      github_token: $GH_PAGES_TOKEN
-      keep-history: true
-      local_dir: docs
-      on:
-          branch: master
-    - provider: script
-      skip_cleanup: true
-      script: curl -T packages/build/libsock_connect-0.$BUILD_NUMBER-1-x86_64.deb -udgolgovsky:$BINTRAY_API_KEY "https://api.bintray.com/content/dgolgovsky/own/sock_connect/$BUILD_NUMBER/libsock_connect-0.$BUILD_NUMBER-1-x86_64.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GH_PAGES_TOKEN
+    keep-history: true
+    local_dir: docs
+    on:
+      branch: master
+  - provider: script
+    skip_cleanup: true
+    script: curl -T packages/build/libsock_connect-0.$BUILD_NUMBER-1-x86_64.deb -udgolgovsky:$BINTRAY_API_KEY "https://api.bintray.com/content/dgolgovsky/own/sock_connect/$BUILD_NUMBER/libsock_connect-0.$BUILD_NUMBER-1-x86_64.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"

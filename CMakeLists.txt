@@ -5,39 +5,39 @@ set(TARGET sock_connect)
 
 find_package(Threads)
 
-if (DEFINED ENV{BUILD_NUMBER})
+if(DEFINED ENV{BUILD_NUMBER})
 	project(${TARGET} VERSION 0.$ENV{BUILD_NUMBER})
-else ()
+else()
 	project(${TARGET} VERSION 0.5)
-endif ()
+endif()
 
 add_compile_options(-O2 -fPIC)
 
 file(GLOB TARGET_SRC
-		"${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-		"${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h")
 
 add_library(${TARGET} SHARED ${TARGET_SRC})
 
 set_target_properties(${TARGET} PROPERTIES
-		CXX_STANDARD 11
-		CXX_STANDARD_REQUIRED ON)
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+                      CXX_STANDARD 11
+                      CXX_STANDARD_REQUIRED ON)
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 	set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-Weverything -stdlib=libc++")
-else ()
+else()
 	set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-Wall -Wextra -Wpedantic")
-endif ()
+endif()
 
 target_link_libraries(${TARGET} ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS ${TARGET} LIBRARY DESTINATION lib)
 
-if (DEBUG)
-	target_compile_options(${TARGET} PRIVATE -DNDEBUG -g)
-endif ()
+if(NOT DEBUG)
+	target_compile_options(${TARGET} PRIVATE -DNDEBUG)
+endif()
 
 install(DIRECTORY src/ DESTINATION include
-		FILES_MATCHING PATTERN "*.h")
+        FILES_MATCHING PATTERN "*.h")
 
 set(CPACK_GENERATOR ${GEN_PKG})
 
@@ -55,9 +55,9 @@ include(CPack)
 # uninstall target
 if(NOT TARGET uninstall)
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-			"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-			IMMEDIATE @ONLY)
+	               "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+	               IMMEDIATE @ONLY)
 
 	add_custom_target(uninstall
-			COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+	                  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
