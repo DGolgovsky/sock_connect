@@ -150,6 +150,7 @@ bool Connection::Bind(bool listen) const {
 }
 
 bool Connection::Listen() const {
+	if (socket_.c_type() == "UDP") return true;
 	if (listen(socket_.id(), SOMAXCONN) < 0) {
 		throw std::runtime_error(
 				"[SOCK_CONNECT] " + socket_.c_type() + " Listen failed, error number: "

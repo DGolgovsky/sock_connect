@@ -11,7 +11,7 @@ else()
 	project(${TARGET} VERSION 0.5)
 endif()
 
-add_compile_options(-O2 -fPIC)
+add_compile_options(-Wall -Wextra -Werror -Wpedantic)
 
 file(GLOB TARGET_SRC
      "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -19,13 +19,13 @@ file(GLOB TARGET_SRC
 
 add_library(${TARGET} SHARED ${TARGET_SRC})
 
-set_target_properties(${TARGET} PROPERTIES
-                      CXX_STANDARD 11
-                      CXX_STANDARD_REQUIRED ON)
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-Weverything -stdlib=libc++")
+set_target_properties(${TARGET} PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+target_compile_options(${TARGET} PRIVATE -march=native -mtune=generic -pipe -fPIC -fstack-protector-strong -fno-plt)
+if(CMAKE_CXX_COMPILER_ID MATCHES "clang")
+	set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-Weverything -stdlib=libc++ -pthread")
 else()
-	set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-Wall -Wextra -Wpedantic")
+	set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS
+	                      "-Wctor-dtor-privacy -Wenum-compare -Wfloat-equal -Wnon-virtual-dtor -Woverloaded-virtual -Wredundant-decls")
 endif()
 
 target_link_libraries(${TARGET} ${CMAKE_THREAD_LIBS_INIT})
@@ -34,7 +34,22 @@ install(TARGETS ${TARGET} LIBRARY DESTINATION lib)
 
 if(NOT DEBUG)
 	target_compile_options(${TARGET} PRIVATE -DNDEBUG)
+	add_compile_options(-O3)
+else()
+	message(*\ Building\ with\ DEBUG\ Insertions)
+	add_compile_options(-O2)
+	target_compile_options(${TARGET} PRIVATE -g -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC)
 endif()
+
+add_executable(tcp_socket_test tests/tcp_socket_test.cpp)
+target_include_directories(tcp_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(tcp_socket_test ${TARGET} ${CMAKE_THREAD_LIBS_INIT})
+set_target_properties(tcp_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+
+add_executable(udp_socket_test tests/udp_socket_test.cpp)
+target_include_directories(udp_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_link_libraries(udp_socket_test ${TARGET} ${CMAKE_THREAD_LIBS_INIT})
+set_target_properties(udp_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
 install(DIRECTORY src/ DESTINATION include
         FILES_MATCHING PATTERN "*.h")
@@ -60,4 +75,13 @@ if(NOT TARGET uninstall)
 
 	add_custom_target(uninstall
 	                  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+endif()
+
+if(TEST)
+	enable_testing()
+	file(GLOB TESTS_SRC
+	     "${CMAKE_CURRENT_SOURCE_DIR}/tests/catch_test/*.cpp"
+	     "${CMAKE_CURRENT_SOURCE_DIR}/tests/catch_test/*.h")
+	add_executable(catch_test ${TESTS_SRC})
+	add_test(catch_test COMMAND)
 endif()
