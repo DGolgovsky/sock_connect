@@ -27,15 +27,21 @@
 static std::mutex debug_mutex;
 
 template <typename T>
-void print_values(T *val, std::size_t sz) {
-	std::clog << "[";
+std::string print_values(T *val, std::size_t sz) {
+	std::string os{};
 	sz = sz / sizeof(T);
-	for (std::size_t i = 0; i < sz; i++) {
-		if (i != 0 && i != sz)
-			std::clog << "; ";
-		std::clog << (int) *(val + i);
+	if (sz < 17) {
+		os.append("[");
+		for (std::size_t i = 0; i < sz; i++) {
+			if (i != 0 && i != sz)
+				os.append("; ");
+			os += std::to_string(*(val + i));
+		}
+		os.append("]");
+	} else {
+		os = "[DATA SHORTENED]";
 	}
-	std::clog << "]" << std::flush;
+	return os;
 }
 
 #endif
@@ -94,11 +100,11 @@ public:
 		}
 	}
 
-	[[nodiscard]] int id() const noexcept {
+	int id() const noexcept {
 		return m_id;
 	}
 
-	[[nodiscard]] std::string c_type() const noexcept {
+	std::string c_type() const noexcept {
 		return conn_text;
 	}
 };

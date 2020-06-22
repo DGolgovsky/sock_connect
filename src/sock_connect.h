@@ -19,9 +19,9 @@ public:
 
 	int Accept() { return connection.Accept(); }
 
-	[[nodiscard]] bool Listen() const { return connection.Listen(); }
+	bool Listen() const { return connection.Listen(); }
 
-	[[nodiscard]] bool Bind(bool listen = false) const { return connection.Bind(listen); }
+	bool Bind(bool listen = false) const { return connection.Bind(listen); }
 
 	template <typename T>
 	ssize_t Send(const T *value, std::size_t size) {
@@ -39,7 +39,7 @@ public:
 
 	int id() { return connection.id(); }
 
-	[[nodiscard]] bool status() const { return connection.status(); }
+	bool status() const { return connection.status(); }
 
 	void assign_thread(int id) { return connection.assign_thread(id); }
 };
