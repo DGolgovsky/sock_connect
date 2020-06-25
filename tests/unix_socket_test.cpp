@@ -1,11 +1,10 @@
 #include "sock_connect.h"
 #include <fstream>
-#include <iostream>
 #include <random>
 
 void server() {
 	std::size_t const array_size = 8;
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	unsigned seed = static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
 	std::default_random_engine generator(seed);
 	std::uniform_int_distribution<int> distribution(0, 64);
 
@@ -27,7 +26,7 @@ void server() {
 	std::ifstream fstream("libsock_connect.so", std::ios::binary);
 	std::string file;
 	fstream.seekg(0, std::ios::end);
-	file.reserve(fstream.tellg());
+	file.reserve(static_cast<unsigned long>(fstream.tellg()));
 	fstream.seekg(0, std::ios::beg);
 	file.assign((std::istreambuf_iterator<char>(fstream)),
 				std::istreambuf_iterator<char>());

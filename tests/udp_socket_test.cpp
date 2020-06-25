@@ -1,12 +1,11 @@
 #include "sock_connect.h"
 #include <fstream>
-#include <iostream>
 
 void server() {
 	std::ifstream fstream("libsock_connect.so", std::ios::binary);
 	std::string file;
 	fstream.seekg(0, std::ios::end);
-	file.reserve(fstream.tellg());
+	file.reserve(static_cast<unsigned long>(fstream.tellg()));
 	fstream.seekg(0, std::ios::beg);
 	file.assign((std::istreambuf_iterator<char>(fstream)),
 				std::istreambuf_iterator<char>());
@@ -15,7 +14,7 @@ void server() {
 
 	unsigned long sz = file.length();
 	socket->Send(&sz, sizeof(sz));
-	unsigned long msg_sz = socket->Send(&file, sz);
+	auto msg_sz = static_cast<unsigned long>(socket->Send(&file, sz));
 	if (msg_sz < sz)
 		std::cout << "File doesn't sent: msg_size = " << msg_sz << std::endl;
 	std::cout << "Server finished work" << std::endl;

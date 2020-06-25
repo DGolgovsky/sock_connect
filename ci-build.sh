@@ -135,7 +135,7 @@ package() {
 		arch-nspawn $CHROOT/root pacman -Syu
 		makechrootpkg -c -r $CHROOT -- --skipinteg
 		rm PKGBUILD
-		rm *.log
+		rm ./*.log
 		sudo rm -rf $CHROOT
 	fi
 	cd "$src_dir" || exit

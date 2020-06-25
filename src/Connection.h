@@ -25,8 +25,8 @@
  * The main emphasis is on the controller template and polymorphism.
  */
 
-#ifndef _LIB_SOCK_CONNECT_CONNECTION_H
-#define _LIB_SOCK_CONNECT_CONNECTION_H
+#ifndef SOCK_CONNECT_CONNECTION_H
+#define SOCK_CONNECT_CONNECTION_H
 
 #include <utility>
 #include <map>
@@ -154,4 +154,4 @@ public:
 	int get_descriptor();
 };
 
-#endif // _LIB_SOCK_CONNECT_CONNECTION_H
+#endif // SOCK_CONNECT_CONNECTION_H

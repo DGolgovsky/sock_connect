@@ -1,5 +1,5 @@
-#ifndef _LIB_SOCK_CONNECT_USB_SOCKET_H
-#define _LIB_SOCK_CONNECT_USB_SOCKET_H
+#ifndef SOCK_CONNECT_USB_H
+#define SOCK_CONNECT_USB_H
 
 #include "Connection.h"
 #include <termios.h>
@@ -42,4 +42,4 @@ public:
 	bool status() const;
 };
 
-#endif // _LIB_SOCK_CONNECT_USB_SOCKET_H
+#endif // SOCK_CONNECT_USB_H

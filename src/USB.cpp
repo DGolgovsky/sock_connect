@@ -1,5 +1,4 @@
 #include "USB.h"
-#include <utility>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include "type_name.h"

@@ -7,8 +7,8 @@
  * Class realize socket connection
  */
 
-#ifndef _LIB_SOCK_CONNECT_SOCKETIP_H
-#define _LIB_SOCK_CONNECT_SOCKETIP_H
+#ifndef SOCK_CONNECT_SOCKETIP_H
+#define SOCK_CONNECT_SOCKETIP_H
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -109,4 +109,4 @@ public:
 	}
 };
 
-#endif // _LIB_SOCK_CONNECT_SOCKETIP_H
+#endif // SOCK_CONNECT_SOCKETIP_H

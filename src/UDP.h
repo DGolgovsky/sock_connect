@@ -1,5 +1,5 @@
-#ifndef _LIB_SOCK_CONNECT_UDP_SOCKET_H
-#define _LIB_SOCK_CONNECT_UDP_SOCKET_H
+#ifndef SOCK_CONNECT_UDP_H
+#define SOCK_CONNECT_UDP_H
 
 #include "Connection.h"
 
@@ -35,4 +35,4 @@ public:
 	ssize_t Send(T const *value, std::size_t tu_size);
 };
 
-#endif // _LIB_SOCK_CONNECT_UDP_SOCKET_H
+#endif // SOCK_CONNECT_UDP_H

@@ -1,5 +1,5 @@
-#ifndef _LIB_SOCK_CONNECT_SOCK_CONNECT_H
-#define _LIB_SOCK_CONNECT_SOCK_CONNECT_H
+#ifndef SOCK_CONNECT_SOCK_CONNECT_H
+#define SOCK_CONNECT_SOCK_CONNECT_H
 
 #include "TCP.h"
 #include "UDP.h"
@@ -46,4 +46,4 @@ public:
 	void assign_thread(int id) { return connection.assign_thread(id); }
 };
 
-#endif // _LIB_SOCK_CONNECT_SOCK_CONNECT_H
+#endif // SOCK_CONNECT_SOCK_CONNECT_H

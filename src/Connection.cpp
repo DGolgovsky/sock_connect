@@ -5,49 +5,31 @@
  * Transform <const char*> IP-address to uint32_t
  * "127.0.0.1" -> 0x7f000001
  */
-unsigned int ip_to_int(const char *ip) {
+unsigned int ip_to_int(std::string const &str) {
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] Connection::ip_to_int("
-			  << "const char *ip: " << ip << ")\n" << std::flush;
+			  << "const char *ip: " << str << ")\n" << std::flush;
 	debug_mutex.unlock();
 #endif
-	/* The return value. */
-	unsigned v = 0;
-	/* The count of the number of bytes processed. */
-	int i = 0;
-	/* A pointer to the next digit to process. */
-	const char *start = ip;
+	uint32_t ip = 0;
+	uint32_t part = 0;
+	uint32_t part_count = 0;
 
-	for (i = 0; i < 4; ++i) {
-		/* The digit being processed. */
-		char c;
-		/* The value of this byte. */
-		int n = 0;
-		while (true) {
-			c = *start;
-			start++;
-			if (c >= '0' && c <= '9') {
-				n *= 10;
-				n += c - '0';
-			} else if ((i < 3 && c == '.') || i == 3) {
-				/* We insist on stopping at "." if we are still parsing
-				 * the first, second, or third numbers. If we have reached
-				 * the end of the numbers, we will allow any character.
-				 */
-				break;
-			} else {
-				return 0;
-			}
-		}
-
-		if (n >= 256)
-			return 0;
-
-		v *= 256;
-		v += n;
+	for (const auto &c : str) {
+		if (std::isdigit(c)) {
+			part = (part * 10) + (c - '0');
+		} else if (c == '.') {
+			if (++part_count == 4) break;
+			ip = (ip << 8) + part;
+			part = 0;
+		} else { break; }
 	}
-	return v;
+	ip = (ip << 8) + part;
+	if (++part_count < 4)
+		ip = ip << ((4 - part_count) << 3);
+
+	return ip;
 }
 
 Connection::Connection(conn_type cp, uint32_t addr, uint16_t port)
@@ -63,8 +45,8 @@ Connection::Connection(conn_type cp, uint32_t addr, uint16_t port)
 	int reuse = 1;
 	setsockopt(socket_.id(), SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 	setsockopt(socket_.id(), SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse));
-	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *)&set, sizeof(set));
-	setsockopt(socket_.id(), SOL_SOCKET, SO_SNDTIMEO, (char *)&set, sizeof(set));
+	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *) &set, sizeof(set));
+	setsockopt(socket_.id(), SOL_SOCKET, SO_SNDTIMEO, (char *) &set, sizeof(set));
 
 #ifndef NDEBUG
 	debug_mutex.lock();
@@ -80,7 +62,7 @@ Connection::Connection(conn_type cp, char const *addr, uint16_t port)
 		: Connection(cp, ip_to_int(addr), port) {}
 
 Connection::Connection(conn_type cp, std::string const &addr, uint16_t port)
-		: Connection(cp, ip_to_int(addr.data()), port) {}
+		: Connection(cp, ip_to_int(addr), port) {}
 
 Connection::Connection(conn_type cp, const char &&addr, uint16_t port)
 		: Connection(cp, ip_to_int(&addr), port) {}
@@ -102,7 +84,7 @@ Connection::Connection(conn_type cp, std::string const &socket_path)
 }
 
 Connection::Connection(conn_type cp, char const *path)
-		: Connection (cp, (std::string) path) {}
+		: Connection(cp, (std::string) path) {}
 
 void Connection::conn_memset() {
 	memset(&socket_addr, '\0', sizeof(socket_addr));

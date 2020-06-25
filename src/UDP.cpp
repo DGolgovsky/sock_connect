@@ -69,8 +69,8 @@ ssize_t UDP::Send(T const *value, std::size_t const tu_size) {
 	 */
 	auto send_left = tu_size;
 	std::size_t total = 0;
-	unsigned int frames = tu_size / 576;
-	unsigned int last_packet = tu_size - frames * 576;
+	unsigned long frames = tu_size / 576;
+	unsigned long last_packet = tu_size - frames * 576;
 	while (send_left > 0) {
 		if ((msg_sz = sendto(get_descriptor(), value + total, frames ? 576 : last_packet, 0, ptr_addr, size_addr)) < 0) {
 			return total;
