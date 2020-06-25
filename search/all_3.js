@@ -3,7 +3,7 @@ var searchData=
   ['c_5ftype',['c_type',['../class_socket_ip.html#a7c49a9ee1801b9dd9006b7d1f4a2eb8d',1,'SocketIp']]],
   ['client_5faddr',['client_addr',['../class_connection.html#a05ce399210039520a456d6a56771e8b2',1,'Connection']]],
   ['clients',['clients',['../class_connection.html#aab5a4c0d356d910fb82718ac40021a6e',1,'Connection']]],
-  ['clrrts',['clrRTS',['../class_u_s_b.html#a9b75f03272174513c5bdd51a27e65ca3',1,'USB']]],
+  ['clrrts',['clrRTS',['../class_u_s_b.html#a04c99fc0dccbf198f6953811ce5048ba',1,'USB']]],
   ['conn_5fmemset',['conn_memset',['../class_connection.html#a0577809f45abf9510793c10f7c7d4990',1,'Connection']]],
   ['conn_5ftype',['conn_type',['../_socket_ip_8h.html#aa6e9030c6b8b39a4e71dc6ab1657ee14',1,'SocketIp.h']]],
   ['connect',['Connect',['../class_connection.html#ab6efcacfafef098043dacadcd86894bf',1,'Connection::Connect()'],['../class_connector.html#ab1371eac44bb65fa2af89bf79585198b',1,'Connector::Connect()'],['../class_u_s_b.html#a9bddba0c9de3f905f7c407ab3cf45d89',1,'USB::Connect()']]],
