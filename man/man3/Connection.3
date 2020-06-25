@@ -1,4 +1,4 @@
-.TH "Connection" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "Connection" 3 "Thu Jun 25 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -152,15 +152,15 @@ Definition at line 56 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBconn_type\fP cp, char const * addr, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 77 of file Connection\&.cpp\&.
+Definition at line 80 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBconn_type\fP cp, std::string const & addr, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 80 of file Connection\&.cpp\&.
+Definition at line 83 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBconn_type\fP cp, char const && addr, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 98 of file Connection\&.cpp\&.
+Definition at line 101 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBconn_type\fP cp, std::string path = \fC'/tmp/unix\&.sock'\fP)\fC [explicit]\fP"
 
 .PP
@@ -175,7 +175,7 @@ Creates new socket unix_path Explicit ctor:
 .PP
 
 .PP
-Definition at line 83 of file Connection\&.cpp\&.
+Definition at line 86 of file Connection\&.cpp\&.
 .SS "Connection::Connection (\fBConnection\fP &)\fC [delete]\fP"
 
 .PP
@@ -189,7 +189,7 @@ Deleted unused constructors and operator=\&.
 .PP
 Virtual destructor Shutdown opened socket\&. 
 .PP
-Definition at line 107 of file Connection\&.cpp\&.
+Definition at line 110 of file Connection\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "int Connection::Accept ()"
@@ -204,7 +204,7 @@ client_id
 .PP
 
 .PP
-Definition at line 170 of file Connection\&.cpp\&.
+Definition at line 174 of file Connection\&.cpp\&.
 .SS "void Connection::assign_thread (int id)"
 Used with multithreading sockets iteraction 
 .PP
@@ -215,7 +215,7 @@ Used with multithreading sockets iteraction
 .PP
 
 .PP
-Definition at line 212 of file Connection\&.cpp\&.
+Definition at line 216 of file Connection\&.cpp\&.
 .SS "bool Connection::Bind (bool listen) const"
 
 .PP
@@ -228,11 +228,11 @@ status of execution
 .PP
 
 .PP
-Definition at line 131 of file Connection\&.cpp\&.
+Definition at line 134 of file Connection\&.cpp\&.
 .SS "void Connection::conn_memset ()"
 
 .PP
-Definition at line 101 of file Connection\&.cpp\&.
+Definition at line 104 of file Connection\&.cpp\&.
 .SS "bool Connection::Connect ()"
 
 .PP
@@ -245,11 +245,11 @@ state
 .PP
 
 .PP
-Definition at line 188 of file Connection\&.cpp\&.
+Definition at line 192 of file Connection\&.cpp\&.
 .SS "int Connection::get_descriptor ()"
 
 .PP
-Definition at line 225 of file Connection\&.cpp\&.
+Definition at line 229 of file Connection\&.cpp\&.
 .SS "int Connection::id ()\fC [noexcept]\fP"
 
 .PP
@@ -262,7 +262,7 @@ socket\&.id
 .PP
 
 .PP
-Definition at line 204 of file Connection\&.cpp\&.
+Definition at line 208 of file Connection\&.cpp\&.
 .SS "bool Connection::Listen () const"
 
 .PP
@@ -275,7 +275,7 @@ status of execution
 .PP
 
 .PP
-Definition at line 152 of file Connection\&.cpp\&.
+Definition at line 155 of file Connection\&.cpp\&.
 .SS "\fBConnection\fP& Connection::operator= (\fBConnection\fP &)\fC [delete]\fP"
 
 .SS "\fBConnection\fP& Connection::operator= (const \fBConnection\fP &)\fC [delete]\fP"
@@ -294,11 +294,11 @@ void
 .PP
 
 .PP
-Definition at line 117 of file Connection\&.cpp\&.
+Definition at line 120 of file Connection\&.cpp\&.
 .SS "bool Connection::status () const"
 \fBConnection\fP status 
 .PP
-Definition at line 208 of file Connection\&.cpp\&.
+Definition at line 212 of file Connection\&.cpp\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "uint32_t Connection::address_ {}\fC [protected]\fP"

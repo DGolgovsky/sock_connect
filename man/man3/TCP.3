@@ -1,4 +1,4 @@
-.TH "TCP" 3 "Thu Jun 18 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "TCP" 3 "Thu Jun 25 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -26,45 +26,15 @@ Inherits \fBConnection\fP\&.
 .RI "\fB~TCP\fP () override"
 .br
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S tu_size)"
+.RI "template<typename T > ssize_t \fBReceive\fP (T *value, std::size_t const tu_size)"
 .br
 .RI "\fIReceive value Virtual receiving function for values\&. \fP"
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBSend\fP (T const *value, S tu_size)"
+.RI "template<typename T > ssize_t \fBSend\fP (T const *value, std::size_t const tu_size)"
 .br
 .RI "\fISend value Virtual sending function for values\&. \fP"
 .ti -1c
-.RI "template<> ssize_t \fBReceive\fP (uint8_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (uint16_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (uint32_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (std::size_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (char *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (std::string *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const uint8_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const uint16_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const uint32_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const std::size_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (char const *value, std::size_t const tu_size)"
+.RI "template<> ssize_t \fBReceive\fP (std::string *value, std::size_t const tu_size)"
 .br
 .ti -1c
 .RI "template<> ssize_t \fBSend\fP (std::string const *value, std::size_t const tu_size)"
@@ -79,22 +49,22 @@ Definition at line 6 of file TCP\&.h\&.
 .SS "TCP::TCP (uint32_t address, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 7 of file TCP\&.cpp\&.
+Definition at line 4 of file TCP\&.cpp\&.
 .SS "TCP::TCP (const char * address, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 18 of file TCP\&.cpp\&.
+Definition at line 15 of file TCP\&.cpp\&.
 .SS "TCP::TCP (std::string const & address, uint16_t port)\fC [explicit]\fP"
 
 .PP
-Definition at line 29 of file TCP\&.cpp\&.
+Definition at line 26 of file TCP\&.cpp\&.
 .SS "TCP::~TCP ()\fC [override]\fP"
 
 .PP
-Definition at line 40 of file TCP\&.cpp\&.
+Definition at line 37 of file TCP\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "template<typename T , typename S > ssize_t TCP::Receive (T * value, S tu_size)"
+.SS "template<typename T > template ssize_t TCP::Receive (T * value, std::size_t const tu_size)"
 
 .PP
 Receive value Virtual receiving function for values\&. 
@@ -112,31 +82,13 @@ message size
 .RE
 .PP
 
-.SS "template<> ssize_t TCP::Receive (uint8_t * value, const std::size_t tu_size)"
+.PP
+Definition at line 46 of file TCP\&.cpp\&.
+.SS "template<> ssize_t TCP::Receive (std::string * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 49 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Receive (uint16_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 72 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Receive (uint32_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 95 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Receive (std::size_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 118 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Receive (char * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 141 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Receive (std::string * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 171 of file TCP\&.cpp\&.
-.SS "template<typename T , typename S > ssize_t TCP::Send (T const * value, S tu_size)"
+Definition at line 134 of file TCP\&.cpp\&.
+.SS "template<typename T > template ssize_t TCP::Send (T const * value, std::size_t const tu_size)"
 
 .PP
 Send value Virtual sending function for values\&. 
@@ -153,31 +105,13 @@ Send value Virtual sending function for values\&.
 message size 
 .RE
 .PP
-
-.SS "template<> ssize_t TCP::Send (const uint8_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 184 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Send (const uint16_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 206 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Send (const uint32_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 228 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Send (const std::size_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 250 of file TCP\&.cpp\&.
-.SS "template<> ssize_t TCP::Send (char const * value, std::size_t const tu_size)"
 \fBTCP\fP MTU = 1460 net\&.core\&.rmem_max = 212992
 .PP
-Definition at line 272 of file TCP\&.cpp\&.
+Definition at line 74 of file TCP\&.cpp\&.
 .SS "template<> ssize_t TCP::Send (std::string const * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 303 of file TCP\&.cpp\&.
+Definition at line 143 of file TCP\&.cpp\&.
 
 .SH "Author"
 .PP 
