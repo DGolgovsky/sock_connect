@@ -55,8 +55,8 @@ Package provides headers installs at `/usr/local/include` and `.so` library, put
     * `auto tcp = new Connector<TCP>(IP, PORT);`
 2. Connection with `UDP` transmission
     * `auto udp = new Connector<UDP>(INADDR_ANY, PORT);`
-3. Connection with `UNIX` sockets transmission
-    * `auto unix = new Connector<UNIX>(dev_path);`
+3. Connection with `UNIX-domain` sockets transmission
+    * `auto unix = new Connector<UNIX>(sun_path);`
 4. Connection with `USB` transmission
     * `auto usb = new Connector<USB>(dev_path, speed);`
 5. **`DEPRECATED`** Transform `const char*` ip-addr `192.168.1.42` to `uint32_t`

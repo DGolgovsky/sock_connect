@@ -39,17 +39,22 @@ else()
 	message(*\ Building\ with\ DEBUG\ Insertions)
 	add_compile_options(-O2)
 	target_compile_options(${TARGET} PRIVATE -g -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC)
+
+	add_executable(tcp_socket_test tests/tcp_socket_test.cpp)
+	target_include_directories(tcp_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+	target_link_libraries(tcp_socket_test ${TARGET} ${CMAKE_THREAD_LIBS_INIT})
+	set_target_properties(tcp_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+
+	add_executable(udp_socket_test tests/udp_socket_test.cpp)
+	target_include_directories(udp_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+	target_link_libraries(udp_socket_test ${TARGET} ${CMAKE_THREAD_LIBS_INIT})
+	set_target_properties(udp_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+
+	add_executable(unix_socket_test tests/unix_socket_test.cpp)
+	target_include_directories(unix_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+	target_link_libraries(unix_socket_test ${TARGET} ${CMAKE_THREAD_LIBS_INIT})
+	set_target_properties(unix_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 endif()
-
-add_executable(tcp_socket_test tests/tcp_socket_test.cpp)
-target_include_directories(tcp_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(tcp_socket_test ${TARGET} ${CMAKE_THREAD_LIBS_INIT})
-set_target_properties(tcp_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
-
-add_executable(udp_socket_test tests/udp_socket_test.cpp)
-target_include_directories(udp_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_link_libraries(udp_socket_test ${TARGET} ${CMAKE_THREAD_LIBS_INIT})
-set_target_properties(udp_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
 install(DIRECTORY src/ DESTINATION include
         FILES_MATCHING PATTERN "*.h")

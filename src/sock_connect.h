@@ -12,8 +12,10 @@ private:
 	Type connection;
 
 public:
+	template <typename T>
+	explicit Connector(T sun_path) : connection(sun_path) {}
 	template <typename T, typename U>
-	Connector(const T addr, U port) : connection(addr, port) {}
+	Connector(T addr, U port) : connection(addr, port) {}
 
 	~Connector() = default;
 

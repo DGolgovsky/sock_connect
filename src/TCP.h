@@ -22,7 +22,7 @@ public:
 	 * @return message size
 	 */
 	template <typename T>
-	ssize_t Receive(T *value, std::size_t const tu_size);
+	ssize_t Receive(T *value, std::size_t tu_size);
 
 	/**
 	 * @brief Send value
@@ -32,7 +32,7 @@ public:
 	 * @return message size
 	 */
 	template <typename T>
-	ssize_t Send(T const *value, std::size_t const tu_size);
+	ssize_t Send(T const *value, std::size_t tu_size);
 };
 
 #endif // _LIB_SOCK_CONNECT_TCP_SOCKET_H

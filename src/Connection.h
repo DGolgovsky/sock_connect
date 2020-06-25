@@ -65,10 +65,10 @@ public:
 	 * @param addr
 	 * @param port
 	 */
-	explicit Connection(conn_type cp, uint32_t addr, uint16_t port);
-	explicit Connection(conn_type cp, char const *addr, uint16_t port);
-	explicit Connection(conn_type cp, std::string const &addr, uint16_t port);
-	explicit Connection(conn_type cp, char const &&addr, uint16_t port);
+	Connection(conn_type cp, uint32_t addr, uint16_t port);
+	Connection(conn_type cp, char const *addr, uint16_t port);
+	Connection(conn_type cp, std::string const &addr, uint16_t port);
+	Connection(conn_type cp, char const &&addr, uint16_t port);
 
 	/**
 	 * @brief Creates new socket unix_path
@@ -76,7 +76,8 @@ public:
 	 * @param cp
 	 * @param path
 	 */
-	explicit Connection(conn_type cp, std::string path);
+	Connection(conn_type cp, std::string const &path);
+	Connection(conn_type cp, char const *path);
 
 	/**
 	 * @brief Deleted unused constructors and operator=

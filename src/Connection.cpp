@@ -1,8 +1,5 @@
 #include "Connection.h"
-
-#ifndef NDEBUG
-#include <iostream>
-#endif
+#include "type_name.h"
 
 /**
  * Transform <const char*> IP-address to uint32_t
@@ -62,16 +59,15 @@ Connection::Connection(conn_type cp, uint32_t addr, uint16_t port)
 	ptr_addr = (sockaddr *) &socket_addr;
 	size_addr = sizeof(socket_addr);
 	clients = new storage_t(32);
-	//int set = 1;
 	timeval set = {0, 0};
 	set.tv_sec = 10;
 	set.tv_usec = 0;
 	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *)&set, sizeof(set)); //SO_REUSEADDR
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] Connection<" << socket_.c_type() << ">::Connection("
-			  << "uint32_t addr: " << addr << ", "
-			  << "uint16_t port: " << port << ") ["
+	std::clog << "[SOCK_CONNECT] Connection::Connection<" << socket_.c_type() << ">("
+			  << type_name<decltype(addr)>() << " addr: " << addr << ", "
+			  << type_name<decltype(port)>() << " port: " << port << ") ["
 			  << "SOCK_ID = " << socket_.id() << "]\n" << std::flush;
 	debug_mutex.unlock();
 #endif
@@ -83,23 +79,27 @@ Connection::Connection(conn_type cp, char const *addr, uint16_t port)
 Connection::Connection(conn_type cp, std::string const &addr, uint16_t port)
 		: Connection(cp, ip_to_int(addr.data()), port) {}
 
-Connection::Connection(conn_type cp, std::string socket_path = "/tmp/unix.sock")
-		: socket_(cp), m_path(std::move(socket_path)) {
+Connection::Connection(conn_type cp, const char &&addr, uint16_t port)
+		: Connection(cp, ip_to_int(&addr), port) {}
+
+Connection::Connection(conn_type cp, std::string const &socket_path)
+		: socket_(cp), m_path(socket_path) {
 	conn_memset();
 	unix_addr.sun_family = AF_UNIX;
+	strcpy(unix_addr.sun_path, socket_path.c_str());
 	ptr_addr = (sockaddr *) &unix_addr;
 	size_addr = sizeof(unix_addr);
 	clients = new storage_t(32);
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] Connection<" << socket_.c_type() << ">::Connection("
+	std::clog << "[SOCK_CONNECT] Connection::Connection<" << socket_.c_type() << ">("
 			  << "std::string socket_path: " << socket_path << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
 }
 
-Connection::Connection(conn_type cp, const char &&addr, uint16_t port)
-		: Connection(cp, ip_to_int(&addr), port) {}
+Connection::Connection(conn_type cp, char const *path)
+		: Connection (cp, (std::string) path) {}
 
 void Connection::conn_memset() {
 	memset(&socket_addr, '\0', sizeof(socket_addr));
@@ -110,7 +110,7 @@ void Connection::conn_memset() {
 Connection::~Connection() {
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] Connection<" << socket_.c_type() << ">::~Connection()\n" << std::flush;
+	std::clog << "[SOCK_CONNECT] Connection::~Connection<" << socket_.c_type() << ">()\n" << std::flush;
 	debug_mutex.unlock();
 #endif
 	this->Shutdown(socket_.id());
@@ -118,16 +118,25 @@ Connection::~Connection() {
 }
 
 void Connection::Shutdown(int id) {
-#ifndef NDEBUG
-	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] Connection<" << socket_.c_type() << ">::Shutdown(): " << id << '\n'
-			  << std::flush;
-	debug_mutex.unlock();
-#endif
 	if (shutdown(id, SHUT_RDWR) < 0) {
 		if (close(id) < 0)
 			throw std::runtime_error("[SOCK_CONNECT] Shutdown failed, error number: "
 									 + std::to_string(errno));
+#ifndef NDEBUG
+		debug_mutex.lock();
+		std::clog << "[SOCK_CONNECT] Connection::Shutdown<" << socket_.c_type() << ">(): " << id << '\n'
+				  << std::flush;
+		debug_mutex.unlock();
+#endif
+	}
+	if (socket_.c_type() == "UNIX") {
+		unlink(m_path.c_str());
+#ifndef NDEBUG
+		debug_mutex.lock();
+		std::clog << "[SOCK_CONNECT] Connection::Shutdown<" << socket_.c_type() << ">(): " << m_path << '\n'
+				  << std::flush;
+		debug_mutex.unlock();
+#endif
 	}
 }
 
@@ -237,4 +246,5 @@ int Connection::get_descriptor() {
 	else
 		return this->id();
 }
+
 

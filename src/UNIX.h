@@ -6,15 +6,11 @@
 class UNIX : public Connection
 {
 private:
-	/**
-	 * The MTU (Maximum Transmission Unit) for Ethernet value is 1500 bytes
-	 */
-	char buffer[1500]{};
 	ssize_t msg_sz{};
 
 public:
-	explicit UNIX(std::string &path);
-
+	explicit UNIX(std::string const &path);
+	explicit UNIX(char const *path);
 	~UNIX() override;
 
 	/**
@@ -24,8 +20,8 @@ public:
 	 * @param tu_size Package size.
 	 * @return message size
 	 */
-	template <typename T, typename S>
-	ssize_t Receive(T *value, S tu_size);
+	template <typename T>
+	ssize_t Receive(T *value, std::size_t tu_size);
 
 	/**
 	 * @brief Send value
@@ -34,8 +30,8 @@ public:
 	 * @param tu_size
 	 * @return message size
 	 */
-	template <typename T, typename S>
-	ssize_t Send(const T *value, S tu_size);
+	template <typename T>
+	ssize_t Send(T const *value, std::size_t tu_size);
 };
 
 #endif // _LIB_SOCK_CONNECT_UNIX_SOCKET_H
