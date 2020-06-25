@@ -30,8 +30,6 @@ endif()
 
 target_link_libraries(${TARGET} ${CMAKE_THREAD_LIBS_INIT})
 
-install(TARGETS ${TARGET} LIBRARY DESTINATION lib)
-
 if(NOT DEBUG)
 	target_compile_options(${TARGET} PRIVATE -DNDEBUG)
 	add_compile_options(-O3)
@@ -56,8 +54,11 @@ else()
 	set_target_properties(unix_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 endif()
 
-install(DIRECTORY src/ RUNTIME DESTINATION include
-        FILES_MATCHING PATTERN "*.h")
+if(NOT DEBUG)
+	install(TARGETS ${TARGET} LIBRARY DESTINATION lib COMPONENT Libraries)
+	install(DIRECTORY src/ RUNTIME DESTINATION include
+	        FILES_MATCHING PATTERN "*.h")
+endif()
 
 set(CPACK_GENERATOR ${GEN_PKG})
 

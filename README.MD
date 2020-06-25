@@ -38,7 +38,7 @@ or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/de
     * `cd build` jump to directory with compiled objects
     * `sudo make install` install library as `root`
 
-Package provides headers installs at `/usr/local/include` and `.so` library, puts to `/usr/local/lib`
+Package provides headers installs at `/usr/include` and `.so` library, puts to `/usr/lib`
 
 #### Usage:
 
