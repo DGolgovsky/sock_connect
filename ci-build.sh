@@ -48,10 +48,10 @@ while [[ $# -gt 0 ]]; do
 		;;
 	-h | --help | *)
 		echo "Usage:"
+		echo "  -p|--package [PKG]: Type of generated package"
 		echo "  -t|--tests:         Fills build tests"
 		echo "  -d|--debug:         Build package with debug information"
-		echo "  -b|--build:	        Build package without debug information"
-		echo "  -p|--package [PKG]: Type of generated package"
+		echo "  -b|--build:         Build package without debug information"
 		echo "    |--docs:          Generate doxygen documentation"
 		echo "  -h|--help:          Print this message"
 		exit 1

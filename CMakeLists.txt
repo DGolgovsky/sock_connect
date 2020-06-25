@@ -56,7 +56,7 @@ else()
 	set_target_properties(unix_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 endif()
 
-install(DIRECTORY src/ DESTINATION include
+install(DIRECTORY src/ RUNTIME DESTINATION include
         FILES_MATCHING PATTERN "*.h")
 
 set(CPACK_GENERATOR ${GEN_PKG})

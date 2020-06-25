@@ -21,13 +21,16 @@ or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/de
 2. download **`rpm`** packages: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/libsock_connect-0.5-1-x86_64.rpm "Latest stable package")
 or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/debug/libsock_connect-0.5-1-x86_64.rpm "Debug package") (with debug information) versions
     * install it using `sudo dnf -i ${package_name}`
-    * or install it using `sudo zypper install ${package_name}` 
-3. download packages for **`other`** linux distroes: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/libsock_connect-0.5-1-x86_64.tar.gz "Latest stable package")
+    * or install it using `sudo zypper install ${package_name}`
+3. download **`pkg.tar.zst`** packages: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/libsock_connect-0.5-1-x86_64.pkg.tar.zst "Latest stable package")
+   or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/debug/libsock_connect-0.5-1-x86_64.pkg.tar.zst "Debug package") (with debug information) versions
+       * install it using `sudo pacman -U ${package_name}`
+4. download packages for **`other`** linux distroes: [**latest**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/build/libsock_connect-0.5-1-x86_64.tar.gz "Latest stable package")
 or [**devel**](https://github.com/DGolgovsky/sock_connect/raw/master/packages/debug/libsock_connect-0.5-1-x86_64.tar.gz "Debug package") (with debug information) versions
     * extract downloaded package `tar xzfv libsock_connect-${VERSION}-x86_64.tar.gz`
     * `cd libsock_connect-${VERSION}-x86_64`
     * `sudo cp -rv * /usr/local/`
-4. compile from source
+5. compile from source
     * `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository 
     * `cd sock_connect` change directory to cloned repo-dir
     * `./ci-build.sh -b` compile **latest** version
