@@ -62,8 +62,11 @@ Connection::Connection(conn_type cp, uint32_t addr, uint16_t port)
 	ptr_addr = (sockaddr *) &socket_addr;
 	size_addr = sizeof(socket_addr);
 	clients = new storage_t(32);
-	int set = 1;
-	setsockopt(socket_.id(), SOL_SOCKET, SO_REUSEADDR, &set, sizeof(set));
+	//int set = 1;
+	timeval set = {0, 0};
+	set.tv_sec = 10;
+	set.tv_usec = 0;
+	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *)&set, sizeof(set)); //SO_REUSEADDR
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] Connection<" << socket_.c_type() << ">::Connection("
