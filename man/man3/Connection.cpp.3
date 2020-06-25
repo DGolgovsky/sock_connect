@@ -15,12 +15,12 @@ src/Connection.cpp \-
 
 .in +1c
 .ti -1c
-.RI "unsigned int \fBip_to_int\fP (const char *ip)"
+.RI "unsigned int \fBip_to_int\fP (std::string const &str)"
 .br
 .in -1c
 .SH "Function Documentation"
 .PP 
-.SS "unsigned int ip_to_int (const char * ip)"
+.SS "unsigned int ip_to_int (std::string const & str)"
 Transform <const char*> IP-address to uint32_t '127\&.0\&.0\&.1' -> 0x7f000001 
 .PP
 Definition at line 8 of file Connection\&.cpp\&.
