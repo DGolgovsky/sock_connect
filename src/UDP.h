@@ -6,30 +6,23 @@
 class UDP : public Connection
 {
 private:
-	/**
-	 * The MTU (Maximum Transmission Unit) for Ethernet value is 1500 bytes
-	 */
-	char *buffer = nullptr;
 	ssize_t msg_sz{};
 
 public:
 	explicit UDP(uint32_t address, uint16_t port);
-
 	explicit UDP(const char *address, uint16_t port);
-
-	explicit UDP(const std::string &address, uint16_t port);
-
+	explicit UDP(std::string const &address, uint16_t port);
 	~UDP() override;
 
 	/**
-	 * @brief Receive int
+	 * @brief Receive value
 	 * Virtual receiving function for values
 	 * @param value
-	 * @param tu_size
+	 * @param tu_size Package size.
 	 * @return message size
 	 */
-	template <typename T, typename S>
-	ssize_t Receive(T *value, S tu_size);
+	template <typename T>
+	ssize_t Receive(T *value, std::size_t const tu_size);
 
 	/**
 	 * @brief Send value
@@ -38,8 +31,8 @@ public:
 	 * @param tu_size
 	 * @return message size
 	 */
-	template <typename T, typename S>
-	ssize_t Send(T const *value, S tu_size);
+	template <typename T>
+	ssize_t Send(T const *value, std::size_t const tu_size);
 };
 
 #endif // _LIB_SOCK_CONNECT_UDP_SOCKET_H
