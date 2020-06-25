@@ -102,10 +102,14 @@ if [[ $do_pkg ]]; then
 	if [[ $do_debug ]]; then
 		PACK_TYPE="debug"
 	fi
+	mkdir -p "$src_dir"/packages/$PACK_TYPE/
 	mv libsock_connect-* "$src_dir"/packages/$PACK_TYPE/
+		if [[ $PKG != "DEB" ]]; then
+		exit 0
+	fi
 	if [ -f "/etc/arch-release" ]; then
 		cd "$src_dir"/packages/$PACK_TYPE || exit
-		echo "# Maintainer: DGolgovsky
+		echo "# Maintainer: Dmitry Golgovsky
 # e-mail: d.westcoast@aol.com
 
 pkgname=libsock_connect
@@ -118,15 +122,21 @@ url=\"https://github.com/DGolgovsky/sock_connect\"
 license=('MIT')
 groups=('')
 options=('!strip' '!emptydirs')
-depends=(gcc cmake doxygen git)
+depends=(gcc glibc)
 source_x86_64=(\"libsock_connect-0.$BUILD-1-x86_64.deb\")
 
 package() {
     # Extract package data
 	tar xzf data.tar.gz -C \"\${pkgdir}\"
 }" >PKGBUILD
-		makepkg -csf --skipinteg
+		CHROOT=/tmp/chroot
+		mkdir $CHROOT
+		mkarchroot -C /etc/pacman.conf -M /etc/makepkg.conf $CHROOT/root base-devel
+		arch-nspawn $CHROOT/root pacman -Syu
+		makechrootpkg -c -r $CHROOT -- --skipinteg
 		rm PKGBUILD
+		rm *.log
+		sudo rm -rf $CHROOT
 	fi
 	cd "$src_dir" || exit
 fi
