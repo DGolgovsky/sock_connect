@@ -96,9 +96,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a553a3a5d77acf1098eaa3e24e34069db"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U &gt; </td></tr>
-<tr class="memitem:a553a3a5d77acf1098eaa3e24e34069db"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_connector.html#a553a3a5d77acf1098eaa3e24e34069db">Connector</a> (const T addr, U port)</td></tr>
-<tr class="separator:a553a3a5d77acf1098eaa3e24e34069db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca817404242a42616a0ac7f73f10ad71"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aca817404242a42616a0ac7f73f10ad71"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_connector.html#aca817404242a42616a0ac7f73f10ad71">Connector</a> (T sun_path)</td></tr>
+<tr class="separator:aca817404242a42616a0ac7f73f10ad71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a225911d1da0cb6e3575de2ec90c46573"><td class="memTemplParams" colspan="2">template&lt;typename T , typename U &gt; </td></tr>
+<tr class="memitem:a225911d1da0cb6e3575de2ec90c46573"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_connector.html#a225911d1da0cb6e3575de2ec90c46573">Connector</a> (T addr, U port)</td></tr>
+<tr class="separator:a225911d1da0cb6e3575de2ec90c46573"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90d42483db4d2e5eaee4f333f26e0e0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connector.html#a90d42483db4d2e5eaee4f333f26e0e0f">~Connector</a> ()=default</td></tr>
 <tr class="separator:a90d42483db4d2e5eaee4f333f26e0e0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ffd90a99c01cbd912c1bfdadbefad57"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_connector.html#a7ffd90a99c01cbd912c1bfdadbefad57">Accept</a> ()</td></tr>
@@ -131,7 +134,37 @@ class Connector&lt; Type &gt;</h3>
 
 <p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00009">9</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a553a3a5d77acf1098eaa3e24e34069db"></a>
+<a class="anchor" id="aca817404242a42616a0ac7f73f10ad71"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Type &gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_connector.html">Connector</a>&lt; Type &gt;::<a class="el" href="class_connector.html">Connector</a> </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>sun_path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00016">16</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a225911d1da0cb6e3575de2ec90c46573"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -145,7 +178,7 @@ template&lt;typename T , typename U &gt; </div>
         <tr>
           <td class="memname"><a class="el" href="class_connector.html">Connector</a>&lt; Type &gt;::<a class="el" href="class_connector.html">Connector</a> </td>
           <td>(</td>
-          <td class="paramtype">const T&#160;</td>
+          <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>addr</em>, </td>
         </tr>
         <tr>
@@ -167,7 +200,7 @@ template&lt;typename T , typename U &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00016">16</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00018">18</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -220,7 +253,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00020">20</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00022">22</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -248,7 +281,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00044">44</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00046">46</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -276,7 +309,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00024">24</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00026">26</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -303,7 +336,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00036">36</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00038">38</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -330,7 +363,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00040">40</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00042">42</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -357,7 +390,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00022">22</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00024">24</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -397,7 +430,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00032">32</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00034">34</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -437,7 +470,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00027">27</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00029">29</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -465,7 +498,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00038">38</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00040">40</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -492,7 +525,7 @@ template&lt;class Type &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00042">42</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
+<p>Definition at line <a class="el" href="sock__connect_8h_source.html#l00044">44</a> of file <a class="el" href="sock__connect_8h_source.html">sock_connect.h</a>.</p>
 
 </div>
 </div>
@@ -502,7 +535,7 @@ template&lt;class Type &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jun 25 2020 07:35:13 for Shared library Connection Socket by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Jun 25 2020 09:34:49 for Shared library Connection Socket by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -3,7 +3,7 @@ var searchData=
   ['udp',['UDP',['../class_u_d_p.html',1,'UDP'],['../class_u_d_p.html#ac4d135136a0e5d3cf7f40647fcf4fe81',1,'UDP::UDP(uint32_t address, uint16_t port)'],['../class_u_d_p.html#aac1bc0ead07b6a96f9597af4a6397a4c',1,'UDP::UDP(const char *address, uint16_t port)'],['../class_u_d_p.html#ac00ca637f8086bd3ac5c00c4f113d0cf',1,'UDP::UDP(std::string const &amp;address, uint16_t port)']]],
   ['udp_2ecpp',['UDP.cpp',['../_u_d_p_8cpp.html',1,'']]],
   ['udp_2eh',['UDP.h',['../_u_d_p_8h.html',1,'']]],
-  ['unix',['UNIX',['../class_u_n_i_x.html',1,'UNIX'],['../class_u_n_i_x.html#aba491661110acf9699695e024c363e76',1,'UNIX::UNIX()']]],
+  ['unix',['UNIX',['../class_u_n_i_x.html',1,'UNIX'],['../class_u_n_i_x.html#a404e8550dafac5be4138546cf66510ec',1,'UNIX::UNIX(std::string const &amp;path)'],['../class_u_n_i_x.html#a5d0eaef4411b76fc31041258c0376923',1,'UNIX::UNIX(char const *path)']]],
   ['unix_2ecpp',['UNIX.cpp',['../_u_n_i_x_8cpp.html',1,'']]],
   ['unix_2eh',['UNIX.h',['../_u_n_i_x_8h.html',1,'']]],
   ['unix_5faddr',['unix_addr',['../class_connection.html#ab40420f0fd36e7f9806f07005af0b14d',1,'Connection']]],

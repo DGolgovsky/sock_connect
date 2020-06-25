@@ -14,48 +14,27 @@ Inherits \fBConnection\fP\&.
 
 .in +1c
 .ti -1c
-.RI "\fBUNIX\fP (std::string &path)"
+.RI "\fBUNIX\fP (std::string const &path)"
+.br
+.ti -1c
+.RI "\fBUNIX\fP (char const *path)"
 .br
 .ti -1c
 .RI "\fB~UNIX\fP () override"
 .br
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBReceive\fP (T *value, S tu_size)"
+.RI "template<typename T > ssize_t \fBReceive\fP (T *value, std::size_t tu_size)"
 .br
 .RI "\fIReceive value Virtual receiving function for values\&. \fP"
 .ti -1c
-.RI "template<typename T , typename S > ssize_t \fBSend\fP (const T *value, S tu_size)"
+.RI "template<typename T > ssize_t \fBSend\fP (T const *value, std::size_t tu_size)"
 .br
 .RI "\fISend value Virtual sending function for values\&. \fP"
 .ti -1c
-.RI "template<> ssize_t \fBReceive\fP (uint8_t *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBReceive\fP (std::string *value, std::size_t const tu_size)"
 .br
 .ti -1c
-.RI "template<> ssize_t \fBReceive\fP (uint16_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (uint32_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (std::string *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBReceive\fP (char *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const uint8_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const uint16_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const uint32_t *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const std::string *value, const std::size_t tu_size)"
-.br
-.ti -1c
-.RI "template<> ssize_t \fBSend\fP (const char *value, const std::size_t tu_size)"
+.RI "template<> ssize_t \fBSend\fP (std::string const *value, std::size_t const tu_size)"
 .br
 .in -1c
 .SS "Additional Inherited Members"
@@ -64,17 +43,21 @@ Inherits \fBConnection\fP\&.
 Definition at line 6 of file UNIX\&.h\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "UNIX::UNIX (std::string & path)\fC [explicit]\fP"
+.SS "UNIX::UNIX (std::string const & path)\fC [explicit]\fP"
 
 .PP
-Definition at line 7 of file UNIX\&.cpp\&.
+Definition at line 4 of file UNIX\&.cpp\&.
+.SS "UNIX::UNIX (char const * path)\fC [explicit]\fP"
+
+.PP
+Definition at line 14 of file UNIX\&.cpp\&.
 .SS "UNIX::~UNIX ()\fC [override]\fP"
 
 .PP
-Definition at line 17 of file UNIX\&.cpp\&.
+Definition at line 24 of file UNIX\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "template<typename T , typename S > ssize_t UNIX::Receive (T * value, S tu_size)"
+.SS "template<typename T > template ssize_t UNIX::Receive (T * value, std::size_t tu_size)"
 
 .PP
 Receive value Virtual receiving function for values\&. 
@@ -92,27 +75,13 @@ message size
 .RE
 .PP
 
-.SS "template<> ssize_t UNIX::Receive (uint8_t * value, const std::size_t tu_size)"
+.PP
+Definition at line 33 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Receive (std::string * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 28 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Receive (uint16_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 50 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Receive (uint32_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 72 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Receive (std::string * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 94 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Receive (char * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 118 of file UNIX\&.cpp\&.
-.SS "template<typename T , typename S > ssize_t UNIX::Send (const T * value, S tu_size)"
+Definition at line 117 of file UNIX\&.cpp\&.
+.SS "template<typename T > template ssize_t UNIX::Send (T const * value, std::size_t tu_size)"
 
 .PP
 Send value Virtual sending function for values\&. 
@@ -130,26 +99,12 @@ message size
 .RE
 .PP
 
-.SS "template<> ssize_t UNIX::Send (const uint8_t * value, const std::size_t tu_size)"
+.PP
+Definition at line 61 of file UNIX\&.cpp\&.
+.SS "template<> ssize_t UNIX::Send (std::string const * value, std::size_t const tu_size)"
 
 .PP
 Definition at line 126 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Send (const uint16_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 148 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Send (const uint32_t * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 169 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Send (const std::string * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 190 of file UNIX\&.cpp\&.
-.SS "template<> ssize_t UNIX::Send (const char * value, const std::size_t tu_size)"
-
-.PP
-Definition at line 210 of file UNIX\&.cpp\&.
 
 .SH "Author"
 .PP 
