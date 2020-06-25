@@ -90,12 +90,14 @@ int main() {
 			socket->Receive(&size, sizeof(size));
 			socket->Receive(&file, size);
 
-			ofstream << file;
+			if (!file.empty())
+				ofstream << file;
 			socket->Shutdown();
 			i = 0;
 			std::clog << "Client finished work" << std::endl;
 		}
 	}
 	system("md5sum libsock_connect.so libsock_connect.so.received");
+
 	return 0;
 }

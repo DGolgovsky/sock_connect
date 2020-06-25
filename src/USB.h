@@ -2,10 +2,7 @@
 #define _LIB_SOCK_CONNECT_USB_SOCKET_H
 
 #include "Connection.h"
-
-#include <fcntl.h>
 #include <termios.h>
-#include <sys/ioctl.h>
 
 class USB
 {
@@ -24,30 +21,24 @@ public:
 	 * @param speed connection speed: B9600, B57600, B115200
 	 */
 	explicit USB(std::string address, speed_t speed);
-
 	~USB();
 
 	/**
 	 * Connect/open port
 	 */
 	bool Connect();
-
 	void Shutdown();
 
-	template <typename T, typename S>
-	ssize_t Receive(T *value, S const tu_size);
+	template <typename T>
+	ssize_t Receive(T *value, std::size_t const tu_size);
 
-	template <typename T, typename S>
-	ssize_t Send(T const *value, S const tu_size);
+	template <typename T>
+	ssize_t Send(T const *value, std::size_t const tu_size);
 
-	void setRTS();
-
-	void clrRTS();
+	void setRTS() const;
+	void clrRTS() const;
 
 	int id() const;
-
-	bool select_status();
-
 	bool status() const;
 };
 

@@ -1,9 +1,8 @@
 #include "USB.h"
 #include <utility>
-
-#ifndef NDEBUG
-#include <iostream>
-#endif
+#include <sys/ioctl.h>
+#include <fcntl.h>
+#include "type_name.h"
 
 USB::USB(std::string address, speed_t speed)
 		: address(std::move(address)), speed(speed) {}
@@ -58,221 +57,118 @@ bool USB::Connect() {
 #endif
 	return (this->state = true);
 }
-
-template <>
-ssize_t USB::Receive(uint8_t *value, const std::size_t tu_size) {
-	msg_sz = read(fd, value, tu_size);
-
-	if (msg_sz < 0) {
-		this->state = false;
+template <typename T>
+ssize_t USB::Receive(T *value, std::size_t const tu_size) {
+	auto recv_left = tu_size;
+	std::size_t total = 0;
+	while (total < tu_size) {
+		msg_sz = read(fd, value + total, recv_left);
+		if (msg_sz < 0) {
+			this->state = false;
 #ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<uint8_t>::Receive: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
+			debug_mutex.lock();
+			std::clog << "[SOCK_CONNECT] USB::Receive<" << type_name<decltype(value)>() << ">(fd: " << fd
+					  << "): FAILED. Status - DISCONNECTED\n" << std::flush;
+			debug_mutex.unlock();
 #endif
-		return 0;
+			return 0;
+		}
+		recv_left -= msg_sz;
+		total += msg_sz;
 	}
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<uint8_t>::Receive: received <";
-	print_values(value, tu_size);
-	std::clog << " [+" << tu_size << "]>\n" << std::flush;
+	std::clog << "[SOCK_CONNECT] USB::Receive<" << type_name<decltype(value)>() << ">: <" << print_values(value, tu_size)
+			  << " [+" << total << "]>\n" << std::flush;
 	debug_mutex.unlock();
 #endif
-	return msg_sz;
+	return total;
 }
 
-template <>
-ssize_t USB::Receive(uint16_t *value, const std::size_t tu_size) {
-	msg_sz = read(fd, value, tu_size);
-
-	if (msg_sz < 0) {
-		this->state = false;
+template <typename T>
+ssize_t USB::Send(T const *value, std::size_t const tu_size) {
+	auto send_left = tu_size;
+	std::size_t total = 0;
+	while (send_left > 0) {
+		if ((msg_sz = write(fd, value + total, send_left)) < 0) {
+			this->state = false;
 #ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<uint16_t>::Receive: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
+			debug_mutex.lock();
+			std::clog << "[SOCK_CONNECT] USB::Send<" << type_name<decltype(value)>() << ">(fd: " << fd
+					  << "): FAILED. Status - DISCONNECTED\n" << std::flush;
+			debug_mutex.unlock();
 #endif
-		return 0;
+			return 0;
+		}
+		send_left -= msg_sz;
+		total += msg_sz;
 	}
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<uint16_t>::Receive: received <";
-	print_values(value, tu_size);
-	std::clog << " [+" << tu_size << "]>\n" << std::flush;
+	std::clog << "[SOCK_CONNECT] USB::Send<" << type_name<decltype(value)>() << ">: <" << print_values(value, tu_size)
+			  << " [+" << total << "]>\n" << std::flush;
 	debug_mutex.unlock();
 #endif
+	return total;
+}
+
+template ssize_t USB::Receive(char *, std::size_t);
+template ssize_t USB::Receive(unsigned char *, std::size_t);
+template ssize_t USB::Receive(short int *, std::size_t);
+template ssize_t USB::Receive(unsigned short int *, std::size_t);
+template ssize_t USB::Receive(int *, std::size_t);
+template ssize_t USB::Receive(unsigned int *, std::size_t);
+template ssize_t USB::Receive(long int *, std::size_t);
+template ssize_t USB::Receive(unsigned long int *, std::size_t);
+template ssize_t USB::Receive(long long int *, std::size_t);
+template ssize_t USB::Receive(unsigned long long int *, std::size_t);
+template ssize_t USB::Receive(float *, std::size_t);
+template ssize_t USB::Receive(double *, std::size_t);
+template ssize_t USB::Receive(long double *, std::size_t);
+template ssize_t USB::Receive(bool *, std::size_t);
+template ssize_t USB::Send(char const *, std::size_t);
+template ssize_t USB::Send(unsigned char const *, std::size_t);
+template ssize_t USB::Send(short int const *, std::size_t);
+template ssize_t USB::Send(unsigned short int const *, std::size_t);
+template ssize_t USB::Send(int const *, std::size_t);
+template ssize_t USB::Send(unsigned int const *, std::size_t);
+template ssize_t USB::Send(long int const *, std::size_t);
+template ssize_t USB::Send(unsigned long int const *, std::size_t);
+template ssize_t USB::Send(long long int const *, std::size_t);
+template ssize_t USB::Send(unsigned long long int const *, std::size_t);
+template ssize_t USB::Send(float const *, std::size_t);
+template ssize_t USB::Send(double const *, std::size_t);
+template ssize_t USB::Send(long double const *, std::size_t);
+template ssize_t USB::Send(bool const *, std::size_t);
+
+template <>
+ssize_t USB::Receive(std::string *value, std::size_t const tu_size) {
+	if (value->size() < tu_size && tu_size < value->max_size())
+		value->resize(tu_size, '\0');
+	msg_sz = USB::Receive(&value->front(), tu_size);
+	value->shrink_to_fit();
 	return msg_sz;
 }
 
 template <>
-ssize_t USB::Receive(uint32_t *value, const std::size_t tu_size) {
-	msg_sz = read(fd, value, tu_size);
-
-	if (msg_sz < 0) {
-		this->state = false;
-#ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<uint32_t>::Receive: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
-#endif
-		return 0;
-	}
-#ifndef NDEBUG
-	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<uint32_t>::Receive: received <";
-	print_values(value, tu_size);
-	std::clog << " [+" << tu_size << "]>\n" << std::flush;
-	debug_mutex.unlock();
-#endif
-	return msg_sz;
-}
-
-template <>
-ssize_t USB::Receive(std::string *value, std::size_t tu_size) {
-	msg_sz = read(fd, buffer, tu_size);
-
-	if (msg_sz < 0) {
-		this->state = false;
-#ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<char*>::Receive: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
-#endif
-		return 0;
-	}
-
-	buffer[msg_sz] = '\0';
-	*value = std::string(buffer, static_cast<std::size_t>(msg_sz));
-#ifndef NDEBUG
-	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<char*>::Receive: received <" << value->data() << " [+"
-			  << value->size() << "]>\n" << std::flush;
-	debug_mutex.unlock();
-#endif
-	return msg_sz;
-}
-
-template <>
-ssize_t USB::Receive(char *value, const std::size_t tu_size) {
-	std::string msg{value};
-	msg_sz = USB::Receive(&msg, tu_size);
-	strcpy(value, msg.c_str());
-	return msg_sz;
-}
-
-template <>
-ssize_t USB::Send(const uint8_t *value, const std::size_t tu_size) {
-	msg_sz = write(fd, value, tu_size);
-
-	if (msg_sz == -1) {
-		this->state = false;
-#ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<uint8_t>::Send: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
-#endif
-		return 0;
-	}
-#ifndef NDEBUG
-	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<uint8_t>::Send: sent <";
-	print_values(value, tu_size);
-	std::clog << " [+" << tu_size << "]>\n" << std::flush;
-	debug_mutex.unlock();
-#endif
-	return msg_sz;
-}
-
-template <>
-ssize_t USB::Send(const uint16_t *value, const std::size_t tu_size) {
-	msg_sz = write(fd, value, tu_size);
-
-	if (msg_sz == -1) {
-		this->state = false;
-#ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<uint16_t>::Send: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
-#endif
-		return 0;
-	}
-#ifndef NDEBUG
-	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<uint16_t>::Send: sent <";
-	print_values(value, tu_size);
-	std::clog << " [+" << tu_size << "]>\n" << std::flush;
-	debug_mutex.unlock();
-#endif
-	return msg_sz;
-}
-
-template <>
-ssize_t USB::Send(const uint32_t *value, const std::size_t tu_size) {
-	msg_sz = write(fd, value, tu_size);
-
-	if (msg_sz == -1) {
-		this->state = false;
-#ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<uint32_t>::Send: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
-#endif
-		return 0;
-	}
-#ifndef NDEBUG
-	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<uint32_t>::Send: sent <";
-	print_values(value, tu_size);
-	std::clog << " [+" << tu_size << "]>\n" << std::flush;
-	debug_mutex.unlock();
-#endif
-	return msg_sz;
-}
-
-template <>
-ssize_t USB::Send(const std::string *value, const std::size_t tu_size) {
-	msg_sz = write(fd, value->data(), tu_size);
-
-	if (msg_sz == -1) {
-		this->state = false;
-#ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] USB<char*>::Send: status <DISCONNECTED>\n" << std::flush;
-		debug_mutex.unlock();
-#endif
-		return 0;
-	}
-#ifndef NDEBUG
-	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB<char*>::Send: sent <" << value->data() << " [+"
-			  << value->size() << "]>\n" << std::flush;
-	debug_mutex.unlock();
-#endif
-	return msg_sz;
-}
-
-template <>
-ssize_t USB::Send(const char *value, const std::size_t tu_size) {
-	std::string msg{value};
-	return USB::Send(&msg, tu_size);
+ssize_t USB::Send(std::string const *value, std::size_t const tu_size) {
+	return USB::Send(value->c_str(), tu_size);
 }
 
 void USB::Shutdown() {
 	if (fd >= 0)
 		close(fd);
-
 	fd = -1;
 }
 
-void USB::setRTS() {
+void USB::setRTS() const {
 	int status = 0;
 	ioctl(fd, TIOCMGET, &status);
 	status |= TIOCM_RTS;
 	ioctl(fd, TIOCMSET, &status);
 }
 
-void USB::clrRTS() {
+void USB::clrRTS() const {
 	int status = 0;
 	ioctl(fd, TIOCMGET, &status);
 	status &= ~TIOCM_RTS;

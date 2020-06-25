@@ -132,7 +132,7 @@ template ssize_t TCP::Send(bool const *, std::size_t);
 
 template <>
 ssize_t TCP::Receive(std::string *value, std::size_t const tu_size) {
-	if (value->size() < tu_size)
+	if (value->size() < tu_size && tu_size < value->max_size())
 		value->resize(tu_size, '\0');
 	msg_sz = TCP::Receive(&value->front(), tu_size);
 	value->shrink_to_fit();
