@@ -16,14 +16,13 @@ public:
 	explicit Connector(T sun_path) : connection(sun_path) {}
 	template <typename T, typename U>
 	Connector(T addr, U port) : connection(addr, port) {}
-
 	~Connector() = default;
 
 	int Accept() { return connection.Accept(); }
-
 	bool Listen() const { return connection.Listen(); }
-
 	bool Bind(bool listen = false) const { return connection.Bind(listen); }
+	bool Connect() { return connection.Connect(); }
+	void Shutdown(int id = 0) { return connection.Shutdown(id); }
 
 	template <typename T>
 	ssize_t Send(const T *value, std::size_t size) {
@@ -35,14 +34,8 @@ public:
 		return connection.Receive(value, size);
 	}
 
-	bool Connect() { return connection.Connect(); }
-
-	void Shutdown(int id = 0) { return connection.Shutdown(id); }
-
 	int id() { return connection.id(); }
-
 	bool status() const { return connection.status(); }
-
 	void assign_thread(int id) { return connection.assign_thread(id); }
 };
 

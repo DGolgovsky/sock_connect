@@ -30,10 +30,10 @@ public:
 	void Shutdown();
 
 	template <typename T>
-	ssize_t Receive(T *value, std::size_t const tu_size);
+	ssize_t Receive(T *value, std::size_t tu_size);
 
 	template <typename T>
-	ssize_t Send(T const *value, std::size_t const tu_size);
+	ssize_t Send(T const *value, std::size_t tu_size);
 
 	void setRTS() const;
 	void clrRTS() const;

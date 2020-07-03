@@ -1,7 +1,10 @@
+#!/usr/bin/env bash
+
 src_dir=$(pwd)
 TESTS=FALSE
 DBG=FALSE
 BUILD=5
+
 while [[ $# -gt 0 ]]; do
 	case "$1" in
 	-t | --tests)

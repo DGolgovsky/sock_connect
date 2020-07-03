@@ -56,6 +56,7 @@ bool USB::Connect() {
 #endif
 	return (this->state = true);
 }
+
 template <typename T>
 ssize_t USB::Receive(T *value, std::size_t const tu_size) {
 	auto recv_left = tu_size;

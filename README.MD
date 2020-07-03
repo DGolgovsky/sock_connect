@@ -99,6 +99,7 @@ delete tcp;
 ```cpp
 template<class T>
 void handler(T tcp, int client_id) {
+    tcp->assign_thread(client_id);
     uint16_t msg = 0;
     auto recv_sz = sizeof(uint16_t);
     while ((tcp->Receive(&msg, recv_sz))) {
