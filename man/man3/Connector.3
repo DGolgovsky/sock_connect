@@ -1,4 +1,4 @@
-.TH "Connector< Type >" 3 "Thu Jun 25 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "Connector< Type >" 3 "Fri Jul 3 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -30,16 +30,16 @@ Connector< Type > \-
 .RI "bool \fBBind\fP (bool listen=false) const "
 .br
 .ti -1c
-.RI "template<typename T > ssize_t \fBSend\fP (const T *value, std::size_t size)"
-.br
-.ti -1c
-.RI "template<typename T > ssize_t \fBReceive\fP (T *value, std::size_t size)"
-.br
-.ti -1c
 .RI "bool \fBConnect\fP ()"
 .br
 .ti -1c
 .RI "void \fBShutdown\fP (int \fBid\fP=0)"
+.br
+.ti -1c
+.RI "template<typename T > ssize_t \fBSend\fP (const T *value, std::size_t size)"
+.br
+.ti -1c
+.RI "template<typename T > ssize_t \fBReceive\fP (T *value, std::size_t size)"
 .br
 .ti -1c
 .RI "int \fBid\fP ()"
@@ -77,43 +77,43 @@ Definition at line 18 of file sock_connect\&.h\&.
 .SS "template<class Type > int \fBConnector\fP< Type >::Accept ()\fC [inline]\fP"
 
 .PP
-Definition at line 22 of file sock_connect\&.h\&.
+Definition at line 21 of file sock_connect\&.h\&.
 .SS "template<class Type > void \fBConnector\fP< Type >::assign_thread (int id)\fC [inline]\fP"
 
 .PP
-Definition at line 46 of file sock_connect\&.h\&.
+Definition at line 39 of file sock_connect\&.h\&.
 .SS "template<class Type > bool \fBConnector\fP< Type >::Bind (bool listen = \fCfalse\fP) const\fC [inline]\fP"
 
 .PP
-Definition at line 26 of file sock_connect\&.h\&.
+Definition at line 23 of file sock_connect\&.h\&.
 .SS "template<class Type > bool \fBConnector\fP< Type >::Connect ()\fC [inline]\fP"
 
 .PP
-Definition at line 38 of file sock_connect\&.h\&.
+Definition at line 24 of file sock_connect\&.h\&.
 .SS "template<class Type > int \fBConnector\fP< Type >::id ()\fC [inline]\fP"
 
 .PP
-Definition at line 42 of file sock_connect\&.h\&.
+Definition at line 37 of file sock_connect\&.h\&.
 .SS "template<class Type > bool \fBConnector\fP< Type >::Listen () const\fC [inline]\fP"
 
 .PP
-Definition at line 24 of file sock_connect\&.h\&.
+Definition at line 22 of file sock_connect\&.h\&.
 .SS "template<class Type > template<typename T > ssize_t \fBConnector\fP< Type >::Receive (T * value, std::size_t size)\fC [inline]\fP"
 
 .PP
-Definition at line 34 of file sock_connect\&.h\&.
+Definition at line 33 of file sock_connect\&.h\&.
 .SS "template<class Type > template<typename T > ssize_t \fBConnector\fP< Type >::Send (const T * value, std::size_t size)\fC [inline]\fP"
 
 .PP
-Definition at line 29 of file sock_connect\&.h\&.
+Definition at line 28 of file sock_connect\&.h\&.
 .SS "template<class Type > void \fBConnector\fP< Type >::Shutdown (int id = \fC0\fP)\fC [inline]\fP"
 
 .PP
-Definition at line 40 of file sock_connect\&.h\&.
+Definition at line 25 of file sock_connect\&.h\&.
 .SS "template<class Type > bool \fBConnector\fP< Type >::status () const\fC [inline]\fP"
 
 .PP
-Definition at line 44 of file sock_connect\&.h\&.
+Definition at line 38 of file sock_connect\&.h\&.
 
 .SH "Author"
 .PP 

@@ -1,4 +1,4 @@
-.TH "USB" 3 "Thu Jun 25 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "USB" 3 "Fri Jul 3 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -24,10 +24,10 @@ USB \-
 .RI "void \fBShutdown\fP ()"
 .br
 .ti -1c
-.RI "template<typename T > ssize_t \fBReceive\fP (T *value, std::size_t const tu_size)"
+.RI "template<typename T > ssize_t \fBReceive\fP (T *value, std::size_t tu_size)"
 .br
 .ti -1c
-.RI "template<typename T > ssize_t \fBSend\fP (T const *value, std::size_t const tu_size)"
+.RI "template<typename T > ssize_t \fBSend\fP (T const *value, std::size_t tu_size)"
 .br
 .ti -1c
 .RI "void \fBsetRTS\fP () const "
@@ -82,7 +82,7 @@ Definition at line 9 of file USB\&.cpp\&.
 .SS "void USB::clrRTS () const"
 
 .PP
-Definition at line 170 of file USB\&.cpp\&.
+Definition at line 171 of file USB\&.cpp\&.
 .SS "bool USB::Connect ()"
 Connect/open port CONFIGURE THE UART The flags (defined in /usr/include/termios\&.h - see http://pubs.opengroup.org/onlinepubs/007908799/xsh/termios.h.html):
 .PP
@@ -94,35 +94,35 @@ Definition at line 13 of file USB\&.cpp\&.
 .SS "int USB::id () const"
 
 .PP
-Definition at line 181 of file USB\&.cpp\&.
-.SS "template<typename T > template ssize_t USB::Receive (T * value, std::size_t const tu_size)"
+Definition at line 182 of file USB\&.cpp\&.
+.SS "template<typename T > template ssize_t USB::Receive (T * value, std::size_t tu_size)"
 
 .PP
-Definition at line 60 of file USB\&.cpp\&.
+Definition at line 61 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Receive (std::string * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 144 of file USB\&.cpp\&.
-.SS "template<typename T > template ssize_t USB::Send (T const * value, std::size_t const tu_size)"
+Definition at line 145 of file USB\&.cpp\&.
+.SS "template<typename T > template ssize_t USB::Send (T const * value, std::size_t tu_size)"
 
 .PP
-Definition at line 88 of file USB\&.cpp\&.
+Definition at line 89 of file USB\&.cpp\&.
 .SS "template<> ssize_t USB::Send (std::string const * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 153 of file USB\&.cpp\&.
+Definition at line 154 of file USB\&.cpp\&.
 .SS "void USB::setRTS () const"
 
 .PP
-Definition at line 163 of file USB\&.cpp\&.
+Definition at line 164 of file USB\&.cpp\&.
 .SS "void USB::Shutdown ()"
 
 .PP
-Definition at line 157 of file USB\&.cpp\&.
+Definition at line 158 of file USB\&.cpp\&.
 .SS "bool USB::status () const"
 
 .PP
-Definition at line 177 of file USB\&.cpp\&.
+Definition at line 178 of file USB\&.cpp\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "bool USB::state {false}"
