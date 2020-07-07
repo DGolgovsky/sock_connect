@@ -31,10 +31,13 @@ while [[ $# -gt 0 ]]; do
 		rpm | RPM)
 			do_pkg=RPM
 			;;
+		pkg | PKG)
+			do_pkg=PKG
+			;;
 		tgz | TGZ)
 			do_pkg=TGZ
 			;;
-		all)
+		all | ALL)
 			do_pkg=ALL
 			;;
 		*)
@@ -42,8 +45,9 @@ while [[ $# -gt 0 ]]; do
 			echo "  --package [PKG_EXTENSION]"
 			echo "    deb|DEB - Debian/Ubuntu package"
 			echo "    rpm|RPM - openSUSE/Fedora package"
+			echo "    pkg|PKG - ArchLinux package"
 			echo "    tgz|TGZ - other distributive"
-			echo "    all 	  - all available packages"
+			echo "    all|ALL - all available packages"
 			exit 1
 			;;
 		esac
@@ -81,7 +85,7 @@ if [[ ! $do_pkg ]]; then
 else
 	PKG=$do_pkg
 fi
-echo "do_pkg=$do_pkg | PKG=$PKG"
+
 if [[ $do_docs ]]; then
 	if [[ -e docs ]]; then
 		rm -rf docs
@@ -97,11 +101,12 @@ fi
 if [[ $do_tests ]]; then
 	TESTS=TRUE
 fi
+
 echo "* Starting CI building script with BUILD_TYPE = $DBG"
 if [[ -e build ]]; then
 	rm -rf build
 fi
-mkdir build && cd build || exit
+mkdir build 2> /dev/null && cd build || exit
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/ -DCMAKE_BUILD_TYPE=$DBG -DBUILD_TESTING:BOOL=$TESTS -DBUILD_NUMBER=$BUILD ..
 cmake --build . -- -j2
 
@@ -110,10 +115,14 @@ if [[ $do_tests ]]; then
 fi
 
 if [[ $do_pkg ]]; then
-	if [[ $PKG -eq "ALL" ]]; then
+	if [[ $PKG == "ALL" ]]; then
 		cpack .
+	elif [[ $PKG == "PKG" ]]; then
+	    cpack -G DEB
+	    debtap -Q libsock_connect-0."$MINOR"."$BUILD"-1-x86_64.deb
+	    rm libsock_connect-0."$MINOR"."$BUILD"-1-x86_64.deb*
 	else
-		cpack . -G $PKG
+		cpack -G $PKG
 	fi
 	PACK_TYPE="release"
 	if [[ $do_debug ]]; then
@@ -121,10 +130,5 @@ if [[ $do_pkg ]]; then
 	fi
 	mkdir -p "$src_dir"/packages/$PACK_TYPE/
 	mv ./*-0."$MINOR"."$BUILD"-* "$src_dir"/packages/$PACK_TYPE/ 2> /dev/null
-	if [[ $PKG -eq "DEB" || $PKG -eq "ALL" ]]; then
-		cd "$src_dir"/packages/$PACK_TYPE/ || exit
-		debtap -Q libsock_connect-0."$MINOR"."$BUILD"-1-x86_64.deb
-		cd "$src_dir" || exit
-	fi
 fi
 exit 0
