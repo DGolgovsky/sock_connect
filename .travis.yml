@@ -31,4 +31,4 @@ deploy:
       branch: master
   - provider: script
     skip_cleanup: true
-    script: curl -T packages/build/libsock_connect-0.1.$TRAVIS_BUILD_NUMBER-1-x86_64.deb -udgolgovsky:$BINTRAY_API_KEY "https://api.bintray.com/content/dgolgovsky/own/sock_connect/$TRAVIS_BUILD_NUMBER/libsock_connect-0.1.$TRAVIS_BUILD_NUMBER-1-x86_64.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+    script: curl -T packages/release/libsock_connect-0.1.$TRAVIS_BUILD_NUMBER-1-x86_64.deb -udgolgovsky:$BINTRAY_API_KEY "https://api.bintray.com/content/dgolgovsky/own/sock_connect/$TRAVIS_BUILD_NUMBER/libsock_connect-0.1.$TRAVIS_BUILD_NUMBER-1-x86_64.deb;deb_distribution=xenial;deb_component=main;deb_architecture=amd64;publish=1"
