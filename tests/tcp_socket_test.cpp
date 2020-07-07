@@ -23,7 +23,7 @@ void server() {
 	std::fill(ui32a, ui32a + array_size, distribution(generator));
 	std::fill(ui64a, ui64a + array_size, distribution(generator));
 
-	std::ifstream fstream("libsock_connect.so", std::ios::binary);
+	std::ifstream fstream("tcp_socket_test", std::ios::binary);
 	std::string file;
 	fstream.seekg(0, std::ios::end);
 	file.reserve(static_cast<unsigned long>(fstream.tellg()));
@@ -55,11 +55,11 @@ void server() {
 }
 
 int main() {
-	system ("rm -f libsock_connect.so.received");
+	system ("rm -f tcp_socket_test.received");
 	std::thread t(server);
 	t.detach();
 	auto socket = new Connector<TCP>(INADDR_LOOPBACK, 8010);
-	std::ofstream ofstream("libsock_connect.so.received", std::ios::binary);
+	std::ofstream ofstream("tcp_socket_test.received", std::ios::binary);
 	std::string file;
 	int i = 1;
 	std::size_t const array_size = 8;
@@ -96,7 +96,7 @@ int main() {
 			std::clog << "Client finished work" << std::endl;
 		}
 	}
-	system("md5sum libsock_connect.so libsock_connect.so.received");
+	system("md5sum tcp_socket_test tcp_socket_test.received");
 
 	return 0;
 }
