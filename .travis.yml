@@ -7,7 +7,10 @@ branches:
 
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
+      - g++-9
       - doxygen
       - graphviz
 
@@ -16,7 +19,7 @@ before_script: skip
 
 script:
   - doxygen $TRAVIS_BUILD_DIR/Doxyfile
-  - CXX=/usr/bin/g++ CC=/usr/bin/gcc ./ci-build.sh -p deb -v $TRAVIS_BUILD_NUMBER -b
+  - CXX=/usr/bin/g++-9 CC=/usr/bin/gcc-9 ./ci-build.sh -p deb -v $TRAVIS_BUILD_NUMBER -b
 
 deploy:
   - provider: pages
