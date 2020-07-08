@@ -2,7 +2,7 @@
 
 src_dir=$(pwd)
 TESTS=FALSE
-DBG="Debug"
+BUILD_TYPE="Debug"
 BUILD_VERSION=1
 
 if [[ -z "${MINOR_VERSION}" ]]; then
@@ -73,6 +73,7 @@ while [[ $# -gt 0 ]]; do
 	esac
 	shift
 done
+
 if [[ ! $do_pkg ]]; then
 	distroname=$(grep PRETTY_NAME /etc/os-release | sed 's/PRETTY_NAME=//g' | tr -d '="' | awk -F' ' '{print $1}')
 	if [[ $distroname == "Ubuntu" || $distroname == "Debian" ]]; then
@@ -93,21 +94,25 @@ if [[ $do_docs ]]; then
 	doxygen Doxyfile
 fi
 if [[ $do_debug ]]; then
-	DBG="Debug"
+	BUILD_TYPE="Debug"
 fi
 if [[ $do_release ]]; then
-	DBG="Release"
+	BUILD_TYPE="Release"
 fi
 if [[ $do_tests ]]; then
 	TESTS=TRUE
 fi
 
-echo "* Starting CI building script with BUILD_TYPE = $DBG"
+echo "* Starting CI building script with BUILD_TYPE = $BUILD_TYPE"
 if [[ -e build ]]; then
 	rm -rf build
 fi
 mkdir build 2> /dev/null && cd build || exit
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr/ -DCMAKE_BUILD_TYPE=$DBG -DBUILD_TESTING:BOOL=$TESTS -DBUILD_VERSION="$BUILD_VERSION" ..
+cmake .. \
+	-DCMAKE_INSTALL_PREFIX:PATH=/usr/ \
+	-DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+	-DTESTS:BOOL=$TESTS \
+	-DBUILD_VERSION="$BUILD_VERSION"
 cmake --build . -- -j2
 
 if [[ $do_tests ]]; then

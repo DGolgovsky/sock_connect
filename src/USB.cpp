@@ -1,7 +1,7 @@
 #include "USB.h"
+#include "type_name.h"
 #include <sys/ioctl.h>
 #include <fcntl.h>
-#include "type_name.h"
 
 USB::USB(std::string address, speed_t speed)
 		: address(std::move(address)), speed(speed) {}
