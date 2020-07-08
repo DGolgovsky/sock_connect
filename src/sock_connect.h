@@ -6,7 +6,7 @@
 #include "UNIX.h"
 
 template <class Type>
-class Connector
+class Connector final
 {
 private:
 	Type connection;
@@ -20,7 +20,7 @@ public:
 
 	int Accept() { return connection.Accept(); }
 	bool Listen() const { return connection.Listen(); }
-	bool Bind(bool listen = false) const { return connection.Bind(listen); }
+	bool Bind(bool listen = true) const { return connection.Bind(listen); }
 	bool Connect() { return connection.Connect(); }
 	void Shutdown(int id = 0) { return connection.Shutdown(id); }
 
@@ -35,7 +35,7 @@ public:
 	}
 
 	int id() { return connection.id(); }
-	bool status() const { return connection.status(); }
+	bool Status() const { return connection.status(); }
 	void assign_thread(int id) { return connection.assign_thread(id); }
 };
 

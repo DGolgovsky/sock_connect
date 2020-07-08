@@ -55,6 +55,7 @@ Connection::Connection(conn_type cp, uint32_t addr, uint16_t port)
 			  << "SOCK_ID = " << socket_.id() << "]\n" << std::flush;
 	debug_mutex.unlock();
 #endif
+	this->state = true;
 }
 
 Connection::Connection(conn_type cp, char const *addr, uint16_t port)
@@ -80,6 +81,7 @@ Connection::Connection(conn_type cp, std::string const &socket_path)
 			  << "std::string socket_path: " << socket_path << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
+	this->state = true;
 }
 
 Connection::Connection(conn_type cp, char const *path)
@@ -102,6 +104,11 @@ Connection::~Connection() {
 }
 
 void Connection::Shutdown(int id) {
+	if (!id) {
+		id = this->id();
+		this->state = false;
+	}
+
 	if (shutdown(id, SHUT_RDWR) < 0) {
 		if (close(id) < 0)
 			throw std::runtime_error("[SOCK_CONNECT] Shutdown failed, error number: "
@@ -121,6 +128,7 @@ void Connection::Shutdown(int id) {
 				  << std::flush;
 		debug_mutex.unlock();
 #endif
+		this->state = false;
 	}
 }
 
@@ -134,8 +142,8 @@ bool Connection::Bind(bool listen) const {
 #ifndef NDEBUG
 	if (socket_.c_type() != "UNIX") {
 		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] " << socket_.c_type() << " Address Binded: " << inet_ntoa(socket_addr.sin_addr)
-				  << ":" << ntohs(socket_addr.sin_port) << '\n' << std::flush;
+		std::clog << "[SOCK_CONNECT] " << socket_.c_type() << "::Bind(" << inet_ntoa(socket_addr.sin_addr)
+				  << ":" << ntohs(socket_addr.sin_port) << ")\n" << std::flush;
 		debug_mutex.unlock();
 	}
 #endif
@@ -155,8 +163,8 @@ bool Connection::Listen() const {
 #ifndef NDEBUG
 	if (socket_.c_type() != "UNIX") {
 		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] " << socket_.c_type() << " Address Listened: " << inet_ntoa(socket_addr.sin_addr)
-				  << ":" << ntohs(socket_addr.sin_port) << '\n' << std::flush;
+		std::clog << "[SOCK_CONNECT] " << socket_.c_type() << "::Listen(" << inet_ntoa(socket_addr.sin_addr)
+				  << ":" << ntohs(socket_addr.sin_port) << ")\n" << std::flush;
 		debug_mutex.unlock();
 	}
 #endif
@@ -173,8 +181,9 @@ int Connection::Accept() {
 	}
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] " << socket_.c_type() << " Client Connected: " << inet_ntoa(client_addr.sin_addr)
-			  << ":" << ntohs(client_addr.sin_port) << " | fd: " << transmission << '\n' << std::flush;
+	std::clog << "[SOCK_CONNECT] " << socket_.c_type() << "::Accept("
+			  << (socket_.c_type() != "UNIX" ? inet_ntoa(socket_addr.sin_addr) : this->m_path)
+			  << ":" << ntohs(client_addr.sin_port) << ") | fd: " << transmission << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
 	// Must be called at dev-side
@@ -184,20 +193,18 @@ int Connection::Accept() {
 
 bool Connection::Connect() {
 	if (connect(socket_.id(), ptr_addr, sizeof(*ptr_addr)) < 0) {
-		this->state = false;
 		return false;
 	}
 	timeval set = {60, 0};
 	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *) &set, sizeof(set));
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] " << socket_.c_type() << " Connected to: " << inet_ntoa(socket_addr.sin_addr)
-			  << ":" << ntohs(socket_addr.sin_port) << '\n' << std::flush;
+	std::clog << "[SOCK_CONNECT] " << socket_.c_type() << "::Connect("
+			  << (socket_.c_type() != "UNIX" ? inet_ntoa(socket_addr.sin_addr) : this->m_path)
+			  << ":" << ntohs(socket_addr.sin_port) << ")\n" << std::flush;
 	debug_mutex.unlock();
 #endif
-	this->state = true;
-	//this->assign_thread(socket_.id());
-	return true;
+	return this->state = true;
 }
 
 int Connection::id() noexcept {

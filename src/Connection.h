@@ -39,7 +39,7 @@
 
 class Connection
 {
-	using storage_t = std::vector<std::pair<std::thread::id, int>>;
+	using storage_t = std::vector<std::pair<std::thread::id, int>>; // state for each connection
 
 protected:
 	SocketIp socket_;
@@ -100,14 +100,14 @@ public:
 	/**
 	 * @brief Binding address
 	 * Bind function
-	 * @return status of execution
+	 * @return Status of execution
 	 */
 	[[nodiscard]] bool Bind(bool listen) const;
 
 	/**
 	 * @brief Listening address
 	 * Listen functions
-	 * @return status of execution
+	 * @return Status of execution
 	 */
 	[[nodiscard]] bool Listen() const;
 
@@ -141,7 +141,7 @@ public:
 	int id() noexcept;
 
 	/**
-	 * Connection status
+	 * Connection Status
 	 */
 	[[nodiscard]] bool status() const;
 
@@ -150,7 +150,6 @@ public:
 	 * @param id Client ID
 	 */
 	void assign_thread(int id);
-
 	int get_descriptor();
 };
 

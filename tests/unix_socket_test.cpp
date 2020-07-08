@@ -63,7 +63,6 @@ int main() {
 	auto socket = new Connector<UNIX>("/tmp/sun_path");
 	std::ofstream ofstream("unix_socket_test.received", std::ios::binary);
 	std::string file;
-	int i = 1;
 	std::size_t const array_size = 8;
 	uint8_t ui8 = 0;
 	uint16_t ui16 = 0;
@@ -75,7 +74,7 @@ int main() {
 	uint32_t ui32a [array_size];
 	uint64_t ui64a [array_size];
 
-	while (i) {
+	while (socket->Status()) {
 		if (socket->Connect()) {
 			socket->Receive(&ui8, sizeof(ui8));
 			socket->Receive(&ui16, sizeof(ui16));
@@ -95,7 +94,6 @@ int main() {
 				ofstream << file;
 
 			socket->Shutdown();
-			i = 0;
 			std::clog << "Client finished work" << std::endl;
 		}
 	}

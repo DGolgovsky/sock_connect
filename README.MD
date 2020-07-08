@@ -76,7 +76,7 @@ auto recv_sz = sizeof(uint16_t);
 
 /* Create new socket connection */
 auto tcp = new Connector<TCP>(IP, PORT);
-while (true) {
+while (tcp->Status()) {
     // While tcp establish connection to server
     if (tcp->Connect()) {
         // While data receiving do something with it
@@ -115,7 +115,7 @@ void receiver()
     /* Creating new connection */
     auto tcp = new Connector<TCP>(IP, PORT);
 
-    tcp->Bind(); /* You can use it as TCP->Bind(true); for bind && listen */
+    tcp->Bind(false); /* You can use it as TCP->Bind(); for bind && listen */
     tcp->Listen(); /* You may don't need this part if you bind with (true) option */
 
     int client_id = 0;
@@ -141,13 +141,13 @@ auto msg_sz = sizeof(uint16_t);
 while (true) {
     if (tcp->Connect()) {
         // If connection successful,
-        // send data while status() returns true
-        while (tcp->status()) {
+        // send data while Status() returns true
+        while (tcp->Status()) {
             msg = rand() % 50; // Generate random data
             if (msg) {
                 // Trying to send message
                 // Continue if sending is failure,
-                // Also tcp->status() will return false
+                // Also tcp->Status() will return false
                 if (!tcp->Send(&msg, msg_sz)) continue;
                 // Send udp package
                 udp->Send(&msg, msg_sz);                
