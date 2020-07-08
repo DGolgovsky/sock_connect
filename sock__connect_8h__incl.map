@@ -1,7 +1,0 @@
-<map id="src/sock_connect.h" name="src/sock_connect.h">
-<area shape="rect" id="node2" href="$_t_c_p_8h.html" title="TCP.h" alt="" coords="177,80,231,107"/>
-<area shape="rect" id="node19" href="$_u_d_p_8h.html" title="UDP.h" alt="" coords="255,80,315,107"/>
-<area shape="rect" id="node20" href="$_u_n_i_x_8h.html" title="UNIX.h" alt="" coords="339,80,405,107"/>
-<area shape="rect" id="node3" href="$_connection_8h.html" title="Socket Connection Class. " alt="" coords="232,155,339,181"/>
-<area shape="rect" id="node10" href="$_socket_ip_8h.html" title="Socket Connection support Class. " alt="" coords="543,229,633,256"/>
-</map>
