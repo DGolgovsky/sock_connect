@@ -36,6 +36,7 @@ void server() {
 	if (!bind)
 		return;
 	if (socket->Accept()) {
+		sleep(20);
 		std::size_t size = file.length();
 		socket->Send(&ui8, sizeof(ui8));
 		socket->Send(&ui16, sizeof(ui16));

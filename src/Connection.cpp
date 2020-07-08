@@ -41,11 +41,10 @@ Connection::Connection(conn_type cp, uint32_t addr, uint16_t port)
 	ptr_addr = (sockaddr *) &socket_addr;
 	size_addr = sizeof(socket_addr);
 	clients = new storage_t(32);
-	timeval set = {10, 0};
+	timeval set = {60, 0};
 	int reuse = 1;
 	setsockopt(socket_.id(), SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 	setsockopt(socket_.id(), SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse));
-	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *) &set, sizeof(set));
 	setsockopt(socket_.id(), SOL_SOCKET, SO_SNDTIMEO, (char *) &set, sizeof(set));
 
 #ifndef NDEBUG
@@ -188,6 +187,8 @@ bool Connection::Connect() {
 		this->state = false;
 		return false;
 	}
+	timeval set = {60, 0};
+	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *) &set, sizeof(set));
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] " << socket_.c_type() << " Connected to: " << inet_ntoa(socket_addr.sin_addr)
@@ -231,5 +232,3 @@ int Connection::get_descriptor() {
 	else
 		return this->id();
 }
-
-
