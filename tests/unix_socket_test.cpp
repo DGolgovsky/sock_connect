@@ -32,7 +32,7 @@ void server() {
 				std::istreambuf_iterator<char>());
 
 	std::string sun_path = "/tmp/sun_path";
-	auto socket = new Connector<UNIX>(sun_path);
+	auto socket = std::make_shared<Connector<UNIX>>(sun_path);
 	auto bind = socket->Bind(true);
 	if (!bind)
 		return;
@@ -59,8 +59,7 @@ int main() {
 	system ("rm -f unix_socket_test.received");
 	std::thread t(server);
 	t.detach();
-	//std::string sun_path = "/tmp/sun_path";
-	auto socket = new Connector<UNIX>("/tmp/sun_path");
+	auto socket = std::make_shared<Connector<UNIX>>("/tmp/sun_path");
 	std::ofstream ofstream("unix_socket_test.received", std::ios::binary);
 	std::string file;
 	std::size_t const array_size = 8;

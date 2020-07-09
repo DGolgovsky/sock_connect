@@ -132,8 +132,24 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		list(APPEND PUBLIC_CXX_FLAGS "-Weverything" "-stdlib=libc++" "-pthread")
+		list(APPEND PUBLIC_CXX_FLAGS "-Wno-null-dereference")
+		list(APPEND PUBLIC_CXX_FLAGS "-Wno-sign-conversion")
+		list(APPEND PUBLIC_CXX_FLAGS "-Wno-unused-local-typedef")
+		list(APPEND PUBLIC_CXX_FLAGS "-Wthread-safety")
 	else()
-		list(APPEND PUBLIC_CXX_FLAGS "-Wctor-dtor-privacy" "-Wenum-compare" "-Wfloat-equal" "-Wnon-virtual-dtor" "-Woverloaded-virtual" "-Wredundant-decls")
+		list(APPEND PUBLIC_CXX_FLAGS
+		     "-Wctor-dtor-privacy"
+		     "-Wenum-compare"
+		     "-Wfloat-equal"
+		     "-Wnon-virtual-dtor"
+		     "-Woverloaded-virtual"
+		     "-Wredundant-decls"
+		     "-Wconversion"
+		     "-Wno-unused-parameter"
+		     "-Wold-style-cast"
+		     "-Wpointer-arith"
+		     "-Wshadow"
+		     "-Wwrite-strings")
 	endif()
 endif()
 

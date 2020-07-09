@@ -2,7 +2,7 @@
 #include "type_name.h"
 
 /**
- * Transform <const char*> IP-address to uint32_t
+ * Transform <const char*> IP-m_address to uint32_t
  * "127.0.0.1" -> 0x7f000001
  */
 unsigned int ip_to_int(std::string const &str) {
@@ -38,14 +38,14 @@ Connection::Connection(conn_type cp, uint32_t addr, uint16_t port)
 	socket_addr.sin_family = AF_INET;
 	socket_addr.sin_addr.s_addr = htonl(address_);
 	socket_addr.sin_port = htons(port_);
-	ptr_addr = (sockaddr *) &socket_addr;
+	ptr_addr = reinterpret_cast<sockaddr *>(&socket_addr);
 	size_addr = sizeof(socket_addr);
 	clients = new storage_t(32);
 	timeval set = {60, 0};
 	int reuse = 1;
 	setsockopt(socket_.id(), SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
 	setsockopt(socket_.id(), SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse));
-	setsockopt(socket_.id(), SOL_SOCKET, SO_SNDTIMEO, (char *) &set, sizeof(set));
+	setsockopt(socket_.id(), SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<char *>(&set), sizeof(set));
 
 #ifndef NDEBUG
 	debug_mutex.lock();
@@ -72,7 +72,7 @@ Connection::Connection(conn_type cp, std::string const &socket_path)
 	conn_memset();
 	unix_addr.sun_family = AF_UNIX;
 	strcpy(unix_addr.sun_path, socket_path.c_str());
-	ptr_addr = (sockaddr *) &unix_addr;
+	ptr_addr = reinterpret_cast<sockaddr *>(&unix_addr);
 	size_addr = sizeof(unix_addr);
 	clients = new storage_t(32);
 #ifndef NDEBUG
@@ -85,7 +85,7 @@ Connection::Connection(conn_type cp, std::string const &socket_path)
 }
 
 Connection::Connection(conn_type cp, char const *path)
-		: Connection(cp, (std::string) path) {}
+		: Connection(cp, static_cast<std::string>(path)) {}
 
 void Connection::conn_memset() {
 	memset(&socket_addr, '\0', sizeof(socket_addr));
@@ -174,7 +174,7 @@ bool Connection::Listen() const {
 
 int Connection::Accept() {
 	socklen_t sz = sizeof(client_addr);
-	int transmission = accept(socket_.id(), (sockaddr *) &client_addr, &sz);
+	int transmission = accept(socket_.id(), reinterpret_cast<sockaddr *>(&client_addr), &sz);
 	if (transmission < 0) {
 		throw std::runtime_error(
 				"[SOCK_CONNECT] " + socket_.c_type() + " Accept failed, error number: " + std::to_string(errno));
@@ -196,7 +196,7 @@ bool Connection::Connect() {
 		return false;
 	}
 	timeval set = {60, 0};
-	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, (char *) &set, sizeof(set));
+	setsockopt(socket_.id(), SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<char *>(&set), sizeof(set));
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] " << socket_.c_type() << "::Connect("

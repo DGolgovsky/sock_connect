@@ -15,8 +15,8 @@
  * Realize sending, receiving data [int, string]
  *
  * Functional for prototyping the following:
- * - binding address
- * - listening address
+ * - binding m_address
+ * - listening m_address
  * - accepting new connection
  * - connecting to something via TCP
  * - sendind data
@@ -98,14 +98,14 @@ public:
 	virtual ~Connection();
 
 	/**
-	 * @brief Binding address
+	 * @brief Binding m_address
 	 * Bind function
 	 * @return Status of execution
 	 */
 	[[nodiscard]] bool Bind(bool listen) const;
 
 	/**
-	 * @brief Listening address
+	 * @brief Listening m_address
 	 * Listen functions
 	 * @return Status of execution
 	 */

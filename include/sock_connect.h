@@ -15,7 +15,7 @@ public:
 	template <typename T>
 	explicit Connector(T sun_path) : connection(sun_path) {}
 	template <typename T, typename U>
-	Connector(T addr, U port) : connection(addr, port) {}
+	Connector(T addr, U port) : connection(addr, static_cast<uint16_t>(port)) {}
 	~Connector() = default;
 
 	int Accept() { return connection.Accept(); }

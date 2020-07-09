@@ -31,7 +31,7 @@ void server() {
 	file.assign((std::istreambuf_iterator<char>(fstream)),
 				std::istreambuf_iterator<char>());
 
-	auto socket = new Connector<TCP>(INADDR_LOOPBACK, 8010);
+	auto socket = std::make_shared<Connector<TCP>>(INADDR_LOOPBACK, 8010);
 	if (!socket->Bind())
 		return;
 	if (socket->Accept()) {
@@ -46,7 +46,6 @@ void server() {
 		socket->Send(ui32a, sizeof(ui32) * array_size);
 		socket->Send(ui64a, sizeof(ui64) * array_size);
 
-		//std::clog << "SENT: ui8 = " << (int)ui8 << "; ui16 = " << ui16 << "; ui32 = " << ui32 << std::endl;
 		socket->Send(&size, sizeof(size));
 		socket->Send(&file, size);
 	}
@@ -57,7 +56,7 @@ int main() {
 	system ("rm -f tcp_socket_test.received");
 	std::thread t(server);
 	t.detach();
-	auto socket = new Connector<TCP>(INADDR_LOOPBACK, 8010);
+	auto socket = std::make_shared<Connector<TCP>>(INADDR_LOOPBACK, 8010);
 	std::ofstream ofstream("tcp_socket_test.received", std::ios::binary);
 	std::string file;
 	std::size_t const array_size = 8;

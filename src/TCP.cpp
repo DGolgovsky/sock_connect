@@ -6,7 +6,7 @@ TCP::TCP(uint32_t address, uint16_t port)
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] TCP::TCP("
-			<< type_name<decltype(address)>() << " address: " << address << ", "
+			<< type_name<decltype(address)>() << " m_address: " << address << ", "
 			<< type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
@@ -17,7 +17,7 @@ TCP::TCP(const char *address, uint16_t port)
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] TCP::TCP("
-			<< type_name<decltype(address)>() << " address: " << address << ", "
+			<< type_name<decltype(address)>() << " m_address: " << address << ", "
 			<< type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
@@ -28,7 +28,7 @@ TCP::TCP(const std::string &address, uint16_t port)
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] TCP::TCP("
-			<< type_name<decltype(address)>() << " address: " << address << ", "
+			<< type_name<decltype(address)>() << " m_address: " << address << ", "
 			<< type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif

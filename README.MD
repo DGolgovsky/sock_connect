@@ -55,13 +55,13 @@ Package provides headers installs at `/usr/include` and `.so` library, puts to `
 
 ---
 1. Connection with `TCP` transmission
-    * `auto tcp = new Connector<TCP>(IP, PORT);`
+    * `auto tcp = std::make_shared<Connector<TCP>>(IP, PORT);`
 2. Connection with `UDP` transmission
-    * `auto udp = new Connector<UDP>(INADDR_ANY, PORT);`
+    * `auto udp = std::make_shared<Connector<UDP>>(INADDR_ANY, PORT);`
 3. Connection with `UNIX-domain` sockets transmission
-    * `auto unix = new Connector<UNIX>(sun_path);`
+    * `auto unix = std::make_shared<Connector<UNIX>>(sun_path);`
 4. Connection with `USB` transmission
-    * `auto usb = new Connector<USB>(dev_path, speed);`
+    * `auto usb = std::make_shared<Connector<USB>>(dev_path, speed);`
 5. **`DEPRECATED`** Transform `const char*` ip-addr `192.168.1.42` to `uint32_t`
     * `uint32_t IP = ip_to_int(argv[1]);`
 
@@ -75,7 +75,7 @@ uint16_t msg = 0;
 auto recv_sz = sizeof(uint16_t);
 
 /* Create new socket connection */
-auto tcp = new Connector<TCP>(IP, PORT);
+auto tcp = std::make_shared<Connector<TCP>>(IP, PORT);
 while (tcp->Status()) {
     // While tcp establish connection to server
     if (tcp->Connect()) {
@@ -86,12 +86,9 @@ while (tcp->Status()) {
             // ...
         }
         // Trying reconnect if connection lost
-        delete tcp;
-        auto new_tcp = new Connector<TCP>(IP, PORT);
-        tcp = new_tcp;
+        tcp.reset(new Connector<TCP>(IP, PORT));
     }
 }
-delete tcp;
 ```
 
 * Receiving `TCP` as multi-server:
@@ -113,7 +110,7 @@ void handler(T tcp, int client_id) {
 void receiver()
 {
     /* Creating new connection */
-    auto tcp = new Connector<TCP>(IP, PORT);
+    auto tcp = std::make_shared<Connector<TCP>>(IP, PORT);
 
     tcp->Bind(false); /* You can use it as TCP->Bind(); for bind && listen */
     tcp->Listen(); /* You may don't need this part if you bind with (true) option */
@@ -124,15 +121,14 @@ void receiver()
         std::thread thread(handler<decltype(tcp)>, tcp, client_id);
         thread.detach();
     }
-    delete tcp;
 }
 ```
 
 * Sending `TCP` as client to server, broadcasting `UDP`:
 
 ```cpp
-auto tcp = new Connector<TCP>(INADDR_LOOPBACK, PORT); // 127.0.0.1
-auto udp = new Connector<UDP>(INADDR_ANY, PORT); // 0.0.0.0
+auto tcp = std::make_shared<Connector<TCP>>(INADDR_LOOPBACK, PORT); // 127.0.0.1
+auto udp = std::make_shared<Connector<UDP>>(INADDR_ANY, PORT); // 0.0.0.0
 
 uint16_t msg = 0;
 auto msg_sz = sizeof(uint16_t);
@@ -154,13 +150,9 @@ while (true) {
             }
         }
         // Reconnecting if connection lost
-        delete tcp;
-        auto new_tcp = new Connector<TCP>(INADDR_LOOPBACK, PORT);
-        tcp = new_tcp;
+        tcp.reset(new Connector<TCP>(INADDR_LOOPBACK, PORT));
     }
 }
-delete udp;
-delete tcp;
 ```
 
 #### License:

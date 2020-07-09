@@ -10,15 +10,15 @@ private:
 	int fd = -1;
 	char buffer[1500]{};
 	ssize_t msg_sz{-1};
-	std::string address;
-	speed_t speed;
+	std::string m_address;
+	speed_t m_speed;
 public:
 	bool state{false};
 
 public:
 	/**
 	 * @param address path to device {/dev/ttyACM0 | /dev/ttyUSB0}
-	 * @param speed connection speed: B9600, B57600, B115200
+	 * @param speed connection m_speed: B9600, B57600, B115200
 	 */
 	explicit USB(std::string address, speed_t speed);
 	~USB();

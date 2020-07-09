@@ -4,14 +4,14 @@
 #include "type_name.h"
 
 USB::USB(std::string address, speed_t speed)
-		: address(std::move(address)), speed(speed) {}
+		: m_address(std::move(address)), m_speed(speed) {}
 
 USB::~USB() {
 	Shutdown();
 }
 
 bool USB::Connect() {
-	fd = open(address.data(), O_RDWR | O_NOCTTY | O_NDELAY);
+	fd = open(m_address.data(), O_RDWR | O_NOCTTY | O_NDELAY);
 
 	if (fd == -1) {
 		return (this->state = false);
@@ -41,7 +41,7 @@ bool USB::Connect() {
 	tio.c_lflag = 0;       //ICANON;
 	tio.c_cc[VTIME] = 0;
 	tio.c_cc[VMIN] = 0;
-	cfsetspeed(&tio, speed);
+	cfsetspeed(&tio, m_speed);
 	int err = ::tcsetattr(fd, TCSAFLUSH, &tio);
 	if (err != 0) {
 		this->Shutdown();
@@ -50,8 +50,8 @@ bool USB::Connect() {
 
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB Connected to: " << address.data()
-			  << ":" << speed << '\n' << std::flush;
+	std::clog << "[SOCK_CONNECT] USB Connected to: " << m_address.data()
+			  << ":" << m_speed << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
 	return (this->state = true);
