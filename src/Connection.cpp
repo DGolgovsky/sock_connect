@@ -105,7 +105,7 @@ Connection::~Connection() {
 
 void Connection::Shutdown(int id) {
 	if (!id) {
-		id = this->id();
+		id = this->get_descriptor();
 		this->state = false;
 	}
 

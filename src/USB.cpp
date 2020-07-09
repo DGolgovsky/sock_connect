@@ -1,7 +1,7 @@
 #include "USB.h"
-#include "type_name.h"
 #include <sys/ioctl.h>
 #include <fcntl.h>
+#include "type_name.h"
 
 USB::USB(std::string address, speed_t speed)
 		: address(std::move(address)), speed(speed) {}
@@ -26,7 +26,7 @@ bool USB::Connect() {
 	 * B1152000, B1500000, B2000000, B2500000, B3000000, B3500000, B4000000
 	 *
 	 * CSIZE:- CS5, CS6, CS7, CS8
-	 * CLOCAL - Ignore modem status lines
+	 * CLOCAL - Ignore modem Status lines
 	 * CREAD - Enable receiver
 	 * IGNPAR = Ignore characters with parity errors
 	 * ICRNL - Map CR to NL on input (Use for ASCII comms where you want to auto correct end of line characters - don't use for bianry comms!)

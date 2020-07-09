@@ -20,7 +20,6 @@
 #include <stdexcept>
 
 #ifndef NDEBUG
-
 #include <mutex>
 #include <iostream>
 
@@ -43,7 +42,6 @@ std::string print_values(T *val, std::size_t sz) {
 	}
 	return os;
 }
-
 #endif
 
 enum conn_type : char
