@@ -111,8 +111,8 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		message(STATUS "C++std: -std=c++${CMAKE_CXX_STANDARD} (default)")
 	endif()
 
-	list(APPEND PRIVATE_CXX_FLAGS "-Wall" "-Wextra" "-Werror" "-pedantic")
-	list(APPEND PRIVATE_CXX_FLAGS "-march=native" "-mtune=generic" "-pipe" "-fPIC" "-fstack-protector-strong" "-fno-plt")
+	list(APPEND PUBLIC_CXX_FLAGS "-Wall" "-Wextra" "-Werror" "-pedantic")
+	list(APPEND PUBLIC_CXX_FLAGS "-march=native" "-mtune=generic" "-pipe" "-fPIC" "-fstack-protector-strong" "-fno-plt")
 	if(CMAKE_TARGET_ARCHITECTURE STREQUAL "x86_64")
 		list(APPEND PUBLIC_CXX_FLAGS "-mcx16")
 		set(LIB_SUFFIX "64")
@@ -131,13 +131,13 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	endif()
 
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-		list(APPEND PUBLIC_CXX_FLAGS "-Weverything" "-stdlib=libc++" "-pthread")
-		list(APPEND PUBLIC_CXX_FLAGS "-Wno-null-dereference")
-		list(APPEND PUBLIC_CXX_FLAGS "-Wno-sign-conversion")
-		list(APPEND PUBLIC_CXX_FLAGS "-Wno-unused-local-typedef")
-		list(APPEND PUBLIC_CXX_FLAGS "-Wthread-safety")
+		list(APPEND PRIVATE_CXX_FLAGS "-Weverything" "-stdlib=libc++" "-pthread")
+		list(APPEND PRIVATE_CXX_FLAGS "-Wno-null-dereference")
+		list(APPEND PRIVATE_CXX_FLAGS "-Wno-sign-conversion")
+		list(APPEND PRIVATE_CXX_FLAGS "-Wno-unused-local-typedef")
+		list(APPEND PRIVATE_CXX_FLAGS "-Wthread-safety")
 	else()
-		list(APPEND PUBLIC_CXX_FLAGS
+		list(APPEND PRIVATE_CXX_FLAGS
 		     "-Wctor-dtor-privacy"
 		     "-Wenum-compare"
 		     "-Wfloat-equal"
