@@ -2,7 +2,7 @@
 #include "type_name.h"
 
 /**
- * Transform <const char*> IP-m_address to uint32_t
+ * Transform <const char*> IP-address to uint32_t
  * "127.0.0.1" -> 0x7f000001
  */
 unsigned int ip_to_int(std::string const &str) {
@@ -172,7 +172,7 @@ bool Connection::Listen() const {
 	return true;
 }
 
-int Connection::Accept() {
+int Connection::Accept(std::string *client_address) {
 	socklen_t sz = sizeof(client_addr);
 	int transmission = accept(socket_.id(), reinterpret_cast<sockaddr *>(&client_addr), &sz);
 	if (transmission < 0) {
@@ -182,12 +182,15 @@ int Connection::Accept() {
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] " << socket_.c_type() << "::Accept("
-			  << (socket_.c_type() != "UNIX" ? inet_ntoa(socket_addr.sin_addr) : this->m_path)
+			  << (socket_.c_type() != "UNIX" ? inet_ntoa(client_addr.sin_addr) : this->m_path)
 			  << ":" << ntohs(client_addr.sin_port) << ") | fd: " << transmission << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
-	// Must be called at dev-side
-	this->assign_thread(transmission);
+	if (client_address) {
+        client_address->append((socket_.c_type() != "UNIX" ? inet_ntoa(client_addr.sin_addr) : this->m_path));
+	}
+	// Must be called also at dev-side
+    this->assign_thread(transmission);
 	return transmission;
 }
 

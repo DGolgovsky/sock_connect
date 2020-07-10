@@ -4,10 +4,24 @@
 #include "type_name.h"
 
 USB::USB(std::string address, speed_t speed)
-		: m_address(std::move(address)), m_speed(speed) {}
+		: m_address(std::move(address)), m_speed(speed)
+{
+#ifndef NDEBUG
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] USB::USB("
+              << type_name<decltype(address)>() << " address: " << address << ", "
+              << type_name<decltype(speed)>() << " speed: " << speed << ")" << '\n' << std::flush;
+    debug_mutex.unlock();
+#endif
+}
 
 USB::~USB() {
 	Shutdown();
+#ifndef NDEBUG
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] USB::~USB()\n" << std::flush;
+    debug_mutex.unlock();
+#endif
 }
 
 bool USB::Connect() {
@@ -50,8 +64,8 @@ bool USB::Connect() {
 
 #ifndef NDEBUG
 	debug_mutex.lock();
-	std::clog << "[SOCK_CONNECT] USB Connected to: " << m_address.data()
-			  << ":" << m_speed << '\n' << std::flush;
+	std::clog << "[SOCK_CONNECT] USB::Connect(" << m_address.data()
+			  << ":" << m_speed << ")\n" << std::flush;
 	debug_mutex.unlock();
 #endif
 	return (this->state = true);
@@ -143,8 +157,7 @@ template ssize_t USB::Send(bool const *, std::size_t);
 
 template <>
 ssize_t USB::Receive(std::string *value, std::size_t const tu_size) {
-	if (value->size() < tu_size && tu_size < value->max_size())
-		value->resize(tu_size, '\0');
+    value->resize(tu_size < value->max_size() ? tu_size : value->max_size(), '\0');
 	msg_sz = USB::Receive(&value->front(), tu_size);
 	value->shrink_to_fit();
 	return msg_sz;
@@ -156,6 +169,11 @@ ssize_t USB::Send(std::string const *value, std::size_t const tu_size) {
 }
 
 void USB::Shutdown() {
+#ifndef NDEBUG
+    debug_mutex.lock();
+    std::clog << "[SOCK_CONNECT] USB::Shutdown(): " << fd << '\n' << std::flush;
+    debug_mutex.unlock();
+#endif
 	if (fd >= 0)
 		close(fd);
 	fd = -1;

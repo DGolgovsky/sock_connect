@@ -8,7 +8,6 @@ class USB
 {
 private:
 	int fd = -1;
-	char buffer[1500]{};
 	ssize_t msg_sz{-1};
 	std::string m_address;
 	speed_t m_speed;
