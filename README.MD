@@ -8,6 +8,7 @@ Shared library that realize sockets connections and could transfer data-packages
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
+- [Variations](#variations)
 - [License](#license)
 
 #### Installation:
