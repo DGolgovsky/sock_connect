@@ -1,6 +1,6 @@
-## Shared library Socket Connection
+## Socket Connection wrapper shared library 
 
-Shared library that realize connections and could transfer data-packages.
+Shared library that realize sockets connections and could transfer data-packages.
 
 #### Navigation
 
@@ -8,19 +8,19 @@ Shared library that realize connections and could transfer data-packages.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
-- [Variations](#variations)
 - [License](#license)
 
 #### Installation:
 
 ---
 Compile from source
-    * `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository 
-    * `cd sock_connect` change directory to cloned repo-dir
-    * `./ci-build.sh -r` compile **latest** version
-    * **OR** use `./ci-build.sh -h` for print help information for another variations of building
-    * `cd build` jump to directory with compiled objects
-    * `sudo make install` install library as `root`
+
+* `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository 
+* `cd sock_connect` change directory to cloned repo-dir
+* `./ci-build.sh -r` compile **latest** release version
+* also you can use `./ci-build.sh -h` for print help information for another variations of building
+* `cd build` jump to directory with compiled objects
+* `sudo make install` install library as `root`
 
 Package provides headers installs at `/usr/include` and `.so` library, puts to `/usr/lib`
 
