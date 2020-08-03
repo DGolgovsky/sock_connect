@@ -18,7 +18,7 @@ unsigned int ip_to_int(std::string const &str) {
 
 	for (const auto &c : str) {
 		if (std::isdigit(c)) {
-			part = (part * 10) + (c - '0');
+			part = (part * 10) + (static_cast<unsigned int>(c - '0'));
 		} else if (c == '.') {
 			if (++part_count == 4) break;
 			ip = (ip << 8) + part;
