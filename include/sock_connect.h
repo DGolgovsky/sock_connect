@@ -97,7 +97,7 @@ public:
      * @return count of sent bytes
      */
     template<typename T>
-    ssize_t Send(const T *value, std::size_t size) {
+    std::size_t Send(const T *value, std::size_t size) {
         return connection.Send(value, size);
     }
 
@@ -109,7 +109,7 @@ public:
      * @return count of received bytes
      */
     template<typename T>
-    ssize_t Receive(T *value, std::size_t size) {
+	std::size_t Receive(T *value, std::size_t size) {
         return connection.Receive(value, size);
     }
 

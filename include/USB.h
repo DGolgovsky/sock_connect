@@ -2,24 +2,26 @@
 #define SOCK_CONNECT_USB_H
 
 #include "Connection.h"
+#include <sys/ioctl.h>
+#include <fcntl.h>
 #include <termios.h>
 
 class USB
 {
 private:
 	int fd = -1;
-	ssize_t msg_sz{-1};
+	ssize_t msg_sz{};
 	std::string m_address;
 	speed_t m_speed;
-public:
-	bool state{false};
+	bool state{true};
 
 public:
 	/**
 	 * @param address path to device {/dev/ttyACM0 | /dev/ttyUSB0}
 	 * @param speed connection m_speed: B9600, B57600, B115200
 	 */
-	explicit USB(std::string address, speed_t speed);
+	explicit USB(const std::string &address, speed_t speed);
+	explicit USB(const char *address, 		 speed_t speed);
 	~USB();
 
 	/**
@@ -27,18 +29,31 @@ public:
 	 */
 	bool Connect();
 	void Shutdown();
+	void Shutdown(int id);
 
 	template <typename T>
-	ssize_t Receive(T *value, std::size_t tu_size);
+	std::size_t Receive(T *value, std::size_t tu_size);
 
 	template <typename T>
-	ssize_t Send(T const *value, std::size_t tu_size);
+	std::size_t Send(T const *value, std::size_t tu_size);
 
+	bool status() const;
+
+	/**
+	 * Current here for compability
+	 * Do the same as get_descriptor
+	 * @return fd
+	 */
+	int id() const;
+	int Accept(std::string);
+	bool Listen() const;
+	bool Bind() const;
+	void assign_thread(int id);
+
+private:
+	int get_descriptor() const;
 	void setRTS() const;
 	void clrRTS() const;
-
-	int id() const;
-	bool status() const;
 };
 
 #endif // SOCK_CONNECT_USB_H

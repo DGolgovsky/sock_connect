@@ -14,7 +14,7 @@ void server() {
 
 	unsigned long sz = file.length();
 	socket->Send(&sz, sizeof(sz));
-	auto msg_sz = static_cast<unsigned long>(socket->Send(&file, sz));
+	auto msg_sz = socket->Send(&file, sz);
 	if (msg_sz < sz)
 		std::cout << "File doesn't sent: msg_size = " << msg_sz << std::endl;
 	std::cout << "Server finished work" << std::endl;

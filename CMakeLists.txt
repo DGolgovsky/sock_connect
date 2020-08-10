@@ -203,6 +203,11 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
 	target_include_directories(unix_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 	target_link_libraries(unix_socket_test ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 	set_target_properties(unix_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
+
+	add_executable(usb_socket_test tests/usb_socket_test.cpp)
+	target_include_directories(usb_socket_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+	target_link_libraries(usb_socket_test ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+	set_target_properties(usb_socket_test PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 endif()
 
 install(TARGETS ${SC_SHARED_LIBRARY} EXPORT LibSCConfig LIBRARY DESTINATION lib${LIB_SUFFIX} COMPONENT ${LIBRARIES_COMPONENT} NAMELINK_SKIP)

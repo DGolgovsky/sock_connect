@@ -59,8 +59,8 @@ public:
 
 	virtual ~Connection();
 
-	[[nodiscard]] bool Bind(bool listen) const;
-	[[nodiscard]] bool Listen() const;
+	bool Bind(bool listen) const;
+	bool Listen() const;
 
 	int Accept(std::string *client_address);
 	bool Connect();
@@ -68,7 +68,7 @@ public:
 	void Shutdown(int id);
 
 	int id() noexcept;
-	[[nodiscard]] bool status() const;
+	bool status() const;
 
 	void assign_thread(int id);
 
