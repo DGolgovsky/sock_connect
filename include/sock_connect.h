@@ -4,6 +4,7 @@
 #include "TCP.h"
 #include "UDP.h"
 #include "UNIX.h"
+#include "USB.h"
 
 /**
  * @mainpage
