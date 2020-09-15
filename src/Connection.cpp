@@ -5,7 +5,7 @@
  * Transform <const char*> IP-address to uint32_t
  * "127.0.0.1" -> 0x7f000001
  */
-unsigned int ip_to_int(std::string const &str) {
+static unsigned int ip_to_int(std::string const &str) {
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] Connection::ip_to_int("

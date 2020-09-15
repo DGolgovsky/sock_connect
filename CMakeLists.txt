@@ -111,7 +111,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		message(STATUS "C++std: -std=c++${CMAKE_CXX_STANDARD} (default)")
 	endif()
 
-	list(APPEND PUBLIC_CXX_FLAGS "-Wall" "-Wextra" "-Werror" "-pedantic")
 	list(APPEND PUBLIC_CXX_FLAGS "-march=native" "-mtune=generic" "-pipe" "-fPIC" "-fstack-protector-strong" "-fno-plt")
 	if(CMAKE_TARGET_ARCHITECTURE STREQUAL "x86_64")
 		list(APPEND PUBLIC_CXX_FLAGS "-mcx16")
@@ -131,7 +130,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	endif()
 
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-		list(APPEND PRIVATE_CXX_FLAGS "-Weverything" "-stdlib=libc++" "-pthread")
+		list(APPEND PRIVATE_CXX_FLAGS "-Weverything" "-pthread")
+		list(APPEND PRIVATE_CXX_FLAGS "-stdlib=libstdc++" "-lstdc++")
+		list(APPEND PRIVATE_CXX_FLAGS "-Wno-c++98-compat" "-Wno-c++98-compat-pedantic")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-null-dereference")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-sign-conversion")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-unused-local-typedef")
@@ -150,6 +151,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		     "-Wpointer-arith"
 		     "-Wshadow"
 		     "-Wwrite-strings")
+		list(APPEND PUBLIC_CXX_FLAGS "-Wall" "-Wextra" "-Werror" "-pedantic")
 	endif()
 endif()
 

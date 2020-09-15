@@ -187,7 +187,7 @@ void USB::Shutdown() {
 	fd = -1;
 }
 
-void USB::Shutdown(int id) {
+void USB::Shutdown(int) {
 	this->Shutdown();
 }
 
@@ -213,7 +213,7 @@ int USB::get_descriptor() const {
 	return this->id();
 }
 
-void USB::assign_thread(int id) {
+void USB::assign_thread(int) const {
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] USB::assign_thread(): " << fd
@@ -226,7 +226,7 @@ int USB::id() const {
 	return fd;
 }
 
-int USB::Accept(std::string) {
+int USB::Accept(const std::string&) const {
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] USB::Accept(): " << fd
