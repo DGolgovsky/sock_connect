@@ -13,10 +13,10 @@ void server() {
 	uint32_t ui32 = 32;
 	uint64_t ui64 = 64;
 
-	uint8_t ui8a [array_size];
-	uint16_t ui16a [array_size];
-	uint32_t ui32a [array_size];
-	uint64_t ui64a [array_size];
+	uint8_t ui8a[array_size];
+	uint16_t ui16a[array_size];
+	uint32_t ui32a[array_size];
+	uint64_t ui64a[array_size];
 
 	std::fill(ui8a, ui8a + array_size, distribution(generator));
 	std::fill(ui16a, ui16a + array_size, distribution(generator));
@@ -48,15 +48,15 @@ void server() {
 		socket->Send(ui32a, sizeof(ui32) * array_size);
 		socket->Send(ui64a, sizeof(ui64) * array_size);
 
-		//std::clog << "SENT: ui8 = " << (int)ui8 << "; ui16 = " << ui16 << "; ui32 = " << ui32 << std::endl;
+		//std::clog << "[TEST] SENT: ui8 = " << (int)ui8 << "; ui16 = " << ui16 << "; ui32 = " << ui32 << std::endl;
 		socket->Send(&size, sizeof(size));
 		socket->Send(&file, size);
 	}
-	std::clog << "Server finished work" << std::endl;
+	std::clog << "[TEST] Server finished work" << std::endl;
 }
 
 int main() {
-	system ("rm -f unix_socket_test.received");
+	system("rm -f unix_socket_test.received");
 	std::thread t(server);
 	t.detach();
 	auto socket = std::make_shared<Connector<UNIX>>("/tmp/sun_path");
@@ -68,10 +68,10 @@ int main() {
 	uint32_t ui32 = 0;
 	uint64_t ui64 = 0;
 
-	uint8_t ui8a [array_size];
-	uint16_t ui16a [array_size];
-	uint32_t ui32a [array_size];
-	uint64_t ui64a [array_size];
+	uint8_t ui8a[array_size];
+	uint16_t ui16a[array_size];
+	uint32_t ui32a[array_size];
+	uint64_t ui64a[array_size];
 
 	while (socket->Status()) {
 		if (socket->Connect()) {
@@ -93,7 +93,7 @@ int main() {
 				ofstream << file;
 
 			socket->Shutdown();
-			std::clog << "Client finished work" << std::endl;
+			std::clog << "[TEST] Client finished work" << std::endl;
 		}
 	}
 	system("md5sum unix_socket_test unix_socket_test.received");

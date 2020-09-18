@@ -16,15 +16,15 @@ void server() {
 	socket->Send(&sz, sizeof(sz));
 	auto msg_sz = socket->Send(&file, sz);
 	if (msg_sz < sz)
-		std::cout << "File doesn't sent: msg_size = " << msg_sz << std::endl;
-	std::cout << "Server finished work" << std::endl;
+		std::clog << "[TEST] File doesn't sent: msg_size = " << msg_sz << std::endl;
+	std::clog << "[TEST] Server finished work" << std::endl;
 }
 
 int main() {
 	auto socket = std::make_shared<Connector<UDP>>(INADDR_LOOPBACK, 8010);
 	if (!socket->Bind(false)) return 0;
 
-	system ("rm -f udp_socket_test.received");
+	system("rm -f udp_socket_test.received");
 	std::ofstream ofstream("udp_socket_test.received", std::ios::binary);
 	std::string file;
 
