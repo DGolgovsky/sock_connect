@@ -87,7 +87,7 @@ public:
      * @param id Disconnected descriptor id
      * @return void
      */
-    void Shutdown(int id = 0) { return connection.Shutdown(id); }
+    void Shutdown(int id = 0) { connection.Shutdown(id); }
 
     /**
      * Send template function
@@ -128,7 +128,7 @@ public:
      * Used with multithreading sockets interactions
      * @param id Client ID that has been assigned as descriptor
      */
-    void assign_thread(int id) { return connection.assign_thread(id); }
+    void assign_thread(int id) { connection.assign_thread(id); }
 };
 
 #endif // SOCK_CONNECT_H

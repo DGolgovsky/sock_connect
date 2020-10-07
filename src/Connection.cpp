@@ -99,12 +99,15 @@ Connection::~Connection() {
 	std::clog << "[SOCK_CONNECT] Connection::~Connection<" << socket_.c_type() << ">()\n" << std::flush;
 	debug_mutex.unlock();
 #endif
-	this->Shutdown(socket_.id());
+	this->Shutdown(0);
 	delete clients;
 }
 
 void Connection::Shutdown(int id) {
 	if (!id) {
+        for (auto it : *clients) {
+            shutdown(it.second, SHUT_RDWR);
+        }
 		id = this->get_descriptor();
 		this->state = false;
 	}
@@ -113,11 +116,12 @@ void Connection::Shutdown(int id) {
 		if (close(id) < 0)
 			throw std::runtime_error("[SOCK_CONNECT] Shutdown failed, error number: "
 									 + std::to_string(errno));
+	} else {
 #ifndef NDEBUG
-		debug_mutex.lock();
-		std::clog << "[SOCK_CONNECT] Connection::Shutdown<" << socket_.c_type() << ">(): " << id << '\n'
-				  << std::flush;
-		debug_mutex.unlock();
+        debug_mutex.lock();
+        std::clog << "[SOCK_CONNECT] Connection::Shutdown<" << socket_.c_type() << ">(): " << id << '\n'
+                  << std::flush;
+        debug_mutex.unlock();
 #endif
 	}
 	if (socket_.c_type() == "UNIX") {

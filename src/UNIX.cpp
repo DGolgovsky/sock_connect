@@ -35,7 +35,7 @@ std::size_t UNIX::Receive(T *value, std::size_t const tu_size) {
 	std::size_t total = 0;
 	while (total < tu_size) {
 		msg_sz = read(get_descriptor(), value + total, recv_left);
-		if (msg_sz < 0) {
+		if (msg_sz == -1) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] UNIX::Receive<" << type_name<decltype(value)>()
@@ -63,7 +63,7 @@ std::size_t UNIX::Send(T const *value, std::size_t const tu_size) {
 	std::size_t total = 0;
 	while (send_left > 0) {
 		msg_sz = write(get_descriptor(), value + total, send_left);
-		if (msg_sz < 0) {
+		if (msg_sz == -1) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] UNIX::Send<" << type_name<decltype(value)>()
