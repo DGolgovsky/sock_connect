@@ -49,7 +49,7 @@ std::size_t UDP::Receive(T *value, std::size_t const tu_size) {
 	while (total < tu_size) {
 		msg_sz = recvfrom(get_descriptor(), value + total, recv_left, 0,
 						  ptr_addr, &size_addr);
-		if (msg_sz == -1) {
+		if (msg_sz < 1) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] UDP::Receive<" << type_name<decltype(value)>()
@@ -83,7 +83,7 @@ std::size_t UDP::Send(T const *value, std::size_t const tu_size) {
 	unsigned long last_packet = tu_size - frames * 576;
 	while (send_left > 0) {
 		msg_sz = sendto(get_descriptor(), value + total, frames ? 576 : last_packet, 0, ptr_addr, size_addr);
-		if (msg_sz == -1) {
+		if (msg_sz < 1) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] UDP::Send<" << type_name<decltype(value)>()

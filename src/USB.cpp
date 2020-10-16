@@ -89,7 +89,7 @@ std::size_t USB::Receive(T *value, std::size_t const tu_size) {
 	std::size_t total = 0;
 	while (total < tu_size) {
 		msg_sz = read(fd, value + total, recv_left);
-		if (msg_sz == -1) {
+		if (msg_sz < 1) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] USB::Receive<" << type_name<decltype(value)>()
@@ -115,7 +115,7 @@ std::size_t USB::Send(T const *value, std::size_t const tu_size) {
 	std::size_t total = 0;
 	while (send_left > 0) {
 		msg_sz = write(fd, value + total, send_left);
-		if (msg_sz == -1) {
+		if (msg_sz < 1) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] USB::Send<" << type_name<decltype(value)>()

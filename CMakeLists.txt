@@ -131,12 +131,14 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		list(APPEND PRIVATE_CXX_FLAGS "-Weverything" "-pthread")
-		list(APPEND PRIVATE_CXX_FLAGS "-stdlib=libstdc++" "-lstdc++")
+		list(APPEND PRIVATE_CXX_FLAGS "-stdlib=libstdc++")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-c++98-compat" "-Wno-c++98-compat-pedantic")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-null-dereference")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-sign-conversion")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-unused-local-typedef")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wthread-safety")
+		list(APPEND PRIVATE_CXX_FLAGS "-fexperimental-new-pass-manager" "-mllvm" "-inline-threshold=1000")
+		list(APPEND PRIVATE_CXX_FLAGS "-flto=thin")
 	else()
 		list(APPEND PRIVATE_CXX_FLAGS
 		     "-Wctor-dtor-privacy"
