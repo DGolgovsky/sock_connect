@@ -2,7 +2,7 @@
 #include <fstream>
 
 void server() {
-	std::ifstream fstream("udp_socket_test", std::ios::binary);
+	std::ifstream fstream("test_udp_socket", std::ios::binary);
 	std::string file;
 	fstream.seekg(0, std::ios::end);
 	file.reserve(static_cast<unsigned long>(fstream.tellg()));
@@ -24,8 +24,8 @@ int main() {
 	auto socket = std::make_shared<Connector<UDP>>(INADDR_LOOPBACK, 8010);
 	if (!socket->Bind(false)) return 0;
 
-	system("rm -f udp_socket_test.received");
-	std::ofstream ofstream("udp_socket_test.received", std::ios::binary);
+	system("rm -f test_udp_socket.received");
+	std::ofstream ofstream("test_udp_socket.received", std::ios::binary);
 	std::string file;
 
 	std::thread t(server);
@@ -39,7 +39,7 @@ int main() {
 	if (!file.empty())
 		ofstream << file;
 
-	system("md5sum udp_socket_test udp_socket_test.received");
+	system("md5sum test_udp_socket test_udp_socket.received");
 
 	return 0;
 }

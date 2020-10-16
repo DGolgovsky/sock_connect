@@ -23,7 +23,7 @@ void server() {
 	std::fill(ui32a, ui32a + array_size, distribution(generator));
 	std::fill(ui64a, ui64a + array_size, distribution(generator));
 
-	std::ifstream fstream("unix_socket_test", std::ios::binary);
+	std::ifstream fstream("test_unix_socket", std::ios::binary);
 	std::string file;
 	fstream.seekg(0, std::ios::end);
 	file.reserve(static_cast<unsigned long>(fstream.tellg()));
@@ -56,11 +56,11 @@ void server() {
 }
 
 int main() {
-	system("rm -f unix_socket_test.received");
+	system("rm -f test_unix_socket.received");
 	std::thread t(server);
 	t.detach();
 	auto socket = std::make_shared<Connector<UNIX>>("/tmp/sun_path");
-	std::ofstream ofstream("unix_socket_test.received", std::ios::binary);
+	std::ofstream ofstream("test_unix_socket.received", std::ios::binary);
 	std::string file;
 	std::size_t const array_size = 8;
 	uint8_t ui8 = 0;
@@ -96,7 +96,7 @@ int main() {
 			std::clog << "[TEST] Client finished work" << std::endl;
 		}
 	}
-	system("md5sum unix_socket_test unix_socket_test.received");
+	system("md5sum test_unix_socket test_unix_socket.received");
 
 	return 0;
 }
