@@ -1,5 +1,4 @@
 <map id="UNIX" name="UNIX">
-<area shape="rect" id="node1" title=" " alt="" coords="22,171,77,197"/>
-<area shape="rect" id="node2" href="$class_connection.html" title=" " alt="" coords="5,95,93,121"/>
-<area shape="rect" id="node3" href="$class_socket_ip.html" title=" " alt="" coords="12,5,87,32"/>
+<area shape="rect" id="node2" href="$class_connection.html" title="Connection" alt="" coords="5,95,100,121"/>
+<area shape="rect" id="node3" href="$class_socket_ip.html" title="SocketIp" alt="" coords="14,5,91,32"/>
 </map>

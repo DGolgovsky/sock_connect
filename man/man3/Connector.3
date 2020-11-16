@@ -2,7 +2,7 @@
 .ad l
 .nh
 .SH NAME
-Connector< Type >
+Connector< Type > \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -14,34 +14,34 @@ Connector< Type >
 .ti -1c
 .RI "template<typename T > \fBConnector\fP (T sun_path)"
 .br
-.RI "Creates new UNIX-Socket Explicit ctor: "
+.RI "\fICreates new UNIX-Socket Explicit ctor: \fP"
 .ti -1c
 .RI "template<typename T , typename U > \fBConnector\fP (T addr, U port)"
 .br
-.RI "Creates new Stream-Socket with IP:PORT If constructor creates set status true\&. "
+.RI "\fICreates new Stream-Socket with IP:PORT If constructor creates set status true\&. \fP"
 .ti -1c
 .RI "\fB~Connector\fP ()=default"
 .br
 .ti -1c
 .RI "int \fBAccept\fP (std::string *client_address=nullptr)"
 .br
-.RI "Accepting new connection Accept client connection and returns client id If parameter passed write ip address of connected client to it\&. "
+.RI "\fIAccepting new connection Accept client connection and returns client id If parameter passed write ip address of connected client to it\&. \fP"
 .ti -1c
-.RI "bool \fBListen\fP () const"
+.RI "bool \fBListen\fP () const "
 .br
-.RI "Listening address Listen functions\&. "
+.RI "\fIListening address Listen functions\&. \fP"
 .ti -1c
-.RI "bool \fBBind\fP (bool listen=true) const"
+.RI "bool \fBBind\fP (bool listen=true) const "
 .br
-.RI "Binding address Bind function\&. "
+.RI "\fIBinding address Bind function\&. \fP"
 .ti -1c
 .RI "bool \fBConnect\fP ()"
 .br
-.RI "Connecting to server Connect If connection lost or failed set state to false If connection success set state to true\&. "
+.RI "\fIConnecting to server Connect If connection lost or failed set state to false If connection success set state to true\&. \fP"
 .ti -1c
 .RI "void \fBShutdown\fP (int \fBid\fP=0)"
 .br
-.RI "Shutdown socket Close opened socket\&. "
+.RI "\fIShutdown socket Close opened socket\&. \fP"
 .ti -1c
 .RI "template<typename T > std::size_t \fBSend\fP (const T *value, std::size_t size)"
 .br
@@ -51,9 +51,9 @@ Connector< Type >
 .ti -1c
 .RI "int \fBid\fP ()"
 .br
-.RI "Return socket id\&. "
+.RI "\fIReturn socket id\&. \fP"
 .ti -1c
-.RI "bool \fBStatus\fP () const"
+.RI "bool \fBStatus\fP () const "
 .br
 .ti -1c
 .RI "void \fBassign_thread\fP (int \fBid\fP)"
@@ -75,7 +75,7 @@ Definition at line 27 of file sock_connect\&.h\&.
 .PP
 Creates new UNIX-Socket Explicit ctor: 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIsun_path\fP 
 .RE
@@ -88,7 +88,7 @@ Definition at line 39 of file sock_connect\&.h\&.
 .PP
 Creates new Stream-Socket with IP:PORT If constructor creates set status true\&. 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIaddr\fP IP Address 
 .br
@@ -107,12 +107,12 @@ Definition at line 48 of file sock_connect\&.h\&.
 .PP
 Accepting new connection Accept client connection and returns client id If parameter passed write ip address of connected client to it\&. 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIclient_address\fP 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 client_id 
 .RE
@@ -123,7 +123,7 @@ Definition at line 59 of file sock_connect\&.h\&.
 .SS "template<class Type > void \fBConnector\fP< Type >::assign_thread (int id)\fC [inline]\fP"
 Used with multithreading sockets interactions 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIid\fP Client ID that has been assigned as descriptor 
 .RE
@@ -136,7 +136,7 @@ Definition at line 131 of file sock_connect\&.h\&.
 .PP
 Binding address Bind function\&. 
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 Status of execution 
 .RE
@@ -149,7 +149,7 @@ Definition at line 73 of file sock_connect\&.h\&.
 .PP
 Connecting to server Connect If connection lost or failed set state to false If connection success set state to true\&. 
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 state 
 .RE
@@ -162,7 +162,7 @@ Definition at line 82 of file sock_connect\&.h\&.
 .PP
 Return socket id\&. 
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 socket\&.id 
 .RE
@@ -175,7 +175,7 @@ Definition at line 120 of file sock_connect\&.h\&.
 .PP
 Listening address Listen functions\&. 
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 Status of execution 
 .RE
@@ -186,19 +186,19 @@ Definition at line 66 of file sock_connect\&.h\&.
 .SS "template<class Type > template<typename T > std::size_t \fBConnector\fP< Type >::Receive (T * value, std::size_t size)\fC [inline]\fP"
 Receive template function 
 .PP
-\fBTemplate Parameters\fP
+\fBTemplate Parameters:\fP
 .RS 4
 \fIT\fP type of value 
 .RE
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIvalue\fP pointer to value 
 .br
 \fIsize\fP size of bytes 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 count of received bytes 
 .RE
@@ -209,19 +209,19 @@ Definition at line 112 of file sock_connect\&.h\&.
 .SS "template<class Type > template<typename T > std::size_t \fBConnector\fP< Type >::Send (const T * value, std::size_t size)\fC [inline]\fP"
 Send template function 
 .PP
-\fBTemplate Parameters\fP
+\fBTemplate Parameters:\fP
 .RS 4
 \fIT\fP type of value 
 .RE
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIvalue\fP pointer to value 
 .br
 \fIsize\fP size of bytes 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 count of sent bytes 
 .RE
@@ -234,12 +234,12 @@ Definition at line 100 of file sock_connect\&.h\&.
 .PP
 Shutdown socket Close opened socket\&. 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIid\fP Disconnected descriptor id 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 void 
 .RE

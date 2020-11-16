@@ -2,7 +2,7 @@
 .ad l
 .nh
 .SH NAME
-Connection
+Connection \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -34,7 +34,7 @@ Inherited by \fBTCP\fP, \fBUDP\fP, and \fBUNIX\fP\&.
 .ti -1c
 .RI "\fBConnection\fP (\fBConnection\fP &)=delete"
 .br
-.RI "Deleted unused constructors and operator=\&. "
+.RI "\fIDeleted unused constructors and operator=\&. \fP"
 .ti -1c
 .RI "\fBConnection\fP (\fBConnection\fP &&)=delete"
 .br
@@ -54,10 +54,10 @@ Inherited by \fBTCP\fP, \fBUDP\fP, and \fBUNIX\fP\&.
 .RI "virtual \fB~Connection\fP ()"
 .br
 .ti -1c
-.RI "bool \fBBind\fP (bool listen) const"
+.RI "bool \fBBind\fP (bool listen) const "
 .br
 .ti -1c
-.RI "bool \fBListen\fP () const"
+.RI "bool \fBListen\fP () const "
 .br
 .ti -1c
 .RI "int \fBAccept\fP (std::string *client_address)"
@@ -72,7 +72,7 @@ Inherited by \fBTCP\fP, \fBUDP\fP, and \fBUNIX\fP\&.
 .RI "int \fBid\fP () noexcept"
 .br
 .ti -1c
-.RI "bool \fBstatus\fP () const"
+.RI "bool \fBstatus\fP () const "
 .br
 .ti -1c
 .RI "void \fBassign_thread\fP (int \fBid\fP)"
@@ -200,11 +200,11 @@ Definition at line 217 of file Connection\&.cpp\&.
 
 .PP
 Definition at line 160 of file Connection\&.cpp\&.
-.SS "\fBConnection\fP& Connection::operator= (\fBConnection\fP &&)\fC [delete]\fP"
-
 .SS "\fBConnection\fP& Connection::operator= (\fBConnection\fP &)\fC [delete]\fP"
 
 .SS "\fBConnection\fP& Connection::operator= (const \fBConnection\fP &)\fC [delete]\fP"
+
+.SS "\fBConnection\fP& Connection::operator= (\fBConnection\fP &&)\fC [delete]\fP"
 
 .SS "void Connection::Shutdown (int id)"
 

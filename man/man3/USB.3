@@ -2,7 +2,7 @@
 .ad l
 .nh
 .SH NAME
-USB
+USB \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -32,28 +32,28 @@ USB
 .ti -1c
 .RI "template<typename T > std::size_t \fBReceive\fP (T *value, std::size_t tu_size)"
 .br
-.RI "Receive value Virtual receiving function for values\&. "
+.RI "\fIReceive value Virtual receiving function for values\&. \fP"
 .ti -1c
 .RI "template<typename T > std::size_t \fBSend\fP (T const *value, std::size_t tu_size)"
 .br
-.RI "Send value Virtual sending function for values\&. "
+.RI "\fISend value Virtual sending function for values\&. \fP"
 .ti -1c
-.RI "bool \fBstatus\fP () const"
+.RI "bool \fBstatus\fP () const "
 .br
 .ti -1c
-.RI "int \fBid\fP () const"
+.RI "int \fBid\fP () const "
 .br
 .ti -1c
-.RI "int \fBAccept\fP (const std::string &) const"
+.RI "int \fBAccept\fP (const std::string &) const "
 .br
 .ti -1c
-.RI "bool \fBListen\fP () const"
+.RI "bool \fBListen\fP () const "
 .br
 .ti -1c
-.RI "bool \fBBind\fP () const"
+.RI "bool \fBBind\fP () const "
 .br
 .ti -1c
-.RI "void \fBassign_thread\fP (int \fBid\fP) const"
+.RI "void \fBassign_thread\fP (int \fBid\fP) const "
 .br
 .ti -1c
 .RI "template<> std::size_t \fBReceive\fP (std::string *value, std::size_t const tu_size)"
@@ -70,7 +70,7 @@ Definition at line 9 of file USB\&.h\&.
 .SS "USB::USB (const std::string & address, speed_t speed)\fC [explicit]\fP"
 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIaddress\fP path to device {/dev/ttyACM0 | /dev/ttyUSB0} 
 .br
@@ -113,7 +113,7 @@ Definition at line 39 of file USB\&.cpp\&.
 .SS "int USB::id () const"
 Current here for compability Do the same as get_descriptor 
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 fd 
 .RE
@@ -125,23 +125,19 @@ Definition at line 225 of file USB\&.cpp\&.
 
 .PP
 Definition at line 249 of file USB\&.cpp\&.
-.SS "template<> std::size_t USB::Receive (std::string * value, std::size_t const tu_size)"
-
-.PP
-Definition at line 169 of file USB\&.cpp\&.
 .SS "template<typename T > template std::size_t USB::Receive (T * value, std::size_t tu_size)"
 
 .PP
 Receive value Virtual receiving function for values\&. 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIvalue\fP Address of value to receive 
 .br
 \fItu_size\fP Bytes to receive 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 Count of received bytes 
 .RE
@@ -149,23 +145,23 @@ Count of received bytes
 
 .PP
 Definition at line 87 of file USB\&.cpp\&.
-.SS "template<> std::size_t USB::Send (std::string const * value, std::size_t const tu_size)"
+.SS "template<> std::size_t USB::Receive (std::string * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 175 of file USB\&.cpp\&.
+Definition at line 169 of file USB\&.cpp\&.
 .SS "template<typename T > template std::size_t USB::Send (T const * value, std::size_t tu_size)"
 
 .PP
 Send value Virtual sending function for values\&. 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIvalue\fP Address of value to send 
 .br
 \fItu_size\fP Bytes to send 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 Count of sent bytes 
 .RE
@@ -173,6 +169,10 @@ Count of sent bytes
 
 .PP
 Definition at line 113 of file USB\&.cpp\&.
+.SS "template<> std::size_t USB::Send (std::string const * value, std::size_t const tu_size)"
+
+.PP
+Definition at line 175 of file USB\&.cpp\&.
 .SS "void USB::Shutdown ()"
 
 .PP

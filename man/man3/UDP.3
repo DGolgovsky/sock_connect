@@ -2,7 +2,7 @@
 .ad l
 .nh
 .SH NAME
-UDP
+UDP \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -28,11 +28,11 @@ Inherits \fBConnection\fP\&.
 .ti -1c
 .RI "template<typename T > std::size_t \fBReceive\fP (T *value, std::size_t tu_size)"
 .br
-.RI "Receive value Virtual receiving function for values\&. "
+.RI "\fIReceive value Virtual receiving function for values\&. \fP"
 .ti -1c
 .RI "template<typename T > std::size_t \fBSend\fP (T const *value, std::size_t tu_size)"
 .br
-.RI "Send value Virtual sending function for values\&. "
+.RI "\fISend value Virtual sending function for values\&. \fP"
 .ti -1c
 .RI "template<> std::size_t \fBReceive\fP (std::string *value, std::size_t const tu_size)"
 .br
@@ -64,23 +64,19 @@ Definition at line 26 of file UDP\&.cpp\&.
 Definition at line 37 of file UDP\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "template<> std::size_t UDP::Receive (std::string * value, std::size_t const tu_size)"
-
-.PP
-Definition at line 139 of file UDP\&.cpp\&.
 .SS "template<typename T > template std::size_t UDP::Receive (T * value, std::size_t tu_size)"
 
 .PP
 Receive value Virtual receiving function for values\&. 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIvalue\fP Address of value to receive 
 .br
 \fItu_size\fP Bytes to receive 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 Count of received bytes 
 .RE
@@ -88,23 +84,23 @@ Count of received bytes
 
 .PP
 Definition at line 46 of file UDP\&.cpp\&.
-.SS "template<> std::size_t UDP::Send (std::string const * value, std::size_t const tu_size)"
+.SS "template<> std::size_t UDP::Receive (std::string * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 146 of file UDP\&.cpp\&.
+Definition at line 139 of file UDP\&.cpp\&.
 .SS "template<typename T > template std::size_t UDP::Send (T const * value, std::size_t tu_size)"
 
 .PP
 Send value Virtual sending function for values\&. 
 .PP
-\fBParameters\fP
+\fBParameters:\fP
 .RS 4
 \fIvalue\fP Address of value to send 
 .br
 \fItu_size\fP Bytes to send 
 .RE
 .PP
-\fBReturns\fP
+\fBReturns:\fP
 .RS 4
 Count of sent bytes 
 .RE
@@ -112,6 +108,10 @@ Count of sent bytes
 \fBUDP\fP MTU = 576 net\&.core\&.rmem_max = 212992
 .PP
 Definition at line 75 of file UDP\&.cpp\&.
+.SS "template<> std::size_t UDP::Send (std::string const * value, std::size_t const tu_size)"
+
+.PP
+Definition at line 146 of file UDP\&.cpp\&.
 
 .SH "Author"
 .PP 
