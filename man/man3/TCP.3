@@ -1,0 +1,118 @@
+.TH "TCP" 3 "Mon Nov 16 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TCP
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <TCP\&.h>\fP
+.PP
+Inherits \fBConnection\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTCP\fP (uint32_t address, uint16_t port)"
+.br
+.ti -1c
+.RI "\fBTCP\fP (const char *address, uint16_t port)"
+.br
+.ti -1c
+.RI "\fBTCP\fP (std::string const &address, uint16_t port)"
+.br
+.ti -1c
+.RI "\fB~TCP\fP () override"
+.br
+.ti -1c
+.RI "template<typename T > std::size_t \fBReceive\fP (T *value, std::size_t tu_size)"
+.br
+.RI "Receive value Virtual receiving function for values\&. "
+.ti -1c
+.RI "template<typename T > std::size_t \fBSend\fP (T const *value, std::size_t tu_size)"
+.br
+.RI "Send value Virtual sending function for values\&. "
+.ti -1c
+.RI "template<> std::size_t \fBReceive\fP (std::string *value, std::size_t const tu_size)"
+.br
+.ti -1c
+.RI "template<> std::size_t \fBSend\fP (std::string const *value, std::size_t const tu_size)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Definition at line 6 of file TCP\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "TCP::TCP (uint32_t address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 4 of file TCP\&.cpp\&.
+.SS "TCP::TCP (const char * address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 15 of file TCP\&.cpp\&.
+.SS "TCP::TCP (std::string const & address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 26 of file TCP\&.cpp\&.
+.SS "TCP::~TCP ()\fC [override]\fP"
+
+.PP
+Definition at line 37 of file TCP\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<> std::size_t TCP::Receive (std::string * value, std::size_t const tu_size)"
+
+.PP
+Definition at line 135 of file TCP\&.cpp\&.
+.SS "template<typename T > template std::size_t TCP::Receive (T * value, std::size_t tu_size)"
+
+.PP
+Receive value Virtual receiving function for values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP Address of value to receive 
+.br
+\fItu_size\fP Bytes to receive 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Count of received bytes 
+.RE
+.PP
+
+.PP
+Definition at line 46 of file TCP\&.cpp\&.
+.SS "template<> std::size_t TCP::Send (std::string const * value, std::size_t const tu_size)"
+
+.PP
+Definition at line 141 of file TCP\&.cpp\&.
+.SS "template<typename T > template std::size_t TCP::Send (T const * value, std::size_t tu_size)"
+
+.PP
+Send value Virtual sending function for values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP Address of value to send 
+.br
+\fItu_size\fP Bytes to send 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Count of sent bytes 
+.RE
+.PP
+\fBTCP\fP MTU = 1460 net\&.core\&.rmem_max = 212992
+.PP
+Definition at line 74 of file TCP\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Shared library Connection Socket from the source code\&.

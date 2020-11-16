@@ -1,0 +1,17 @@
+<map id="include/Connection.h" name="include/Connection.h">
+<area shape="rect" id="node1" title="Socket Connection Class." alt="" coords="271,5,415,32"/>
+<area shape="rect" id="node2" href="$_connection_8cpp.html" title=" " alt="" coords="5,80,140,107"/>
+<area shape="rect" id="node3" href="$_t_c_p_8h.html" title=" " alt="" coords="164,80,267,107"/>
+<area shape="rect" id="node10" href="$_u_d_p_8h.html" title=" " alt="" coords="291,80,396,107"/>
+<area shape="rect" id="node12" href="$_u_n_i_x_8h.html" title=" " alt="" coords="420,80,531,107"/>
+<area shape="rect" id="node14" href="$_u_s_b_8h.html" title=" " alt="" coords="555,80,662,107"/>
+<area shape="rect" id="node4" href="$_t_c_p_8cpp.html" title=" " alt="" coords="89,155,184,181"/>
+<area shape="rect" id="node5" href="$sock__connect_8h.html" title=" " alt="" coords="329,155,488,181"/>
+<area shape="rect" id="node6" href="$tcp__socket__test_8cpp.html" title=" " alt="" coords="23,229,197,256"/>
+<area shape="rect" id="node7" href="$udp__socket__test_8cpp.html" title=" " alt="" coords="221,229,397,256"/>
+<area shape="rect" id="node8" href="$unix__socket__test_8cpp.html" title=" " alt="" coords="421,229,599,256"/>
+<area shape="rect" id="node9" href="$usb__socket__test_8cpp.html" title=" " alt="" coords="623,229,799,256"/>
+<area shape="rect" id="node11" href="$_u_d_p_8cpp.html" title=" " alt="" coords="209,155,305,181"/>
+<area shape="rect" id="node13" href="$_u_n_i_x_8cpp.html" title=" " alt="" coords="512,155,615,181"/>
+<area shape="rect" id="node15" href="$_u_s_b_8cpp.html" title=" " alt="" coords="639,155,736,181"/>
+</map>

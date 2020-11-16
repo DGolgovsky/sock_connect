@@ -1,0 +1,118 @@
+.TH "UDP" 3 "Mon Nov 16 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+UDP
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <UDP\&.h>\fP
+.PP
+Inherits \fBConnection\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBUDP\fP (uint32_t address, uint16_t port)"
+.br
+.ti -1c
+.RI "\fBUDP\fP (const char *address, uint16_t port)"
+.br
+.ti -1c
+.RI "\fBUDP\fP (std::string const &address, uint16_t port)"
+.br
+.ti -1c
+.RI "\fB~UDP\fP () override"
+.br
+.ti -1c
+.RI "template<typename T > std::size_t \fBReceive\fP (T *value, std::size_t tu_size)"
+.br
+.RI "Receive value Virtual receiving function for values\&. "
+.ti -1c
+.RI "template<typename T > std::size_t \fBSend\fP (T const *value, std::size_t tu_size)"
+.br
+.RI "Send value Virtual sending function for values\&. "
+.ti -1c
+.RI "template<> std::size_t \fBReceive\fP (std::string *value, std::size_t const tu_size)"
+.br
+.ti -1c
+.RI "template<> std::size_t \fBSend\fP (std::string const *value, std::size_t const tu_size)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Definition at line 6 of file UDP\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "UDP::UDP (uint32_t address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 4 of file UDP\&.cpp\&.
+.SS "UDP::UDP (const char * address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 15 of file UDP\&.cpp\&.
+.SS "UDP::UDP (std::string const & address, uint16_t port)\fC [explicit]\fP"
+
+.PP
+Definition at line 26 of file UDP\&.cpp\&.
+.SS "UDP::~UDP ()\fC [override]\fP"
+
+.PP
+Definition at line 37 of file UDP\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<> std::size_t UDP::Receive (std::string * value, std::size_t const tu_size)"
+
+.PP
+Definition at line 139 of file UDP\&.cpp\&.
+.SS "template<typename T > template std::size_t UDP::Receive (T * value, std::size_t tu_size)"
+
+.PP
+Receive value Virtual receiving function for values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP Address of value to receive 
+.br
+\fItu_size\fP Bytes to receive 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Count of received bytes 
+.RE
+.PP
+
+.PP
+Definition at line 46 of file UDP\&.cpp\&.
+.SS "template<> std::size_t UDP::Send (std::string const * value, std::size_t const tu_size)"
+
+.PP
+Definition at line 146 of file UDP\&.cpp\&.
+.SS "template<typename T > template std::size_t UDP::Send (T const * value, std::size_t tu_size)"
+
+.PP
+Send value Virtual sending function for values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP Address of value to send 
+.br
+\fItu_size\fP Bytes to send 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Count of sent bytes 
+.RE
+.PP
+\fBUDP\fP MTU = 576 net\&.core\&.rmem_max = 212992
+.PP
+Definition at line 75 of file UDP\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Shared library Connection Socket from the source code\&.
