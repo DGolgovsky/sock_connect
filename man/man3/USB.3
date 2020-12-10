@@ -1,4 +1,4 @@
-.TH "USB" 3 "Mon Nov 16 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
+.TH "USB" 3 "Thu Dec 10 2020" "Version 01" "Shared library Connection Socket" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -83,33 +83,33 @@ Definition at line 4 of file USB\&.cpp\&.
 .SS "USB::USB (const char * address, speed_t speed)\fC [explicit]\fP"
 
 .PP
-Definition at line 17 of file USB\&.cpp\&.
+Definition at line 16 of file USB\&.cpp\&.
 .SS "USB::~USB ()"
 
 .PP
-Definition at line 30 of file USB\&.cpp\&.
+Definition at line 29 of file USB\&.cpp\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "int USB::Accept (const std::string &) const"
 
 .PP
-Definition at line 229 of file USB\&.cpp\&.
+Definition at line 236 of file USB\&.cpp\&.
 .SS "void USB::assign_thread (int id) const"
 
 .PP
-Definition at line 216 of file USB\&.cpp\&.
+Definition at line 223 of file USB\&.cpp\&.
 .SS "bool USB::Bind () const"
 
 .PP
-Definition at line 239 of file USB\&.cpp\&.
+Definition at line 246 of file USB\&.cpp\&.
 .SS "bool USB::Connect ()"
 Connect/open port CONFIGURE THE UART The flags (defined in /usr/include/termios\&.h - see http://pubs.opengroup.org/onlinepubs/007908799/xsh/termios.h.html):
 .PP
 Baud rate:- B1200, B2400, B4800, B9600, B19200, B38400, B57600, B115200, B230400, B460800, B500000, B576000, B921600, B1000000, B1152000, B1500000, B2000000, B2500000, B3000000, B3500000, B4000000
 .PP
-CSIZE:- CS5, CS6, CS7, CS8 CLOCAL - Ignore modem Status lines CREAD - Enable receiver IGNPAR = Ignore characters with parity errors ICRNL - Map CR to NL on input (Use for ASCII comms where you want to auto correct end of line characters - don't use for bianry comms!) PARENB - Parity enable PARODD - Odd parity (else even)
+CSIZE:- CS5, CS6, CS7, CS8 CLOCAL - Ignore modem Status lines CREAD - Enable receiver IGNPAR = Ignore characters with parity errors ICRNL - Map CR to NL on input (Use for ASCII comms where you want to auto correct end of line characters - don't use for binary comms!) PARENB - Parity enable PARODD - Odd parity (else even)
 .PP
-Definition at line 39 of file USB\&.cpp\&.
+Definition at line 38 of file USB\&.cpp\&.
 .SS "int USB::id () const"
 Current here for compability Do the same as get_descriptor 
 .PP
@@ -120,11 +120,11 @@ fd
 .PP
 
 .PP
-Definition at line 225 of file USB\&.cpp\&.
+Definition at line 232 of file USB\&.cpp\&.
 .SS "bool USB::Listen () const"
 
 .PP
-Definition at line 249 of file USB\&.cpp\&.
+Definition at line 256 of file USB\&.cpp\&.
 .SS "template<typename T > template std::size_t USB::Receive (T * value, std::size_t tu_size)"
 
 .PP
@@ -144,11 +144,11 @@ Count of received bytes
 .PP
 
 .PP
-Definition at line 87 of file USB\&.cpp\&.
+Definition at line 90 of file USB\&.cpp\&.
 .SS "template<> std::size_t USB::Receive (std::string * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 169 of file USB\&.cpp\&.
+Definition at line 175 of file USB\&.cpp\&.
 .SS "template<typename T > template std::size_t USB::Send (T const * value, std::size_t tu_size)"
 
 .PP
@@ -168,23 +168,23 @@ Count of sent bytes
 .PP
 
 .PP
-Definition at line 113 of file USB\&.cpp\&.
+Definition at line 118 of file USB\&.cpp\&.
 .SS "template<> std::size_t USB::Send (std::string const * value, std::size_t const tu_size)"
 
 .PP
-Definition at line 175 of file USB\&.cpp\&.
+Definition at line 181 of file USB\&.cpp\&.
 .SS "void USB::Shutdown ()"
 
 .PP
-Definition at line 179 of file USB\&.cpp\&.
+Definition at line 185 of file USB\&.cpp\&.
 .SS "void USB::Shutdown (int id)"
 
 .PP
-Definition at line 190 of file USB\&.cpp\&.
+Definition at line 197 of file USB\&.cpp\&.
 .SS "bool USB::status () const"
 
 .PP
-Definition at line 208 of file USB\&.cpp\&.
+Definition at line 215 of file USB\&.cpp\&.
 
 .SH "Author"
 .PP 
