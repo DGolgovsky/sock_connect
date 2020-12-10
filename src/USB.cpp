@@ -3,7 +3,6 @@
 
 USB::USB(const std::string &address, speed_t speed)
 		: m_address(address), m_speed(speed)
-		, state{true}
 {
 #ifndef NDEBUG
     debug_mutex.lock();
@@ -37,6 +36,10 @@ USB::~USB() {
 }
 
 bool USB::Connect() {
+	if (fd != -1) {
+		return this->state;
+	}
+
 	fd = open(m_address.data(), O_RDWR | O_NOCTTY | O_NDELAY);
 
 	if (fd == -1) {
@@ -55,7 +58,7 @@ bool USB::Connect() {
 	 * CLOCAL - Ignore modem Status lines
 	 * CREAD - Enable receiver
 	 * IGNPAR = Ignore characters with parity errors
-	 * ICRNL - Map CR to NL on input (Use for ASCII comms where you want to auto correct end of line characters - don't use for bianry comms!)
+	 * ICRNL - Map CR to NL on input (Use for ASCII comms where you want to auto correct end of line characters - don't use for binary comms!)
 	 * PARENB - Parity enable
 	 * PARODD - Odd parity (else even)
 	 */
@@ -89,16 +92,18 @@ std::size_t USB::Receive(T *value, std::size_t const tu_size) {
 	std::size_t total = 0;
 	while (total < tu_size) {
 		msg_sz = read(fd, value + total, recv_left);
-		if (msg_sz < 1) {
+		if (msg_sz < 0) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] USB::Receive<" << type_name<decltype(value)>()
 					  << ">(fd: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
 			debug_mutex.unlock();
 #endif
+			this->state = false;
+			return total;
 		}
-		recv_left -= static_cast<unsigned long>(msg_sz);
-		total += static_cast<unsigned long>(msg_sz);
+		recv_left -= static_cast<std::size_t>(msg_sz);
+		total += static_cast<std::size_t>(msg_sz);
 	}
 #ifndef NDEBUG
 	debug_mutex.lock();
@@ -115,17 +120,18 @@ std::size_t USB::Send(T const *value, std::size_t const tu_size) {
 	std::size_t total = 0;
 	while (send_left > 0) {
 		msg_sz = write(fd, value + total, send_left);
-		if (msg_sz < 1) {
+		if (msg_sz < 0) {
 #ifndef NDEBUG
 			debug_mutex.lock();
 			std::clog << "[SOCK_CONNECT] USB::Send<" << type_name<decltype(value)>()
 					  << ">(fd: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
 			debug_mutex.unlock();
 #endif
+			this->state = false;
 			return total;
 		}
-		send_left -= static_cast<unsigned long>(msg_sz);
-		total += static_cast<unsigned long>(msg_sz);
+		send_left -= static_cast<std::size_t>(msg_sz);
+		total += static_cast<std::size_t>(msg_sz);
 	}
 #ifndef NDEBUG
 	debug_mutex.lock();
@@ -177,13 +183,14 @@ std::size_t USB::Send(std::string const *value, std::size_t const tu_size) {
 }
 
 void USB::Shutdown() {
+	if (fd >= 0) {
 #ifndef NDEBUG
-    debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::Shutdown(): " << fd << '\n' << std::flush;
-    debug_mutex.unlock();
+		debug_mutex.lock();
+		std::clog << "[SOCK_CONNECT] USB::Shutdown(): " << fd << '\n' << std::flush;
+		debug_mutex.unlock();
 #endif
-	if (fd >= 0)
 		close(fd);
+	}
 	fd = -1;
 }
 

@@ -13,7 +13,7 @@ private:
 	ssize_t msg_sz{};
 	std::string m_address;
 	speed_t m_speed;
-	bool state{true};
+	bool state{false};
 
 public:
 	/**
