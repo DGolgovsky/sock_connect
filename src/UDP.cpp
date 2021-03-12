@@ -1,5 +1,4 @@
 #include "UDP.h"
-#include "type_name.h"
 
 UDP::UDP(uint32_t address, uint16_t port)
 		: Connection(_UDP, address, port) {

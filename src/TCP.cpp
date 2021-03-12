@@ -1,5 +1,4 @@
 #include "TCP.h"
-#include "type_name.h"
 
 TCP::TCP(uint32_t address, uint16_t port)
 		: Connection(_TCP, address, port) {

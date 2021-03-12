@@ -19,6 +19,10 @@
 
 #include "SocketIp.h"
 
+#ifndef NDEBUG
+#include "helpers.h"
+#endif
+
 class Connection
 {
 	using storage_t = std::vector<std::pair<std::thread::id, int>>; // state for each connection
