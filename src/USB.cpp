@@ -261,3 +261,4 @@ bool USB::Listen() const {
 #endif
 	return false;
 }
+

@@ -89,7 +89,7 @@ fi
 
 if [[ $do_docs ]]; then
 	if [[ -e docs ]]; then
-		rm -rf docs
+		rm -rf doxy_docs
 	fi
 	doxygen Doxyfile
 fi
@@ -103,7 +103,7 @@ if [[ $do_tests ]]; then
 	TESTS=TRUE
 fi
 
-echo "* Starting CI building script with BUILD_TYPE = $BUILD_TYPE"
+echo "* Start CI building script with BUILD_TYPE = $BUILD_TYPE"
 if [[ -e build ]]; then
 	rm -rf build
 fi
@@ -112,7 +112,9 @@ cmake .. \
 	-DCMAKE_INSTALL_PREFIX:PATH=/usr/ \
 	-DCMAKE_BUILD_TYPE=$BUILD_TYPE \
 	-DTESTS:BOOL=$TESTS \
-	-DBUILD_VERSION="$BUILD_VERSION"
+	-DBUILD_VERSION="$BUILD_VERSION" \
+	-DCMAKE_EXPORT_COMPILE_COMMANDS=${TESTS} \
+	-DCMAKE_CXX_CPPCHECK=/usr/bin/cppcheck
 cmake --build . -- -j2
 
 if [[ $do_tests ]]; then
@@ -136,4 +138,7 @@ if [[ $do_pkg ]]; then
 	mkdir -p "$src_dir"/packages/$PACK_TYPE/
 	mv ./*-0."$MINOR"."$BUILD_VERSION"-* "$src_dir"/packages/$PACK_TYPE/ 2> /dev/null
 fi
+
+cd "$src_dir" || exit
+
 exit 0

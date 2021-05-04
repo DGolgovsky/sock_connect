@@ -5,8 +5,8 @@ UDP::UDP(uint32_t address, uint16_t port)
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] UDP::UDP("
-			<< type_name<decltype(address)>() << " address: " << address << ", "
-			<< type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+			  << type_name<decltype(address)>() << " address: " << address << ", "
+			  << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
 }
@@ -16,8 +16,8 @@ UDP::UDP(const char *address, uint16_t port)
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] UDP::UDP("
-			<< type_name<decltype(address)>() << " address: " << address << ", "
-			<< type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+			  << type_name<decltype(address)>() << " address: " << address << ", "
+			  << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
 }
@@ -27,8 +27,8 @@ UDP::UDP(const std::string &address, uint16_t port)
 #ifndef NDEBUG
 	debug_mutex.lock();
 	std::clog << "[SOCK_CONNECT] UDP::UDP("
-			<< type_name<decltype(address)>() << " address: " << address << ", "
-			<< type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+			  << type_name<decltype(address)>() << " address: " << address << ", "
+			  << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
 	debug_mutex.unlock();
 #endif
 }
