@@ -109,13 +109,15 @@ if [[ -e build ]]; then
 fi
 mkdir build 2> /dev/null && cd build || exit
 cmake .. \
+	-GNinja \
 	-DCMAKE_INSTALL_PREFIX:PATH=/usr/ \
 	-DCMAKE_BUILD_TYPE=$BUILD_TYPE \
 	-DTESTS:BOOL=$TESTS \
 	-DBUILD_VERSION="$BUILD_VERSION" \
 	-DCMAKE_EXPORT_COMPILE_COMMANDS=${TESTS} \
 	-DCMAKE_CXX_CPPCHECK=/usr/bin/cppcheck
-cmake --build . -- -j2
+#cmake --build . -- -j2
+ninja
 
 if [[ $do_tests ]]; then
 	ctest -j2

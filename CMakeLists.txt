@@ -111,7 +111,20 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		message(STATUS "C++std: -std=c++${CMAKE_CXX_STANDARD} (default)")
 	endif()
 
-	list(APPEND PUBLIC_CXX_FLAGS "-march=native" "-mtune=generic" "-pipe" "-fPIC" "-fstack-protector-strong" "-fno-plt")
+	list(APPEND PUBLIC_CXX_FLAGS
+		 "-march=native"
+		 "-mtune=generic"
+		 "-pipe"
+		 "-fPIC"
+		 "-fstack-protector-strong"
+		 "-fno-plt"
+		 "-fexceptions"
+		 "-fstack-clash-protection"
+		 "-fstack-protector-strong"
+		 "-fcf-protection"
+		 "-fomit-frame-pointer"
+		 "-ffunction-sections"
+		 "-fdata-sections")
 	if(CMAKE_TARGET_ARCHITECTURE STREQUAL "x86_64")
 		list(APPEND PUBLIC_CXX_FLAGS "-mcx16")
 		set(LIB_SUFFIX "64")
