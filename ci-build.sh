@@ -22,6 +22,12 @@ while [[ $# -gt 0 ]]; do
 	-r | --release)
 		do_release=1
 		;;
+	-i | --install)
+		do_install=1
+		;;
+	-u | --uninstall)
+		do_uninstall=1
+		;;
 	-p | --package)
 		shift
 		case "$1" in
@@ -65,6 +71,8 @@ while [[ $# -gt 0 ]]; do
 		echo "  -t|--tests:         Fills build tests"
 		echo "  -d|--debug:         Build package with debug information"
 		echo "  -r|--release:       Build package without debug information"
+		echo "  -i|--install:       Install after build. May be need root access"
+		echo "  -u|--uninstall:     Uninstall previous build (if build dir still exists)"		
 		echo "  -v|--version:       Build package with custom version"
 		echo "    |--docs:          Generate doxygen documentation"
 		echo "  -h|--help:          Print this message"
@@ -103,6 +111,13 @@ if [[ $do_tests ]]; then
 	TESTS=TRUE
 fi
 
+if [[ ${do_uninstall} ]]; then
+  cd build || exit 1
+	sudo make uninstall
+	cd "$src_dir" || exit 1
+	exit 0
+fi
+
 echo "* Start CI building script with BUILD_TYPE = $BUILD_TYPE"
 if [[ -e build ]]; then
 	rm -rf build
@@ -121,6 +136,10 @@ ninja
 
 if [[ $do_tests ]]; then
 	ctest -j2
+fi
+
+if [[ ${do_install} ]]; then
+	sudo make install
 fi
 
 if [[ $do_pkg ]]; then
