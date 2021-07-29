@@ -1,5 +1,4 @@
 #include "USB.h"
-#include "type_name.h"
 
 USB::USB(const std::string &address, speed_t speed)
 		: m_address(address), m_speed(speed)
@@ -262,3 +261,4 @@ bool USB::Listen() const {
 #endif
 	return false;
 }
+

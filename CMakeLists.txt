@@ -111,7 +111,20 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		message(STATUS "C++std: -std=c++${CMAKE_CXX_STANDARD} (default)")
 	endif()
 
-	list(APPEND PUBLIC_CXX_FLAGS "-march=native" "-mtune=generic" "-pipe" "-fPIC" "-fstack-protector-strong" "-fno-plt")
+	list(APPEND PUBLIC_CXX_FLAGS
+		 "-march=native"
+		 "-mtune=generic"
+		 "-pipe"
+		 "-fPIC"
+		 "-fstack-protector-strong"
+		 "-fno-plt"
+		 "-fexceptions"
+		 "-fstack-clash-protection"
+		 "-fstack-protector-strong"
+		 "-fcf-protection"
+		 "-fomit-frame-pointer"
+		 "-ffunction-sections"
+		 "-fdata-sections")
 	if(CMAKE_TARGET_ARCHITECTURE STREQUAL "x86_64")
 		list(APPEND PUBLIC_CXX_FLAGS "-mcx16")
 		set(LIB_SUFFIX "64")
@@ -136,9 +149,9 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-null-dereference")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-sign-conversion")
 		list(APPEND PRIVATE_CXX_FLAGS "-Wno-unused-local-typedef")
-		list(APPEND PRIVATE_CXX_FLAGS "-Wthread-safety")
+		list(APPEND PRIVATE_CXX_FLAGS "-Wthread-safety" "-Wpadded")
 		list(APPEND PRIVATE_CXX_FLAGS "-fexperimental-new-pass-manager" "-mllvm" "-inline-threshold=1000")
-		list(APPEND PRIVATE_CXX_FLAGS "-flto=thin")
+		list(APPEND PRIVATE_CXX_FLAGS "-flto=thin" "-mbranches-within-32B-boundaries")
 	else()
 		list(APPEND PRIVATE_CXX_FLAGS
 		     "-Wctor-dtor-privacy"
@@ -160,7 +173,6 @@ endif()
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
 	message(STATUS "Cmake flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
 else()
-	add_compile_options(-O3)
 	message(STATUS "Cmake flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
 endif()
 message(STATUS "Compiler public flags: ${PUBLIC_CXX_FLAGS}")
@@ -214,11 +226,12 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
 	set_target_properties(test_usb_socket PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 endif()
 
+include(GNUInstallDirs)
 install(TARGETS ${SC_SHARED_LIBRARY} EXPORT LibSCConfig LIBRARY DESTINATION lib${LIB_SUFFIX} COMPONENT ${LIBRARIES_COMPONENT} NAMELINK_SKIP)
 install(TARGETS ${SC_SHARED_LIBRARY} EXPORT LibSCConfig LIBRARY DESTINATION lib${LIB_SUFFIX} COMPONENT ${HEADERS_COMPONENT} NAMELINK_ONLY)
 install(TARGETS ${SC_STATIC_LIBRARY} EXPORT LibSCConfig DESTINATION lib${LIB_SUFFIX} COMPONENT ${LIBRARIES_COMPONENT})
 install(EXPORT LibSCConfig FILE LibSCConfig.cmake DESTINATION lib/cmake/LibSC)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ RUNTIME DESTINATION include COMPONENT ${HEADERS_COMPONENT} FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ RUNTIME DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT ${HEADERS_COMPONENT} FILES_MATCHING PATTERN "*.h")
 
 set(CPACK_GENERATOR TGZ;STGZ;ZIP;DEB;RPM)
 

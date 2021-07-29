@@ -1,5 +1,4 @@
 #include "Connection.h"
-#include "type_name.h"
 
 /**
  * Transform <const char*> IP-address to uint32_t

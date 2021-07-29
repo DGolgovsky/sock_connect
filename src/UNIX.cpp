@@ -1,5 +1,4 @@
 #include "UNIX.h"
-#include "type_name.h"
 
 UNIX::UNIX(std::string const &path)
 		: Connection(_UNIX, path) {
