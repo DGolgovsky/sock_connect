@@ -33,7 +33,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 if(BUILD_VERSION)
 	set(PROJECT_VERSION 0.1.${BUILD_VERSION})
 else()
-	set(PROJECT_VERSION 0.1.5)
+	set(PROJECT_VERSION 0.1.6)
 endif()
 
 if(NOT CMAKE_TARGET_ARCHITECTURE)
@@ -112,19 +112,19 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	endif()
 
 	list(APPEND PUBLIC_CXX_FLAGS
-		 "-march=native"
-		 "-mtune=generic"
-		 "-pipe"
-		 "-fPIC"
-		 "-fstack-protector-strong"
-		 "-fno-plt"
-		 "-fexceptions"
-		 "-fstack-clash-protection"
-		 "-fstack-protector-strong"
-		 "-fcf-protection"
-		 "-fomit-frame-pointer"
-		 "-ffunction-sections"
-		 "-fdata-sections")
+	     "-march=native"
+	     "-mtune=generic"
+	     "-pipe"
+	     "-fPIC"
+	     "-fstack-protector-strong"
+	     "-fno-plt"
+	     "-fexceptions"
+	     "-fstack-clash-protection"
+	     "-fstack-protector-strong"
+	     "-fcf-protection"
+	     "-fomit-frame-pointer"
+	     "-ffunction-sections"
+	     "-fdata-sections")
 	if(CMAKE_TARGET_ARCHITECTURE STREQUAL "x86_64")
 		list(APPEND PUBLIC_CXX_FLAGS "-mcx16")
 		set(LIB_SUFFIX "64")
@@ -206,22 +206,18 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
 	set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 
 	add_executable(test_tcp_socket tests/tcp_socket_test.cpp)
-	target_include_directories(test_tcp_socket PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 	target_link_libraries(test_tcp_socket ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 	set_target_properties(test_tcp_socket PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
 	add_executable(test_udp_socket tests/udp_socket_test.cpp)
-	target_include_directories(test_udp_socket PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 	target_link_libraries(test_udp_socket ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 	set_target_properties(test_udp_socket PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
 	add_executable(test_unix_socket tests/unix_socket_test.cpp)
-	target_include_directories(test_unix_socket PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 	target_link_libraries(test_unix_socket ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 	set_target_properties(test_unix_socket PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
 	add_executable(test_usb_socket tests/usb_socket_test.cpp)
-	target_include_directories(test_usb_socket PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 	target_link_libraries(test_usb_socket ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 	set_target_properties(test_usb_socket PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 endif()
@@ -231,7 +227,7 @@ install(TARGETS ${SC_SHARED_LIBRARY} EXPORT LibSCConfig LIBRARY DESTINATION lib$
 install(TARGETS ${SC_SHARED_LIBRARY} EXPORT LibSCConfig LIBRARY DESTINATION lib${LIB_SUFFIX} COMPONENT ${HEADERS_COMPONENT} NAMELINK_ONLY)
 install(TARGETS ${SC_STATIC_LIBRARY} EXPORT LibSCConfig DESTINATION lib${LIB_SUFFIX} COMPONENT ${LIBRARIES_COMPONENT})
 install(EXPORT LibSCConfig FILE LibSCConfig.cmake DESTINATION lib/cmake/LibSC)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ RUNTIME DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT ${HEADERS_COMPONENT} FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/interface/ RUNTIME DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT ${HEADERS_COMPONENT} FILES_MATCHING PATTERN "*.h")
 
 set(CPACK_GENERATOR TGZ;STGZ;ZIP;DEB;RPM)
 

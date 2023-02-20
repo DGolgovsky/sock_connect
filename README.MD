@@ -1,4 +1,4 @@
-## Socket Connection wrapper shared library 
+## Socket Connection wrapper shared library
 
 Shared library that realize sockets connections and could transfer data-packages.
 
@@ -16,7 +16,7 @@ Shared library that realize sockets connections and could transfer data-packages
 ---
 Compile from source
 
-* `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository 
+* `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository
 * `cd sock_connect` change directory to cloned repo-dir
 * `./ci-build.sh -r` compile **latest** release version
 * also you can use `./ci-build.sh -h` for print help information for another variations of building
@@ -39,44 +39,44 @@ Package provides headers installs at `/usr/include` and `.so` library, puts to `
 #### Variations:
 
 ---
-1. Connection with `TCP` transmission
-    * `auto tcp = std::make_shared<Connector<TCP>>(IP, PORT);`
-2. Connection with `UDP` transmission
-    * `auto udp = std::make_shared<Connector<UDP>>(INADDR_ANY, PORT);`
-3. Connection with `UNIX-domain` sockets transmission
-    * `auto unix = std::make_shared<Connector<UNIX>>(sun_path);`
-4. Connection with `USB` transmission
-    * `auto usb = std::make_shared<Connector<USB>>(dev_path, speed);`
+1. Connection with `tcp` transmission
+    * `auto tcp = std::make_shared<connector<tcp>>(IP, PORT);`
+2. Connection with `udp` transmission
+    * `auto udp = std::make_shared<connector<udp>>(INADDR_ANY, PORT);`
+3. Connection with `sun-domain` sockets transmission
+    * `auto unix = std::make_shared<connector<sun>>(sun_path);`
+4. Connection with `usb` transmission
+    * `auto usb = std::make_shared<connector<usb>>(dev_path, speed);`
 5. **`DEPRECATED`** Transform `const char*` ip-addr `192.168.1.42` to `uint32_t`
     * `uint32_t IP = ip_to_int(argv[1]);`
 
 #### Examples:
 
 ---
-* Receiving `TCP` as client:
+* Receiving `tcp` as client:
 
 ```cpp
 uint16_t msg = 0;
 auto recv_sz = sizeof(uint16_t);
 
 /* Create new socket connection */
-auto tcp = std::make_shared<Connector<TCP>>(IP, PORT);
-while (tcp->Status()) {
+auto tcp = std::make_shared<connector<tcp>>(IP, PORT);
+while (tcp->status()) {
     // While tcp establish connection to server
-    if (tcp->Connect()) {
+    if (tcp->connect()) {
         // While data receiving do something with it
-        // if tcp connection lost tcp->Receive returns false
-        while (tcp->Receive(&msg, recv_sz)) {
+        // if tcp connection lost tcp->receive returns false
+        while (tcp->receive(&msg, recv_sz)) {
             // do_something with received data
             // ...
         }
-        // Trying reconnect if connection lost
-        tcp.reset(new Connector<TCP>(IP, PORT));
+        // Trying to reconnect if connection lost
+        tcp.reset(new connector<tcp>(IP, PORT));
     }
 }
 ```
 
-* Receiving `TCP` as multi-server:
+* Receiving `tcp` as multi-server:
 
 ```cpp
 template<class T>
@@ -84,24 +84,24 @@ void handler(T tcp, int client_id) {
     tcp->assign_thread(client_id);
     uint16_t msg = 0;
     auto recv_sz = sizeof(uint16_t);
-    while ((tcp->Receive(&msg, recv_sz))) {
+    while ((tcp->receive(&msg, recv_sz))) {
         // do_something with received message
         // ...
     }
-    tcp->Shutdown(client_id);
+    tcp->shutdown(client_id);
 }
 
 /* Used if [this] - recv server */
 void receiver()
 {
     /* Creating new connection */
-    auto tcp = std::make_shared<Connector<TCP>>(IP, PORT);
+    auto tcp = std::make_shared<connector<tcp>>(IP, PORT);
 
-    tcp->Bind(false); /* You can use it as TCP->Bind(); for bind && listen */
-    tcp->Listen(); /* You may don't need this part if you bind with (true) option */
+    tcp->bind(false); /* You can use it as tcp->bind(); for bind && listen */
+    tcp->listen(); /* You may don't need this part if you bind with (true) option */
 
     int client_id = 0;
-    while ((client_id = tcp->Accept()) > 0) {
+    while ((client_id = tcp->accept()) > 0) {
         /* Accepting new connections and start receiving with the new thread */
         std::thread thread(handler<decltype(tcp)>, tcp, client_id);
         thread.detach();
@@ -109,33 +109,33 @@ void receiver()
 }
 ```
 
-* Sending `TCP` as client to server, broadcasting `UDP`:
+* Sending `tcp` as client to server, broadcasting `udp`:
 
 ```cpp
-auto tcp = std::make_shared<Connector<TCP>>(INADDR_LOOPBACK, PORT); // 127.0.0.1
-auto udp = std::make_shared<Connector<UDP>>(INADDR_ANY, PORT); // 0.0.0.0
+auto tcp = std::make_shared<connector<tcp>>(INADDR_LOOPBACK, PORT); // 127.0.0.1
+auto udp = std::make_shared<connector<udp>>(INADDR_ANY, PORT); // 0.0.0.0
 
 uint16_t msg = 0;
 auto msg_sz = sizeof(uint16_t);
 
-// Infinite loop. This allow execute tcp_sender as daemon
+// Infinite loop. This allows to execute tcp_sender as daemon
 while (true) {
-    if (tcp->Connect()) {
+    if (tcp->connect()) {
         // If connection successful,
-        // send data while Status() returns true
-        while (tcp->Status()) {
+        // send data while status() returns true
+        while (tcp->status()) {
             msg = rand() % 50; // Generate random data
             if (msg) {
                 // Trying to send message
                 // Continue if sending is failure,
-                // Also tcp->Status() will return false
-                if (!tcp->Send(&msg, msg_sz)) continue;
+                // Also tcp->status() will return false
+                if (!tcp->send(&msg, msg_sz)) continue;
                 // Send udp package
-                udp->Send(&msg, msg_sz);                
+                udp->send(&msg, msg_sz);                
             }
         }
         // Reconnecting if connection lost
-        tcp.reset(new Connector<TCP>(INADDR_LOOPBACK, PORT));
+        tcp.reset(new connector<tcp>(INADDR_LOOPBACK, PORT));
     }
 }
 ```
