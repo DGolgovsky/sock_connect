@@ -115,12 +115,12 @@ function(target_architecture output_var)
         # way, we can detect the correct target architecture even when cross-compiling,
         # since the program itself never needs to be run (only the compiler/preprocessor)
         try_run(
-            run_result_unused
-            compile_result_unused
-            "${CMAKE_BINARY_DIR}"
-            "${CMAKE_BINARY_DIR}/arch.c"
-            COMPILE_OUTPUT_VARIABLE ARCH
-            CMAKE_FLAGS CMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
+                run_result_unused
+                compile_result_unused
+                "${CMAKE_BINARY_DIR}"
+                "${CMAKE_BINARY_DIR}/arch.c"
+                COMPILE_OUTPUT_VARIABLE ARCH
+                CMAKE_FLAGS CMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
         )
 
         # Parse the architecture name from the compiler output
@@ -132,10 +132,19 @@ function(target_architecture output_var)
         # If we are compiling with an unknown architecture this variable should
         # already be set to "unknown" but in the case that it's empty (i.e. due
         # to a typo in the code), then set it to unknown
-        if (NOT ARCH)
+        if(NOT ARCH)
             set(ARCH unknown)
         endif()
     endif()
 
     set(${output_var} "${ARCH}" PARENT_SCOPE)
 endfunction()
+
+if(APPLE)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DARWIN_C_SOURCE")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_DARWIN_C_SOURCE")
+endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "AIX")
+    set(CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> -q -c ${CMAKE_STATIC_LINKER_FLAGS} -o <TARGET> <OBJECTS>")
+endif()

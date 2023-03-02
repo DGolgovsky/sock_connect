@@ -1,5 +1,5 @@
-#ifndef SOCK_CONNECT_HELPERS_H
-#define SOCK_CONNECT_HELPERS_H
+#ifndef SOCK_CONNECT_DEBUG_OUTPUT_H
+#define SOCK_CONNECT_DEBUG_OUTPUT_H
 
 #include <iostream>
 #include <string>
@@ -54,7 +54,7 @@ std::string print_values(T *val, size_t sz)
         os.append("[");
         for (size_t i = 0; i < sz; i++)
         {
-            if (i && i != sz)
+            if (i)
             {
                 os.append("; ");
             }
@@ -69,5 +69,4 @@ std::string print_values(T *val, size_t sz)
     return os;
 }
 
-#endif //SOCK_CONNECT_HELPERS_H
-
+#endif //SOCK_CONNECT_DEBUG_OUTPUT_H

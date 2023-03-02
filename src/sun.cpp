@@ -1,23 +1,23 @@
 #include "interface/sun.h"
 
 sun::sun(std::string const &path)
-    : connection(_UNIX, path)
+    : connection(SUN, path)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
     std::clog << "[SOCK_CONNECT] sun::sun("
-              << "std::string const &path: " << path << ")" << '\n' << std::flush;
+              << "std::string path: " << path << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
 
 sun::sun(char const *path)
-    : connection(_UNIX, path)
+    : connection(SUN, path)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] sun::sun("
-              << "char const *path: " << path << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] sun::sun(" << type_name<decltype(path)>()
+              << " path: " << path << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -26,7 +26,7 @@ sun::~sun()
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] sun::sun)\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] sun::~sun)\n" << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -43,8 +43,10 @@ size_t sun::receive(T *value, size_t tu_size)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] sun::receive<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] sun::receive<"
+                      << type_name<decltype(value)>()
+                      << ">(fd: " << get_descriptor() << "): DISCONNECTED"
+                      << '\n' << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -55,9 +57,9 @@ size_t sun::receive(T *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] sun::receive<" << type_name<decltype(value)>() << ">: <"
-              << print_values(value, tu_size)
-              << " [+" << total << "]>\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] sun::receive<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size) << " [+" << total
+              << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return total;
@@ -75,8 +77,10 @@ size_t sun::send(T const *value, size_t tu_size)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] sun::send<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] sun::send<"
+                      << type_name<decltype(value)>() << ">(fd: "
+                      << get_descriptor() << "): DISCONNECTED" << '\n'
+                      << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -87,7 +91,8 @@ size_t sun::send(T const *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] sun::send<" << type_name<decltype(value)>() << ">: <" << print_values(value, tu_size)
+    std::clog << "[SOCK_CONNECT] sun::send<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size)
               << " [+" << total << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif

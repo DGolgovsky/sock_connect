@@ -2,7 +2,6 @@
 #include <random>
 #include <chrono>
 #include <memory>
-#include <netinet/in.h>
 #include <iostream>
 #include <thread>
 
@@ -31,7 +30,7 @@ static void server()
     std::fill(ui_32_a, ui_32_a + array_size, distribution(generator));
     std::fill(ui_64_a, ui_64_a + array_size, distribution(generator));
 
-    std::ifstream fstream("tcp_socket_test", std::ios::binary);
+    std::ifstream fstream("sun_socket_test", std::ios::binary);
     std::string file;
     fstream.seekg(0, std::ios::end);
     file.reserve(static_cast<unsigned long>(fstream.tellg()));
@@ -39,7 +38,9 @@ static void server()
     file.assign((std::istreambuf_iterator<char>(fstream)),
                 std::istreambuf_iterator<char>());
 
-    auto socket = std::make_shared<connector<tcp>>(INADDR_LOOPBACK, 8010);
+    std::string sun_path = "/tmp/sun_path";
+    auto socket = std::make_shared<connector<sun>>(sun_path);
+
     socket->bind();
     if (socket->accept())
     {
@@ -54,6 +55,7 @@ static void server()
         socket->send(ui_32_a, sizeof(ui_32) * array_size);
         socket->send(ui_64_a, sizeof(ui_64) * array_size);
 
+        //std::clog << "[TEST] SENT: ui_8 = " << (int)ui_8 << "; ui_16 = " << ui_16 << "; ui_32 = " << ui_32 << std::endl;
         socket->send(&size, sizeof(size));
         socket->send(&file, size);
     }
@@ -62,13 +64,13 @@ static void server()
 
 int main()
 {
-    system("rm -f tcp_socket_test.received");
+    system("rm -f sun_socket_test.received /tmp/sun_path");
     std::thread t(server);
     t.detach();
 
-    auto socket = std::make_shared<connector<tcp>>(INADDR_LOOPBACK, 8010);
+    auto socket = std::make_shared<connector<sun>>("/tmp/sun_path");
 
-    std::ofstream ofstream("tcp_socket_test.received", std::ios::binary);
+    std::ofstream ofstream("sun_socket_test.received", std::ios::binary);
     std::string file;
     size_t const array_size = 8;
     uint8_t ui_8 = 0;
@@ -103,11 +105,12 @@ int main()
             {
                 ofstream << file;
             }
+
             socket->shutdown();
             std::clog << "[TEST] Client finished work" << std::endl;
         }
     }
-    system("md5sum tcp_socket_test tcp_socket_test.received");
+    system("md5sum sun_socket_test sun_socket_test.received");
 
     return 0;
 }

@@ -10,20 +10,21 @@ inline bool main_loop(const std::string &dev_path, speed_t speed)
     std::string msg;
     auto socket = std::make_shared<connector<usb>>(dev_path, speed);
 
-    std::clog << "[TEST] connect to: " << dev_path << "\n";
+    std::clog << "[TEST] Connect to: " << dev_path << "\n";
     while (true)
-    { // Infinite loop
+    {
         if (socket->connect())
         {
             while (socket->status())
             { // Reading messages queue
-                std::clog << "[TEST] >>> send data: ";
+                std::clog << "[TEST] >>> Send data: ";
                 std::cin >> msg;
                 if (!msg.empty())
                 {
                     if (!socket->send(&msg, msg.length()))
                     {
-                        std::clog << "[TEST] === Couldn't send data: " << msg << std::endl;
+                        std::clog << "[TEST] === Couldn't send data: " << msg
+                                  << std::endl;
                         return false;
                     }
                     //std::this_thread::sleep_for(std::chrono::seconds(1));

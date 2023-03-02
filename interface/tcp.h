@@ -3,7 +3,7 @@
 
 #include "include/connection.h"
 
-class tcp: public connection
+class tcp final: public connection
 {
 public:
     explicit tcp(uint32_t address, uint16_t port);
@@ -12,7 +12,7 @@ public:
     ~tcp() override;
 
     /**
-     * @brief receive value
+     * @brief Receive value
      * Virtual receiving function for values
      * @param value Address of value to receive
      * @param tu_size Bytes to receive
@@ -22,7 +22,7 @@ public:
     size_t receive(T *value, size_t tu_size);
 
     /**
-     * @brief send value
+     * @brief Send value
      * Virtual sending function for values
      * @param value Address of value to send
      * @param tu_size Bytes to send

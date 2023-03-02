@@ -1,4 +1,6 @@
 #include <fstream>
+#include <random>
+#include <chrono>
 #include <memory>
 #include <netinet/in.h>
 #include <iostream>
@@ -6,9 +8,9 @@
 
 #include "interface/sock_connect.h"
 
-void server()
+static void server()
 {
-    std::ifstream fstream("test_udp_socket", std::ios::binary);
+    std::ifstream fstream("udp_socket_test", std::ios::binary);
     std::string file;
     fstream.seekg(0, std::ios::end);
     file.reserve(static_cast<unsigned long>(fstream.tellg()));
@@ -23,7 +25,8 @@ void server()
     auto msg_sz = socket->send(&file, sz);
     if (msg_sz < sz)
     {
-        std::clog << "[TEST] File doesn't sent: msg_size = " << msg_sz << std::endl;
+        std::clog << "[TEST] File doesn't sent: msg_size = " << msg_sz
+                  << std::endl;
     }
     std::clog << "[TEST] Server finished work" << std::endl;
 }
@@ -31,13 +34,10 @@ void server()
 int main()
 {
     auto socket = std::make_shared<connector<udp>>(INADDR_LOOPBACK, 8010);
-    if (!socket->bind(false))
-    {
-        return 0;
-    }
+    socket->bind();
 
-    system("rm -f test_udp_socket.received");
-    std::ofstream ofstream("test_udp_socket.received", std::ios::binary);
+    system("rm -f udp_socket_test.received");
+    std::ofstream ofstream("udp_socket_test.received", std::ios::binary);
     std::string file;
 
     std::thread t(server);
@@ -46,14 +46,13 @@ int main()
     auto size = file.length();
     socket->receive(&size, sizeof(size));
     socket->receive(&file, size);
-    //socket->shutdown(); //TODO Fix exception
 
     if (!file.empty())
     {
         ofstream << file;
     }
 
-    system("md5sum test_udp_socket test_udp_socket.received");
+    system("md5sum udp_socket_test udp_socket_test.received");
 
     return 0;
 }

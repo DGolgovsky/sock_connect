@@ -3,7 +3,7 @@
 
 #include "include/connection.h"
 
-class sun: public connection
+class sun final: public connection
 {
 public:
     explicit sun(std::string const &path);

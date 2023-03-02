@@ -6,9 +6,9 @@ usb::usb(const std::string &address, speed_t speed)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::USB("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(speed)>() << " speed: " << speed << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::usb(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(speed)>()
+              << " speed: " << speed << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -20,9 +20,9 @@ usb::usb(char const *address, speed_t speed)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::USB("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(speed)>() << " speed: " << speed << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::usb(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(speed)>()
+              << " speed: " << speed << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -32,7 +32,7 @@ usb::~usb()
     this->shutdown();
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::~USB()\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::~usb()\n" << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -72,7 +72,7 @@ bool usb::connect()
     cfmakeraw(&tio);
     tio.c_iflag &= static_cast<unsigned int>(~(IXON | IXOFF));
     tio.c_oflag = 0;
-    tio.c_lflag = 0;       //ICANON;
+    tio.c_lflag = 0;
     tio.c_cc[VTIME] = 0;
     tio.c_cc[VMIN] = 0;
     cfsetspeed(&tio, m_speed_);
@@ -85,8 +85,8 @@ bool usb::connect()
 
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::connect(" << m_address_.data()
-              << ":" << m_speed_ << ")\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::connect(" << m_address_.data() << ":"
+              << m_speed_ << ")\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return (this->state_ = true);
@@ -104,8 +104,10 @@ size_t usb::receive(T *value, size_t tu_size)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] USB::receive<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] usb::receive<"
+                      << type_name<decltype(value)>() << ">(fd: "
+                      << get_descriptor() << "): DISCONNECTED" << '\n'
+                      << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -116,9 +118,9 @@ size_t usb::receive(T *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::receive<" << type_name<decltype(value)>() << ">: <"
-              << print_values(value, tu_size)
-              << " [+" << total << "]>\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::receive<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size) << " [+" << total
+              << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return total;
@@ -136,8 +138,10 @@ size_t usb::send(T const *value, size_t tu_size)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] USB::send<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] usb::send<"
+                      << type_name<decltype(value)>() << ">(fd: "
+                      << get_descriptor() << "): DISCONNECTED" << '\n'
+                      << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -148,8 +152,9 @@ size_t usb::send(T const *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::send<" << type_name<decltype(value)>() << ">: <" << print_values(value, tu_size)
-              << " [+" << total << "]>\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::send<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size) << " [+" << total
+              << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return total;
@@ -188,7 +193,8 @@ template size_t usb::send(bool const *, size_t);
 template<>
 size_t usb::receive(std::string *value, size_t const tu_size)
 {
-    value->resize(tu_size < value->max_size() ? tu_size : value->max_size(), '\0');
+    value->resize(tu_size < value->max_size() ? tu_size : value->max_size(),
+                  '\0');
     return usb::receive(&value->front(), tu_size);
 }
 
@@ -204,7 +210,8 @@ void usb::shutdown()
     {
 #ifndef NDEBUG
         debug_mutex.lock();
-        std::clog << "[SOCK_CONNECT] USB::shutdown(): " << fd_ << '\n' << std::flush;
+        std::clog << "[SOCK_CONNECT] usb::shutdown(): " << fd_ << '\n'
+                  << std::flush;
         debug_mutex.unlock();
 #endif
         close(fd_);
@@ -247,8 +254,8 @@ void usb::assign_thread(int) const
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::assign_thread(): " << fd_
-              << ". Doesn't use in current state_" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::assign_thread(): " << fd_
+              << ". Doesn't use in current state" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -262,32 +269,30 @@ int usb::accept(const std::string &) const
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::accept(): " << fd_
-              << ". Doesn't use in current state_" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::accept(): " << fd_
+              << ". Doesn't use in current state" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
     return 0;
 }
 
-bool usb::bind() const
+void usb::bind(bool) const
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::bind(): " << fd_
-              << ". Doesn't use in current state_" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::bind(): " << fd_
+              << ". Doesn't use in current state" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
-    return false;
 }
 
-bool usb::listen() const
+void usb::listen() const
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] USB::listen(): " << fd_
-              << ". Doesn't use in current state_" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] usb::listen(): " << fd_
+              << ". Doesn't use in current state" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
-    return false;
 }
 

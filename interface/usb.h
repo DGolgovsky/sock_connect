@@ -6,7 +6,7 @@
 #include <fcntl.h>
 #include <termios.h>
 
-class usb
+class usb final
 {
 public:
     /**
@@ -18,7 +18,7 @@ public:
     ~usb();
 
     /**
-     * @brief receive value
+     * @brief Receive value
      * Virtual receiving function for values
      * @param value Address of value to receive
      * @param tu_size Bytes to receive
@@ -28,7 +28,7 @@ public:
     size_t receive(T *value, size_t tu_size);
 
     /**
-     * @brief send value
+     * @brief Send value
      * Virtual sending function for values
      * @param value Address of value to send
      * @param tu_size Bytes to send
@@ -45,15 +45,11 @@ public:
     void shutdown(int id);
     bool status() const;
 
-    /**
-     * Current here for compatibility
-     * Do the same as get_descriptor
-     * @return fd_
-     */
+    /** Functions below here for compatibility */
     int id() const;
     int accept(const std::string &) const;
-    bool listen() const;
-    bool bind() const;
+    void listen() const;
+    void bind(bool) const;
     void assign_thread(int id) const;
 
 private:

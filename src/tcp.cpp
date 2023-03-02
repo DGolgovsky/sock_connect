@@ -1,37 +1,37 @@
 #include "interface/tcp.h"
 
 tcp::tcp(uint32_t address, uint16_t port)
-    : connection(_TCP, address, port)
+    : connection(TCP, address, port)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] TCP::TCP("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] tcp::tcp(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(port)>()
+              << " port: " << port << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
 
 tcp::tcp(const char *address, uint16_t port)
-    : connection(_TCP, address, port)
+    : connection(TCP, address, port)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] TCP::TCP("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] tcp::tcp(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(port)>()
+              << " port: " << port << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
 
 tcp::tcp(const std::string &address, uint16_t port)
-    : connection(_TCP, address.data(), port)
+    : connection(TCP, address.data(), port)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] TCP::TCP("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] tcp::tcp(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(port)>()
+              << " port: " << port << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -40,7 +40,7 @@ tcp::~tcp()
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] TCP::~TCP()\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] tcp::~tcp()\n" << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -52,13 +52,16 @@ size_t tcp::receive(T *value, size_t tu_size)
     size_t total = 0;
     while (total < tu_size)
     {
-        msg_sz_ = ::recv(get_descriptor(), value + total, recv_left, MSG_NOSIGNAL);
+        msg_sz_ = ::recv(get_descriptor(), value + total, recv_left,
+                         MSG_NOSIGNAL);
         if (msg_sz_ < 1)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] TCP::receive<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] tcp::receive<"
+                      << type_name<decltype(value)>() << ">(fd: "
+                      << get_descriptor() << "): DISCONNECTED" << '\n'
+                      << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -69,9 +72,9 @@ size_t tcp::receive(T *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] TCP::receive<" << type_name<decltype(value)>() << ">: <"
-              << print_values(value, tu_size)
-              << " [+" << total << "]>\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] tcp::receive<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size) << " [+" << total
+              << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return total;
@@ -88,13 +91,16 @@ size_t tcp::send(T const *value, size_t tu_size)
     size_t total = 0;
     while (send_left > 0)
     {
-        msg_sz_ = ::send(get_descriptor(), value + total, send_left, MSG_NOSIGNAL);
+        msg_sz_ = ::send(get_descriptor(), value + total, send_left,
+                         MSG_NOSIGNAL);
         if (msg_sz_ < 1)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] TCP::send<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] tcp::send<"
+                      << type_name<decltype(value)>() << ">(fd: "
+                      << get_descriptor() << "): DISCONNECTED" << '\n'
+                      << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -105,8 +111,9 @@ size_t tcp::send(T const *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] TCP::send<" << type_name<decltype(value)>() << ">: <" << print_values(value, tu_size)
-              << " [+" << total << "]>\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] tcp::send<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size) << " [+" << total
+              << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return total;
@@ -145,7 +152,8 @@ template size_t tcp::send(bool const *, size_t);
 template<>
 size_t tcp::receive(std::string *value, size_t const tu_size)
 {
-    value->resize(tu_size < value->max_size() ? tu_size : value->max_size(), '\0');
+    value->resize(tu_size < value->max_size() ? tu_size : value->max_size(),
+                  '\0');
     return tcp::receive(&value->front(), tu_size);
 }
 

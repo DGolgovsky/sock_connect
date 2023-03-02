@@ -131,8 +131,8 @@ cmake .. \
   -DBUILD_VERSION="$BUILD_VERSION" \
   -DCMAKE_EXPORT_COMPILE_COMMANDS=${TESTS} \
   -DCMAKE_CXX_CPPCHECK=/usr/bin/cppcheck
-#cmake --build . -- -j2
-ninja
+cmake --build . -- -j $(nproc)
+#ninja
 
 if [[ $do_tests ]]; then
   ctest -j2

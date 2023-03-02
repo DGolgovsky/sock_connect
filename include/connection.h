@@ -1,6 +1,6 @@
 /**
  * @file connection.h
- * @author DGolgovsky
+ * @author Dmitry Golgovsky
  * @date 2018
  * @brief Socket connection Class
  *
@@ -11,28 +11,32 @@
 #define SOCK_CONNECT_CONNECTION_H
 
 #include <vector>
+#include <string>
 #include <thread>
 
-#include "include/socket_ip.h"
 #ifndef NDEBUG
-#include "include/helpers.h"
+#include "include/debug_output.h"
 #endif
+#include "include/socket_id.h"
 
 class connection
 {
-    using storage_t = std::vector<std::pair<std::thread::id, int>>; // state_ for each connection
+    /**
+     * @brief Inner storage for each connection state
+     */
+    using storage_t = std::vector<std::pair<std::thread::id, int>>;
 
 public:
     connection(conn_type cp, uint32_t address, uint16_t port);
     connection(conn_type cp, char const *address, uint16_t port);
     connection(conn_type cp, std::string const &address, uint16_t port);
     connection(conn_type cp, char const &&address, uint16_t port);
-    connection(conn_type cp, std::string const &path);
+    connection(conn_type cp, std::string const &sun_path);
     connection(conn_type cp, char const *path);
     virtual ~connection();
 
-    bool bind(bool listen) const;
-    bool listen() const;
+    void bind(bool listen) const;
+    void listen() const;
     int accept(std::string *client_address);
     bool connect();
     void shutdown(int id);
@@ -46,26 +50,26 @@ public:
      */
     connection(connection &) = delete;
     connection(connection &&) = delete;
-    connection(const connection &) = delete;
+    connection(connection const &) = delete;
     connection &operator=(connection &) = delete;
-    connection &operator=(const connection &) = delete;
+    connection &operator=(connection const &) = delete;
     connection &operator=(connection &&) = delete;
 protected:
     void conn_memset();
     int get_descriptor();
 
 protected:
-    socket_ip socket_;
+    socket_id id_;
 
-    uint32_t address_{};
-    uint16_t port_{};
-    std::string m_path_{};
+    uint32_t ip_address_{};
+    uint16_t ip_port_{};
+    std::string sun_path_{};
 
-    sockaddr_in socket_addr_{};
-    sockaddr_in client_addr_{};
-    sockaddr_un unix_addr_{};
-    sockaddr *ptr_addr_;
-    socklen_t size_addr_;
+    sockaddr_in self_socket_{};
+    sockaddr_in client_socket_{};
+    sockaddr_un unix_socket_{};
+    sockaddr *addr_ptr_{};
+    socklen_t addr_size_{};
 
     storage_t *client_list_{};
     bool state_{false};

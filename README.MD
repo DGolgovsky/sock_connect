@@ -4,7 +4,6 @@ Shared library that realize sockets connections and could transfer data-packages
 
 #### Navigation
 
-- [Navigation](#navigation)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Examples](#examples)
@@ -19,40 +18,48 @@ Compile from source
 * `git clone https://github.com/DGolgovsky/sock_connect.git` clone git repository
 * `cd sock_connect` change directory to cloned repo-dir
 * `./ci-build.sh -r` compile **latest** release version
-* also you can use `./ci-build.sh -h` for print help information for another variations of building
+  * also you can use `./ci-build.sh -h` for print help information of another variations of build
 * `cd build` jump to directory with compiled objects
 * `sudo make install` install library as `root`
 
-Package provides headers installs at `/usr/include` and `.so` library, puts to `/usr/lib`
+Package provides develop headers that installs at `/usr/include` and `.so` library, puts to `/usr/lib`
 
 #### Usage:
 
 ---
+
 * Include header in your source files where do you need it.
 
 ```cpp
 #include <sock_connect.h>
 ```
 
-* Compile with `-lsock_connect` 
+* Compile with `-lsock_connect`
 
 #### Variations:
 
 ---
+
 1. Connection with `tcp` transmission
-    * `auto tcp = std::make_shared<connector<tcp>>(IP, PORT);`
+
+* `auto tcp = std::make_shared<connector<tcp>>(IP, PORT);`
+
 2. Connection with `udp` transmission
-    * `auto udp = std::make_shared<connector<udp>>(INADDR_ANY, PORT);`
+
+* `auto udp = std::make_shared<connector<udp>>(INADDR_ANY, PORT);`
+
 3. Connection with `sun-domain` sockets transmission
-    * `auto unix = std::make_shared<connector<sun>>(sun_path);`
+
+* `auto unix = std::make_shared<connector<sun>>(sun_path);`
+
 4. Connection with `usb` transmission
-    * `auto usb = std::make_shared<connector<usb>>(dev_path, speed);`
-5. **`DEPRECATED`** Transform `const char*` ip-addr `192.168.1.42` to `uint32_t`
-    * `uint32_t IP = ip_to_int(argv[1]);`
+
+* `auto usb = std::make_shared<connector<usb>>(dev_path, speed);`
 
 #### Examples:
 
 ---
+
 * Receiving `tcp` as client:
 
 ```cpp
@@ -97,7 +104,7 @@ void receiver()
     /* Creating new connection */
     auto tcp = std::make_shared<connector<tcp>>(IP, PORT);
 
-    tcp->bind(false); /* You can use it as tcp->bind(); for bind && listen */
+    tcp->bind(false); /* You can use it as tcp->bind(); for bind and listen */
     tcp->listen(); /* You may don't need this part if you bind with (true) option */
 
     int client_id = 0;

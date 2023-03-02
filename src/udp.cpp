@@ -1,37 +1,37 @@
 #include "interface/udp.h"
 
 udp::udp(uint32_t address, uint16_t port)
-    : connection(_UDP, address, port)
+    : connection(UDP, address, port)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] UDP::UDP("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] udp::udp(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(port)>()
+              << " port: " << port << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
 
 udp::udp(const char *address, uint16_t port)
-    : connection(_UDP, address, port)
+    : connection(UDP, address, port)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] UDP::UDP("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] udp::udp(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(port)>()
+              << " port: " << port << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
 
 udp::udp(const std::string &address, uint16_t port)
-    : connection(_UDP, address.data(), port)
+    : connection(UDP, address.data(), port)
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] UDP::UDP("
-              << type_name<decltype(address)>() << " address: " << address << ", "
-              << type_name<decltype(port)>() << " port: " << port << ")" << '\n' << std::flush;
+    std::clog << "[SOCK_CONNECT] udp::udp(" << type_name<decltype(address)>()
+              << " address: " << address << ", " << type_name<decltype(port)>()
+              << " port: " << port << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -40,7 +40,7 @@ udp::~udp()
 {
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] UDP::~UDP()\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] udp::~udp()\n" << std::flush;
     debug_mutex.unlock();
 #endif
 }
@@ -53,13 +53,15 @@ size_t udp::receive(T *value, size_t tu_size)
     while (total < tu_size)
     {
         msg_sz_ = ::recvfrom(get_descriptor(), value + total, recv_left, 0,
-                             ptr_addr_, &size_addr_);
+                             addr_ptr_, &addr_size_);
         if (msg_sz_ < 1)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] UDP::receive<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] udp::receive<"
+                      << type_name<decltype(value)>() << ">(fd: "
+                      << get_descriptor() << "): DISCONNECTED" << '\n'
+                      << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -70,9 +72,9 @@ size_t udp::receive(T *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] UDP::receive<" << type_name<decltype(value)>() << ">: <"
-              << print_values(value, tu_size)
-              << " [+" << total << "]>\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] udp::receive<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size) << " [+" << total
+              << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return total;
@@ -91,13 +93,17 @@ size_t udp::send(T const *value, size_t tu_size)
     unsigned long last_packet = tu_size - frames * 576;
     while (send_left > 0)
     {
-        msg_sz_ = ::sendto(get_descriptor(), value + total, frames ? 576 : last_packet, 0, ptr_addr_, size_addr_);
+        msg_sz_ = ::sendto(get_descriptor(), value + total,
+                           frames ? 576 : last_packet, 0, addr_ptr_,
+                           addr_size_);
         if (msg_sz_ < 1)
         {
 #ifndef NDEBUG
             debug_mutex.lock();
-            std::clog << "[SOCK_CONNECT] UDP::send<" << type_name<decltype(value)>()
-                      << ">(fd_: " << get_descriptor() << "): DISCONNECTED" << '\n' << std::flush;
+            std::clog << "[SOCK_CONNECT] udp::send<"
+                      << type_name<decltype(value)>() << ">(fd: "
+                      << get_descriptor() << "): DISCONNECTED" << '\n'
+                      << std::flush;
             debug_mutex.unlock();
 #endif
             this->state_ = false;
@@ -109,8 +115,9 @@ size_t udp::send(T const *value, size_t tu_size)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] UDP::send<" << type_name<decltype(value)>() << ">: <" << print_values(value, tu_size)
-              << " [+" << total << "]>\n" << std::flush;
+    std::clog << "[SOCK_CONNECT] udp::send<" << type_name<decltype(value)>()
+              << ">: <" << print_values(value, tu_size) << " [+" << total
+              << "]>\n" << std::flush;
     debug_mutex.unlock();
 #endif
     return total;
