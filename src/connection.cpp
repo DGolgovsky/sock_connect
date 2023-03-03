@@ -42,16 +42,15 @@ static unsigned int ip_to_int(std::string const &str)
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] ip_to_int("
-              << "string ip: " << str << ") = " << ip << '\n'
-              << std::flush;
+    std::clog << "[SOCK_CONNECT] ip_to_int(" << "string ip: " << str << ") = "
+              << ip << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
     return ip;
 }
 
 connection::connection(conn_type cp, uint32_t address, uint16_t port)
-    : id_(cp)
+    : socket_(cp)
     , ip_address_(address)
     , ip_port_(port)
 {
@@ -66,18 +65,18 @@ connection::connection(conn_type cp, uint32_t address, uint16_t port)
     client_list_ = new storage_t(32);
     timeval set = {60, 0};
     int reuse = 1;
-    setsockopt(id_.id(), SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
-    setsockopt(id_.id(), SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse));
-    setsockopt(id_.id(), SOL_SOCKET, SO_SNDTIMEO,
+    setsockopt(socket_, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof(reuse));
+    setsockopt(socket_, SOL_SOCKET, SO_REUSEPORT, &reuse, sizeof(reuse));
+    setsockopt(socket_, SOL_SOCKET, SO_SNDTIMEO,
                reinterpret_cast<char *>(&set), sizeof(set));
 #ifndef NDEBUG
     debug_mutex.lock();
     std::clog << "[SOCK_CONNECT] connection::connection<"
-              << id_.connection_type() << ">("
+              << socket_.connection_type() << ">("
               << type_name<decltype(address)>() << " address: " << address
               << ", "
               << type_name<decltype(port)>() << " port: " << port << ") ["
-              << "SOCKET_ID = " << id_.id() << "]\n" << std::flush;
+              << "SOCKET_ID = " << socket_.id() << "]\n" << std::flush;
     debug_mutex.unlock();
 #endif
     this->state_ = true;
@@ -96,7 +95,7 @@ connection::connection(conn_type cp, const char &&address, uint16_t port)
 {}
 
 connection::connection(conn_type cp, std::string const &sun_path)
-    : id_(cp)
+    : socket_(cp)
     , sun_path_(sun_path)
 {
     conn_memset();
@@ -109,10 +108,8 @@ connection::connection(conn_type cp, std::string const &sun_path)
 #ifndef NDEBUG
     debug_mutex.lock();
     std::clog << "[SOCK_CONNECT] connection::connection<"
-              << id_.connection_type() << ">("
-              << "std::string sun_path: " << sun_path
-              << ")" << '\n'
-              << std::flush;
+              << socket_.connection_type() << ">(" << "std::string sun_path: "
+              << sun_path << ")" << '\n' << std::flush;
     debug_mutex.unlock();
 #endif
     this->state_ = true;
@@ -134,12 +131,12 @@ connection::~connection()
 #ifndef NDEBUG
     debug_mutex.lock();
     std::clog << "[SOCK_CONNECT] connection::~connection<"
-              << id_.connection_type() << ">()\n" << std::flush;
+              << socket_.connection_type() << ">()\n" << std::flush;
     debug_mutex.unlock();
 #endif
     try
     {
-        this->shutdown(0);
+        shutdown(0);
     }
     catch (std::exception const &e)
     {
@@ -178,18 +175,18 @@ void connection::shutdown(int id)
 #ifndef NDEBUG
         debug_mutex.lock();
         std::clog << "[SOCK_CONNECT] connection::shutdown<"
-                  << id_.connection_type() << ">(): " << id << '\n'
+                  << socket_.connection_type() << ">(): " << id << '\n'
                   << std::flush;
         debug_mutex.unlock();
 #endif
     }
-    if (id_.connection_type() == "sun")
+    if (socket_.connection_type() == "sun")
     {
         unlink(sun_path_.c_str());
 #ifndef NDEBUG
         debug_mutex.lock();
         std::clog << "[SOCK_CONNECT] connection::shutdown<"
-                  << id_.connection_type() << ">(): " << sun_path_ << '\n'
+                  << socket_.connection_type() << ">(): " << sun_path_ << '\n'
                   << std::flush;
         debug_mutex.unlock();
 #endif
@@ -199,16 +196,16 @@ void connection::shutdown(int id)
 
 void connection::bind(bool listen) const
 {
-    if (::bind(id_.id(), addr_ptr_, addr_size_) < 0)
+    if (::bind(socket_, addr_ptr_, addr_size_) < 0)
     {
-        close(id_.id());
+        close(socket_);
         throw std::runtime_error(
-            "[SOCK_CONNECT] " + id_.connection_type() +
+            "[SOCK_CONNECT] " + socket_.connection_type() +
             "::bind failed. Error number: " + std::to_string(errno));
     }
 #ifndef NDEBUG
     std::string bind_addr;
-    if (id_.connection_type() != "sun")
+    if (socket_.connection_type() != "sun")
     {
         bind_addr = inet_ntoa(self_socket_.sin_addr);
         bind_addr.append(":")
@@ -219,11 +216,11 @@ void connection::bind(bool listen) const
         bind_addr = this->sun_path_;
     }
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] " << id_.connection_type() << "::bind("
+    std::clog << "[SOCK_CONNECT] " << socket_.connection_type() << "::bind("
               << bind_addr << ")\n" << std::flush;
     debug_mutex.unlock();
 #endif
-    if (listen && id_.connection_type() != "udp")
+    if (listen && socket_.connection_type() != "udp")
     {
         this->listen();
     }
@@ -231,15 +228,15 @@ void connection::bind(bool listen) const
 
 void connection::listen() const
 {
-    if (::listen(id_.id(), SOMAXCONN) < 0)
+    if (::listen(socket_, SOMAXCONN) < 0)
     {
         throw std::runtime_error(
-            "[SOCK_CONNECT] " + id_.connection_type() +
+            "[SOCK_CONNECT] " + socket_.connection_type() +
             "::listen failed, error number: " + std::to_string(errno));
     }
 #ifndef NDEBUG
     std::string bind_addr;
-    if (id_.connection_type() == "tcp")
+    if (socket_.connection_type() == "tcp")
     {
         bind_addr = inet_ntoa(self_socket_.sin_addr);
         bind_addr.append(":")
@@ -250,7 +247,7 @@ void connection::listen() const
         bind_addr = this->sun_path_;
     }
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] " << id_.connection_type() << "::listen("
+    std::clog << "[SOCK_CONNECT] " << socket_.connection_type() << "::listen("
               << bind_addr << ")\n" << std::flush;
     debug_mutex.unlock();
 #endif
@@ -259,19 +256,19 @@ void connection::listen() const
 int connection::accept(std::string *client_address)
 {
     socklen_t sz = sizeof(client_socket_);
-    int transmission = ::accept(id_.id(),
+    int transmission = ::accept(socket_,
                                 reinterpret_cast<sockaddr *>(&client_socket_),
                                 &sz);
     if (transmission < 0)
     {
         throw std::runtime_error(
-            "[SOCK_CONNECT] " + id_.connection_type() +
+            "[SOCK_CONNECT] " + socket_.connection_type() +
             "::accept failed. Error number: " + std::to_string(errno));
     }
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] " << id_.connection_type() << "::accept("
-              << (id_.connection_type() != "sun" ? inet_ntoa(
+    std::clog << "[SOCK_CONNECT] " << socket_.connection_type() << "::accept("
+              << (socket_.connection_type() != "sun" ? inet_ntoa(
                   client_socket_.sin_addr) : this->sun_path_)
               << ":" << ntohs(client_socket_.sin_port) << ") | fd: "
               << transmission << '\n' << std::flush;
@@ -279,7 +276,7 @@ int connection::accept(std::string *client_address)
 #endif
     if (client_address)
     {
-        client_address->append((id_.connection_type() != "sun" ? inet_ntoa(
+        client_address->append((socket_.connection_type() != "sun" ? inet_ntoa(
             client_socket_.sin_addr) : this->sun_path_));
     }
     // Must be called also at dev-side
@@ -289,17 +286,17 @@ int connection::accept(std::string *client_address)
 
 bool connection::connect()
 {
-    if (::connect(id_.id(), addr_ptr_, sizeof(*addr_ptr_)) < 0)
+    if (::connect(socket_, addr_ptr_, sizeof(*addr_ptr_)) < 0)
     {
         return false;
     }
     timeval set = {60, 0};
-    setsockopt(id_.id(), SOL_SOCKET, SO_RCVTIMEO,
+    setsockopt(socket_, SOL_SOCKET, SO_RCVTIMEO,
                reinterpret_cast<char *>(&set), sizeof(set));
 #ifndef NDEBUG
     debug_mutex.lock();
-    std::clog << "[SOCK_CONNECT] " << id_.connection_type() << "::connect("
-              << (id_.connection_type() != "sun" ? inet_ntoa(
+    std::clog << "[SOCK_CONNECT] " << socket_.connection_type() << "::connect("
+              << (socket_.connection_type() != "sun" ? inet_ntoa(
                   self_socket_.sin_addr) : this->sun_path_)
               << ":" << ntohs(self_socket_.sin_port) << ")\n" << std::flush;
     debug_mutex.unlock();
@@ -309,7 +306,7 @@ bool connection::connect()
 
 int connection::id() const noexcept
 {
-    return id_.id();
+    return socket_;
 }
 
 bool connection::status() const noexcept
@@ -322,8 +319,7 @@ void connection::assign_thread(int id)
     auto thread_id = std::this_thread::get_id();
     auto it = std::find_if(client_list_->begin(), client_list_->end(),
                            [&thread_id]
-                               (const std::pair<std::thread::id, int> &element)
-                           {
+                               (const std::pair<std::thread::id, int> &element) {
                                return element.first == thread_id;
                            });
     if (it != client_list_->end())
@@ -336,13 +332,12 @@ void connection::assign_thread(int id)
     }
 }
 
-int connection::get_descriptor()
+int connection::get_descriptor() const
 {
     auto thread_id = std::this_thread::get_id();
     auto it = std::find_if(client_list_->begin(), client_list_->end(),
                            [&thread_id]
-                               (const std::pair<std::thread::id, int> &element)
-                           {
+                               (const std::pair<std::thread::id, int> &element) {
                                return element.first == thread_id;
                            });
     if (it != client_list_->end())

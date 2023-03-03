@@ -45,7 +45,7 @@ udp::~udp()
 #endif
 }
 
-template<typename T>
+template <typename T>
 size_t udp::receive(T *value, size_t tu_size)
 {
     auto recv_left = tu_size;
@@ -80,7 +80,7 @@ size_t udp::receive(T *value, size_t tu_size)
     return total;
 }
 
-template<typename T>
+template <typename T>
 size_t udp::send(T const *value, size_t tu_size)
 {
     /**
@@ -153,7 +153,7 @@ template size_t udp::send(double const *, size_t);
 template size_t udp::send(long double const *, size_t);
 template size_t udp::send(bool const *, size_t);
 
-template<>
+template <>
 size_t udp::receive(std::string *value, size_t const tu_size)
 {
     if (value->size() < tu_size && tu_size < value->max_size())
@@ -163,7 +163,7 @@ size_t udp::receive(std::string *value, size_t const tu_size)
     return udp::receive(&value->front(), tu_size);
 }
 
-template<>
+template <>
 size_t udp::send(std::string const *value, size_t const tu_size)
 {
     return udp::send(value->c_str(), tu_size);

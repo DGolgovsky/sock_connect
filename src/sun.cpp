@@ -31,7 +31,7 @@ sun::~sun()
 #endif
 }
 
-template<typename T>
+template <typename T>
 size_t sun::receive(T *value, size_t tu_size)
 {
     auto recv_left = tu_size;
@@ -65,7 +65,7 @@ size_t sun::receive(T *value, size_t tu_size)
     return total;
 }
 
-template<typename T>
+template <typename T>
 size_t sun::send(T const *value, size_t tu_size)
 {
     auto send_left = tu_size;
@@ -129,7 +129,7 @@ template size_t sun::send(double const *, size_t);
 template size_t sun::send(long double const *, size_t);
 template size_t sun::send(bool const *, size_t);
 
-template<>
+template <>
 size_t sun::receive(std::string *value, size_t const tu_size)
 {
     if (value->size() < tu_size && tu_size < value->max_size())
@@ -139,7 +139,7 @@ size_t sun::receive(std::string *value, size_t const tu_size)
     return sun::receive(&value->front(), tu_size);
 }
 
-template<>
+template <>
 size_t sun::send(std::string const *value, size_t const tu_size)
 {
     return sun::send(value->c_str(), tu_size);

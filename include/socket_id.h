@@ -17,18 +17,19 @@
 #include <unistd.h>
 #include <stdexcept>
 
-enum conn_type: char
+enum conn_type : char
 {
     TCP,
     UDP,
-    SUN
+    SUN,
+    USB
 };
 
 class socket_id final
 {
 public:
     explicit socket_id(conn_type ct)
-        : id_(0)
+        : id_(-1)
         , type_()
     {
         switch (ct)
@@ -44,6 +45,10 @@ public:
             case SUN:
                 id_ = socket(AF_UNIX, SOCK_STREAM, 0);
                 type_ = "sun";
+                break;
+            case USB:
+                id_ = 0;
+                type_ = "usb";
                 break;
         }
 
@@ -84,18 +89,26 @@ public:
      * @return Socket ID
      */
     int id() const noexcept
-    {
-        return id_;
-    }
+    { return id_; }
+
+    void set_id(int id)
+    { id_ = id; }
 
     /**
      * @brief Get Connection text type
      * @return Type string
      */
     std::string connection_type() const noexcept
-    {
-        return type_;
-    }
+    { return type_; }
+
+    operator int() const noexcept
+    { return id_; }
+    bool operator==(int compare) const noexcept
+    { return id_ == compare; }
+    bool operator!=(int compare) const noexcept
+    { return id_ != compare; }
+    bool operator>=(int compare) const noexcept
+    { return id_ >= compare; }
 
 private:
     int id_;

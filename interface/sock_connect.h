@@ -26,7 +26,7 @@
 #include "sun.h"
 #include "usb.h"
 
-template<class Type>
+template <class Type>
 class connector final
 {
 public:
@@ -34,7 +34,7 @@ public:
      * @brief Create new UNIX-Socket
      * @param sun_path Filename of unix sun socket
      */
-    template<typename T>
+    template <typename T>
     explicit connector(T sun_path)
         : connection_(sun_path)
     {}
@@ -44,7 +44,7 @@ public:
      * @param address IP Address
      * @param port IP Port
      */
-    template<typename T, typename U>
+    template <typename T, typename U>
     connector(T address, U port)
         : connection_(address, static_cast<uint16_t>(port))
     {}
@@ -94,7 +94,7 @@ public:
      * @param size size of bytes
      * @return Count of received bytes
      */
-    template<typename T>
+    template <typename T>
     size_t receive(T *value, size_t size)
     { return connection_.receive(value, size); }
 
@@ -105,7 +105,7 @@ public:
      * @param size Size of bytes
      * @return Count of sent bytes
      */
-    template<typename T>
+    template <typename T>
     size_t send(const T *value, size_t size)
     { return connection_.send(value, size); }
 

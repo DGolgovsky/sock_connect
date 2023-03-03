@@ -35,15 +35,18 @@ public:
     connection(conn_type cp, char const *path);
     virtual ~connection();
 
-    void bind(bool listen) const;
-    void listen() const;
-    int accept(std::string *client_address);
-    bool connect();
-    void shutdown(int id);
+    virtual void bind(bool listen) const;
+    virtual void listen() const;
 
-    int id() const noexcept;
-    bool status() const noexcept;
-    void assign_thread(int id);
+    virtual int accept(std::string *client_address);
+    virtual bool connect();
+
+    virtual int id() const noexcept;
+    virtual bool status() const noexcept;
+
+    virtual void shutdown(int id);
+
+    virtual void assign_thread(int id);
 
     /**
      * @brief Deleted unused constructors and operator=
@@ -54,12 +57,13 @@ public:
     connection &operator=(connection &) = delete;
     connection &operator=(connection const &) = delete;
     connection &operator=(connection &&) = delete;
-protected:
-    void conn_memset();
-    int get_descriptor();
 
 protected:
-    socket_id id_;
+    void conn_memset();
+    virtual int get_descriptor() const;
+
+protected:
+    socket_id socket_;
 
     uint32_t ip_address_{};
     uint16_t ip_port_{};
@@ -68,11 +72,14 @@ protected:
     sockaddr_in self_socket_{};
     sockaddr_in client_socket_{};
     sockaddr_un unix_socket_{};
+
     sockaddr *addr_ptr_{};
     socklen_t addr_size_{};
 
     storage_t *client_list_{};
     bool state_{false};
+
+    ssize_t msg_sz_{};
 };
 
 #endif // SOCK_CONNECT_CONNECTION_H
