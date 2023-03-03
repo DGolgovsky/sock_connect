@@ -17,28 +17,28 @@ inline bool main_loop(const std::string &dev_path, speed_t speed)
         {
             while (socket->status())
             { // Reading messages queue
-                std::clog << "[TEST] >>> Send data: ";
+                std::cout << "[TEST] >>> Send data: ";
                 std::cin >> msg;
                 if (!msg.empty())
                 {
                     if (!socket->send(&msg, msg.length()))
                     {
-                        std::clog << "[TEST] === Couldn't send data: " << msg
+                        std::cout << "[TEST] === Couldn't send data: " << msg
                                   << std::endl;
                         return false;
                     }
                     //std::this_thread::sleep_for(std::chrono::seconds(1));
                 }
                 socket->receive(&msg, msg.length());
-                std::clog << "[TEST] <<< Recv data: " << msg << std::endl;
+                std::cout << "[TEST] <<< Recv data: " << msg << std::endl;
             }
         }
-        std::clog << "[TEST] Socket status returned false. Exit\n";
+        std::cout << "[TEST] Socket status returned false. Exit\n";
         return false;
     }
 }
 
-int main()
+int main(int, char **)
 {
     std::string dev_path{"/dev/ttyACM0"};
     speed_t speed = 0000015; // B9600

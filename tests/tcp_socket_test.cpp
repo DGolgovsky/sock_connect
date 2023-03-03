@@ -1,113 +1,94 @@
 #include <fstream>
-#include <random>
-#include <chrono>
-#include <memory>
-#include <netinet/in.h>
 #include <iostream>
+#include <memory>
 #include <thread>
 
+#include "tests/helpers.h"
 #include "interface/sock_connect.h"
 
 static void server()
 {
-    size_t const array_size = 8;
-    unsigned seed = static_cast<unsigned int>
-    (std::chrono::system_clock::now().time_since_epoch().count());
-    std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution(0, 64);
-
-    uint8_t ui_8 = 8;
-    uint16_t ui_16 = 16;
-    uint32_t ui_32 = 32;
-    uint64_t ui_64 = 64;
-
-    uint8_t ui_8_a[array_size];
-    uint16_t ui_16_a[array_size];
-    uint32_t ui_32_a[array_size];
-    uint64_t ui_64_a[array_size];
-
-    std::fill(ui_8_a, ui_8_a + array_size, distribution(generator));
-    std::fill(ui_16_a, ui_16_a + array_size, distribution(generator));
-    std::fill(ui_32_a, ui_32_a + array_size, distribution(generator));
-    std::fill(ui_64_a, ui_64_a + array_size, distribution(generator));
+    v.randomize_fill();
 
     std::ifstream fstream("tcp_socket_test", std::ios::binary);
-    std::string file;
+    std::string file_content;
     fstream.seekg(0, std::ios::end);
-    file.reserve(static_cast<unsigned long>(fstream.tellg()));
+    file_content.reserve(static_cast<unsigned long>(fstream.tellg()));
     fstream.seekg(0, std::ios::beg);
-    file.assign((std::istreambuf_iterator<char>(fstream)),
-                std::istreambuf_iterator<char>());
+    file_content.assign(std::istreambuf_iterator<char>(fstream),
+                        std::istreambuf_iterator<char>());
 
-    auto socket = std::make_shared<connector<tcp>>(INADDR_LOOPBACK, 8010);
+    auto socket = std::make_shared<connector<tcp>>(ip_addr, ip_port);
     socket->bind();
     if (socket->accept())
     {
-        size_t size = file.length();
-        socket->send(&ui_8, sizeof(ui_8));
-        socket->send(&ui_16, sizeof(ui_16));
-        socket->send(&ui_32, sizeof(ui_32));
-        socket->send(&ui_64, sizeof(ui_64));
+        socket->send(&v.ui_8, sizeof(v.ui_8));
+        socket->send(&v.ui_16, sizeof(v.ui_16));
+        socket->send(&v.ui_32, sizeof(v.ui_32));
+        socket->send(&v.ui_64, sizeof(v.ui_64));
 
-        socket->send(ui_8_a, sizeof(ui_8) * array_size);
-        socket->send(ui_16_a, sizeof(ui_16) * array_size);
-        socket->send(ui_32_a, sizeof(ui_32) * array_size);
-        socket->send(ui_64_a, sizeof(ui_64) * array_size);
+        socket->send(v.ui_8_a, sizeof(v.ui_8) * array_size);
+        socket->send(v.ui_16_a, sizeof(v.ui_16) * array_size);
+        socket->send(v.ui_32_a, sizeof(v.ui_32) * array_size);
+        socket->send(v.ui_64_a, sizeof(v.ui_64) * array_size);
 
-        socket->send(&size, sizeof(size));
-        socket->send(&file, size);
+        size_t const file_size = file_content.length();
+        socket->send(&file_size, sizeof(file_size));
+        socket->send(&file_content, file_size);
     }
-    std::clog << "[TEST] Server finished work" << std::endl;
+    std::cout << "[TEST] Sender (server) finished work" << std::endl;
 }
 
-int main()
+int main(int, char **)
 {
     system("rm -f tcp_socket_test.received");
     std::thread t(server);
     t.detach();
 
-    auto socket = std::make_shared<connector<tcp>>(INADDR_LOOPBACK, 8010);
-
     std::ofstream ofstream("tcp_socket_test.received", std::ios::binary);
-    std::string file;
-    size_t const array_size = 8;
-    uint8_t ui_8 = 0;
-    uint16_t ui_16 = 0;
-    uint32_t ui_32 = 0;
-    uint64_t ui_64 = 0;
+    value_storage recv_v{};
 
-    uint8_t ui_8_a[array_size];
-    uint16_t ui_16_a[array_size];
-    uint32_t ui_32_a[array_size];
-    uint64_t ui_64_a[array_size];
-
+    auto socket = std::make_shared<connector<tcp>>(ip_addr, ip_port);
     while (socket->status())
     {
         if (socket->connect())
         {
-            socket->receive(&ui_8, sizeof(ui_8));
-            socket->receive(&ui_16, sizeof(ui_16));
-            socket->receive(&ui_32, sizeof(ui_32));
-            socket->receive(&ui_64, sizeof(ui_64));
+            socket->receive(&recv_v.ui_8, sizeof(recv_v.ui_8));
+            socket->receive(&recv_v.ui_16, sizeof(recv_v.ui_16));
+            socket->receive(&recv_v.ui_32, sizeof(recv_v.ui_32));
+            socket->receive(&recv_v.ui_64, sizeof(recv_v.ui_64));
 
-            socket->receive(ui_8_a, sizeof(ui_8) * array_size);
-            socket->receive(ui_16_a, sizeof(ui_16) * array_size);
-            socket->receive(ui_32_a, sizeof(ui_32) * array_size);
-            socket->receive(ui_64_a, sizeof(ui_64) * array_size);
+            socket->receive(recv_v.ui_8_a, sizeof(recv_v.ui_8) * array_size);
+            socket->receive(recv_v.ui_16_a, sizeof(recv_v.ui_16) * array_size);
+            socket->receive(recv_v.ui_32_a, sizeof(recv_v.ui_32) * array_size);
+            socket->receive(recv_v.ui_64_a, sizeof(recv_v.ui_64) * array_size);
 
-            size_t size = 0;
-            socket->receive(&size, sizeof(size));
-            socket->receive(&file, size);
+            std::string file_content;
+            size_t file_size = 0;
+            socket->receive(&file_size, sizeof(file_size));
+            socket->receive(&file_content, file_size);
 
-            if (!file.empty())
-            {
-                ofstream << file;
-            }
             socket->shutdown();
-            std::clog << "[TEST] Client finished work" << std::endl;
+            std::cout << "[TEST] Receiver (client) finished work" << std::endl;
+
+            if (!file_content.empty())
+            {
+                ofstream << file_content;
+            }
         }
     }
+    std::cout << "[TEST] Transferred int values ";
+    if (recv_v == v)
+    {
+        std::cout << "is the same\n";
+    }
+    else
+    {
+        std::cout << "isn't the same\n";
+    }
+
     system("md5sum tcp_socket_test tcp_socket_test.received");
+    system("rm -f tcp_socket_test.received");
 
     return 0;
 }
