@@ -1,0 +1,40 @@
+stages:
+  - build
+
+default:
+  before_script:
+    - whoami
+    - printenv
+  after_script:
+    - echo "After script section"
+
+deploy:
+  stage: build
+  tags:
+    - shell
+  only:
+    changes:
+      - interface/*
+      - include/*
+      - src/*
+      - build.sh
+      - .gitlab-ci.yml
+  except:
+    changes:
+      - packages/*
+  script:
+    - echo "Start building with version v.0.$MINOR_VERSION.$CI_PIPELINE_ID"
+    #- source /etc/profile
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    #- chmod 644 ~/.ssh/known_hosts
+    - rm packages/release/*
+    - ./build.sh -p all -v $CI_PIPELINE_ID -r
+    - echo "Start deploying with version v.0.$MINOR_VERSION.$CI_PIPELINE_ID"
+    - git config user.email "gitlab.ickamaz@outlook.com"
+    - git config user.name "GitLab CI/CD Service"
+    - git add packages
+    - git commit -m "CI Bump packages version to v.0.$MINOR_VERSION.$CI_PIPELINE_ID"
+    - git tag -a v.0.$MINOR_VERSION.$CI_PIPELINE_ID -m "CI Bump packages version to v.0.$MINOR_VERSION.$CI_PIPELINE_ID" -f
+    - git remote set-url --push origin ssh://git@$CI_SERVER_HOST:2203/$CI_PROJECT_PATH
+    - git remote show origin
+    - git push origin --tags HEAD:$CI_COMMIT_REF_NAME
