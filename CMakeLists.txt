@@ -2,24 +2,24 @@ cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
 # Set CMake library search policy
 if(COMMAND cmake_policy)
-    cmake_policy(SET CMP0003 NEW)
-    cmake_policy(SET CMP0005 NEW)
+	cmake_policy(SET CMP0003 NEW)
+	cmake_policy(SET CMP0005 NEW)
 endif()
 cmake_policy(SET CMP0016 NEW)
 if(POLICY CMP0042)
-    cmake_policy(SET CMP0042 NEW)
+	cmake_policy(SET CMP0042 NEW)
 endif()
 
 project(sock_connect LANGUAGES CXX)
 if(BUILD_VERSION)
-    set(PROJECT_VERSION 0.1.${BUILD_VERSION})
+	set(PROJECT_VERSION 0.1.${BUILD_VERSION})
 else()
-    set(PROJECT_VERSION 0.1.999)
+	set(PROJECT_VERSION 0.1.999)
 endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
-    include(StaticAnalyzers)
+	include(StaticAnalyzers)
 endif()
 
 # Options
@@ -38,20 +38,20 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 include(TargetArch)
 if(NOT CMAKE_TARGET_ARCHITECTURE)
-    target_architecture(CMAKE_TARGET_ARCHITECTURE)
+	target_architecture(CMAKE_TARGET_ARCHITECTURE)
 endif()
 
 if(BIN_DIR)
-    set(EXECUTABLE_OUTPUT_PATH ${BIN_DIR})
-    set(LIBRARY_OUTPUT_PATH ${BIN_DIR})
+	set(EXECUTABLE_OUTPUT_PATH ${BIN_DIR})
+	set(LIBRARY_OUTPUT_PATH ${BIN_DIR})
 else()
-    set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
-    set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
+	set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
+	set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 endif()
 message(STATUS "Binary output path: ${EXECUTABLE_OUTPUT_PATH}")
 
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug CACHE STRING "Default build type to Debug" FORCE)
+	set(CMAKE_BUILD_TYPE Debug CACHE STRING "Default build type to Debug" FORCE)
 endif()
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -D_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -g3 -ggdb -fstack-protector-all")
@@ -66,9 +66,9 @@ message(STATUS "Linker flags: ${CMAKE_EXE_LINKER_FLAGS}")
 include(project_cxx)
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
-    message(STATUS "Cmake flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
+	message(STATUS "Cmake flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
 else()
-    message(STATUS "Cmake flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
+	message(STATUS "Cmake flags:${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
 endif()
 message(STATUS "Compiler public flags: ${PUBLIC_CXX_FLAGS}")
 message(STATUS "Compiler private flags: ${PRIVATE_CXX_FLAGS}")
@@ -113,7 +113,7 @@ set(CPACK_RESOURCE_FILE_LICENSE ${PROJECT_SOURCE_DIR}/LICENSE)
 set(CPACK_PACKAGE_CHECKSUM SHA256)
 set(CPACK_PACKAGE_FILE_NAME "lib${CMAKE_PROJECT_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_PACKAGE_RELEASE}-${CMAKE_HOST_SYSTEM_PROCESSOR}")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Prototype shared library of socket connector")
-set(CPACK_PACKAGE_CONTACT "Dmitry Golgovsky <d.westcoast@aol.com>")
+set(CPACK_PACKAGE_CONTACT "Dmitry Golgowski <d.westcoast@aol.com>")
 
 # TGZ specific
 set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
@@ -121,7 +121,7 @@ set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
 # RPM specific
 set(CPACK_RPM_COMPONENT_INSTALL ON)
 set(CPACK_RPM_PACKAGE_RELEASE ${CPACK_PACKAGE_RELEASE})
-set(CPACK_RPM_PACKAGE_URL https://github.com/dgolgovsky/sock_connect)
+set(CPACK_RPM_PACKAGE_URL https://github.com/dGolgowski/sock_connect)
 set(CPACK_RPM_PACKAGE_LICENSE MIT)
 set(CPACK_RPM_PACKAGE_GROUP "System Environment/Base")
 set(CPACK_RPM_PACKAGE_REQUIRES "glibc, gcc")
@@ -133,8 +133,8 @@ set(CPACK_DEB_COMPONENT_INSTALL ON)
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${CMAKE_TARGET_ARCHITECTURE})
 set(CPACK_DEB_PACKAGE_LICENSE MIT)
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "glibc, gcc")
-set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/dgolgovsky/sock_connect")
-set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Dmitry Golgovsky")
+set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/dGolgowski/sock_connect")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Dmitry Golgowski")
 
 # Components grouping for Mac OS X and Windows installers
 set(CPACK_COMPONENT_${LIBRARIES_COMPONENT}_GROUP "Runtime")
@@ -147,24 +147,24 @@ include(CPack)
 
 # uninstall target
 if(NOT TARGET uninstall)
-    configure_file("${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in"
-                   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-                   IMMEDIATE @ONLY)
+	configure_file("${CMAKE_MODULE_PATH}/cmake_uninstall.cmake.in"
+	               "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+	               IMMEDIATE @ONLY)
 
-    add_custom_target(uninstall
-                      COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+	add_custom_target(uninstall
+	                  COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
 
 if(TESTS)
-    enable_testing()
-    set(TEST_MODULES
-        tcp_socket_test
-        udp_socket_test
-        sun_socket_test
-        usb_socket_test)
-    foreach(module ${TEST_MODULES})
-        add_executable(${module} tests/${module}.cpp)
-        target_link_libraries(${module} ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
-    endforeach()
-    message(STATUS "Build tests: activated")
+	enable_testing()
+	set(TEST_MODULES
+	    tcp_socket_test
+	    udp_socket_test
+	    sun_socket_test
+	    usb_socket_test)
+	foreach(module ${TEST_MODULES})
+		add_executable(${module} tests/${module}.cpp)
+		target_link_libraries(${module} ${SC_SHARED_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
+	endforeach()
+	message(STATUS "Build tests: activated")
 endif()

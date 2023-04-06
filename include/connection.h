@@ -1,6 +1,6 @@
 /**
  * @file connection.h
- * @author Dmitry Golgovsky
+ * @author Dmitry Golgowski
  * @date 2018
  * @brief Socket connection Class
  *
